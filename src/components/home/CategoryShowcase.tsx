@@ -100,7 +100,7 @@ export const CategoryShowcase = () => {
       href: '/categories/5',
     },
     {
-      name: t("Hierbas"),
+      name: t("hierbas"),
       imageUrl: '/categories/hierbasa.jpg',
       icon: Leaf,
       href: '/categories/15',

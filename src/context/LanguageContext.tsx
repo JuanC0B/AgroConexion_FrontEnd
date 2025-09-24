@@ -251,6 +251,116 @@ const translations: Record<string, [string, string]> = {
   eliminar: ["Eliminar", "Delete"],
   editar: ["Editar", "Edit"],
 
+  // Loading & errors
+  cargandoProductos: ["Cargando productos...", "Loading products..."],
+  errorCategoria: ["Error al obtener categoría", "Error fetching category"],
+  noCategoria: ["No se encontró la categoría", "Category not found"],
+
+  // Hero / intro
+  conoceProductos: [
+    "Conoce nuestros productos campesinos",
+    "Discover our farmers' products"
+  ],
+  textoIntroCategoria: [
+    "Cada producto en esta categoría proviene directamente de campesinos locales, cultivado con dedicación y respeto por la tierra. Comprar aquí significa apoyar a las comunidades rurales y disfrutar de alimentos frescos y de calidad.",
+    "Each product in this category comes directly from local farmers, cultivated with dedication and respect for the land. Shopping here means supporting rural communities and enjoying fresh, high-quality food."
+  ],
+
+  // Products section
+  productosDisponibles: ["Productos disponibles", "Available products"],
+  noProductos: [
+    "No hay productos en esta categoría",
+    "No products in this category"
+  ],
+  vuelvePronto: [
+    "Vuelve pronto, nuestros campesinos están cosechando más productos para ti.",
+    "Come back soon, our farmers are harvesting more products for you."
+  ],
+
+  // CTA final
+  graciasCampesinos: [
+    "🌾 Gracias por apoyar a nuestros campesinos",
+    "🌾 Thank you for supporting our farmers"
+  ],
+  textoFinalCategoria: [
+    "Cada compra impulsa el trabajo de las familias rurales y fomenta un comercio justo. Explora más categorías y descubre la riqueza del campo colombiano.",
+    "Each purchase supports the work of rural families and promotes fair trade. Explore more categories and discover the richness of the Colombian countryside."
+  ],
+  verMasProductos: ["Ver más productos", "See more products"],
+  anadirFavoritos: ["Añadir a favoritos", "Add to favorites"],
+  anadiendo: ["Añadiendo...", "Adding..."],
+  categoriaFavorito: [
+    "✅ Categoría añadida a favoritos",
+    "✅ Category added to favorites"
+  ],
+  yaFavorito: [
+    "⚠️ Esta categoría ya está en favoritos",
+    "⚠️ This category is already in favorites"
+  ],
+  errorFavorito: [
+    "❌ Error al añadir a favoritos",
+    "❌ Error adding to favorites"
+  ],
+
+  // Loading & states
+  inicializando: ["Inicializando...", "Initializing..."],
+  cargandoFacturas: ["Cargando facturas...", "Loading invoices..."],
+  errorFacturas: ["Error al cargar las facturas", "Error loading invoices"],
+
+  // Empty state
+  noFacturas: ["No tienes facturas", "You don’t have any invoices"],
+  textoNoFacturas: [
+    "Aún no has registrado ninguna factura. Cuando realices tu primera compra, aparecerá aquí.",
+    "You haven’t registered any invoices yet. Once you make your first purchase, it will appear here."
+  ],
+  explorarProductos: ["Explorar productos", "Browse products"],
+
+  // Invoice header
+  factura: ["Factura", "Invoice"],
+  sinProductosFactura: [
+    "Esta factura no tiene productos registrados.",
+    "This invoice has no registered products."
+  ],
+
+  // Main header
+  historialCompras: ["Historial completo de tus compras", "Complete history of your purchases"],
+
+  // Stats
+  totalFacturas: ["Total de Facturas", "Total Invoices"],
+  ultimaCompra: ["Última Compra", "Last Purchase"],
+  montoTotal: ["Monto Total", "Total Amount"],
+
+  // Table headers
+  producto: ["Producto", "Product"],
+  precioUnitario: ["Precio Unitario", "Unit Price"],
+  subtotal: ["Subtotal", "Subtotal"],
+
+  // Footer
+  mostrandoFacturas: ["Mostrando", "Showing"],
+  ultimaActualizacion: ["Última actualización:", "Last updated:"],
+
+  usuario: ["Usuario", "User"],
+  noInfoUsuario: ["No hay información disponible del usuario.", "No user information available."],
+  agrupacionCampesina: ["👥 Agrupación campesina", "👥 Farmers' group"],
+  administrador: ["🛡️ Administrador", "🛡️ Admin"],
+  usuarioComun: ["👤 Usuario común", "👤 Common user"],
+  correo: ["Correo", "Email"],
+  telefono: ["Teléfono", "Phone"],
+  direccion: ["Dirección", "Address"],
+  rol: ["Rol", "Role"],
+  noRegistrado: ["No registrado", "Not registered"],
+  noRegistrada: ["No registrada", "Not registered"],
+  vendedor: ["Vendedor", "Seller"],
+  cliente: ["Cliente", "Customer"],
+  autenticacionDosPasos: ["Autenticación en dos pasos", "Two-factor authentication"],
+  activada: ["✅ Activada", "✅ Enabled"],
+  desactivada: ["❌ Desactivada", "❌ Disabled"],
+  infoAgrupacion: ["Información de la Agrupación", "Group Information"],
+  nit: ["NIT", "NIT"],
+  tipoOrganizacion: ["Tipo de organización", "Organization type"],
+  representante: ["Representante", "Representative"],
+  cedula: ["Cédula", "ID"],
+
 
 };
 

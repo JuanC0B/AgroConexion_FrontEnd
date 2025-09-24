@@ -20,6 +20,9 @@ import { Leaf, ShoppingBag, Sprout, Heart } from "lucide-react";
 import Footer from "@/components/home/footer";
 import api from "@/lib/axios";
 import toast from "react-hot-toast";
+import { useLanguage } from '@/context/LanguageContext';
+
+
 /** Tipado del producto */
 interface Product {
   id: number;
@@ -38,6 +41,9 @@ interface Category {
 }
 
 export default function CategoriaPage() {
+
+  
+  const { t } = useLanguage();
   // Obtiene el ID de la categoría desde la URL dinámica
   const { id } = useParams();
 
@@ -59,7 +65,7 @@ export default function CategoriaPage() {
         const res = await fetch(
           `http://127.0.0.1:8000/api/products/categories/${id}/`
         );
-        if (!res.ok) throw new Error("Error al obtener categoría");
+        if (!res.ok) throw new Error(t("errorCategoria"));
 
         // Conversión de la respuesta a JSON con tipado de Category
         const categoryData: Category = await res.json();
@@ -79,13 +85,13 @@ export default function CategoriaPage() {
     setAdding(true);
     try {
       await api.post("/cart/categories/", { category: Number(id) });
-      toast.success("✅ Categoría añadida a favoritos");
+      toast.success(t("categoriaFavorito"));
     } catch (error: any) {
       // Si la API devuelve error porque ya está añadida
       if (error.response?.status === 400) {
-        toast.error("⚠️ Esta categoría ya está en favoritos");
+        toast.error(t("yaFavorito"));
       } else {
-        toast.error("❌ Error al añadir a favoritos");
+        toast.error(t("errorFavorito"));
       }
     } finally {
       setAdding(false);
@@ -97,7 +103,7 @@ export default function CategoriaPage() {
     return (
       <div className="flex justify-center items-center h-64">
         <p className="animate-pulse text-green-700 text-lg">
-          Cargando productos...
+          {t("cargandoFacturas")}
         </p>
       </div>
     );
@@ -107,7 +113,7 @@ export default function CategoriaPage() {
   if (!category) {
     return (
       <div className="text-center p-6">
-        <p className="text-gray-600 text-lg">No se encontró la categoría</p>
+        <p className="text-gray-600 text-lg">{t("noCategoria")}</p>
       </div>
     );
   }
@@ -128,13 +134,10 @@ export default function CategoriaPage() {
       {/* SECCIÓN INTRODUCTORIA */}
       <section className="px-6 md:px-12 py-6 bg-amber-50 text-center dark:bg-gray-800">
         <h2 className="text-2xl font-semibold text-amber-800 mb-3 dark:text-amber-200">
-          Conoce nuestros productos campesinos
+          {t("conoceProductos")}
         </h2>
         <p className="max-w-3xl mx-auto text-gray-700 dark:text-gray-300">
-          Cada producto en esta categoría proviene directamente de campesinos
-          locales, cultivado con dedicación y respeto por la tierra. Comprar aquí
-          significa apoyar a las comunidades rurales y disfrutar de alimentos
-          frescos y de calidad.
+          {t("textoIntroCategoria")}
         </p>
       </section>
 
@@ -146,7 +149,7 @@ export default function CategoriaPage() {
             <div className="flex items-center gap-2 mb-8">
               <Leaf className="text-green-700 w-7 h-7 dark:text-green-400" />
               <h2 className="text-3xl font-bold text-green-800 dark:text-green-400 dark:to-green-300">
-                Productos disponibles
+                {t("productosDisponibles")}
               </h2>
             </div>
 
@@ -173,11 +176,10 @@ export default function CategoriaPage() {
           <div className="flex flex-col items-center justify-center text-center p-10 bg-amber-100 rounded-xl shadow-sm">
             <ShoppingBag className="w-12 h-12 text-amber-700 mb-4" />
             <p className="text-lg text-amber-700 font-semibold">
-              No hay productos en esta categoría
+              {t("noProductos")}
             </p>
             <p className="text-gray-600 text-sm">
-              Vuelve pronto, nuestros campesinos están cosechando más productos
-              para ti.
+              {t("vuelvePronto")}
             </p>
           </div>
         )}
@@ -186,19 +188,17 @@ export default function CategoriaPage() {
       {/* CTA FINAL - Agradecimiento */}
       <section className="bg-gradient-to-r from-orange-500 via-amber-500 to-yellow-500 text-white text-center py-8 px-6">
         <h3 className="text-2xl sm:text-3xl font-bold mb-4">
-          🌾 Gracias por apoyar a nuestros campesinos
+          {t("graciasCampesinos")}
         </h3>
         <p className="max-w-2xl mx-auto mb-6 opacity-90">
-          Cada compra impulsa el trabajo de las familias rurales y fomenta un
-          comercio justo. Explora más categorías y descubre la riqueza del campo
-          colombiano.
+          {t("textoFinalCategoria")}
         </p>
         <section className="bg-gradient-to-r from-orange-500 via-amber-500 to-yellow-500 text-white text-center py-8 px-6 flex flex-col sm:flex-row items-center justify-center gap-4">
             <a
               href="/"
               className="inline-block bg-white text-orange-600 font-semibold px-6 py-3 rounded-xl shadow-md hover:bg-amber-100 transition"
             >
-              Ver más productos
+              {t("verMasProductos")}
             </a>
 
             <button
@@ -207,7 +207,7 @@ export default function CategoriaPage() {
               className="flex items-center gap-2 bg-red-600 text-white font-semibold px-6 py-3 rounded-xl shadow-md hover:bg-red-700 transition disabled:opacity-50"
             >
               <Heart className="w-5 h-5" />
-              {adding ? "Añadiendo..." : "Añadir a favoritos"}
+              {adding ? (t("anadiendo")) : (t("anadirFavoritos"))}
             </button>
         </section>
       </section>

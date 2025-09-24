@@ -167,10 +167,10 @@ const ComentsProduct: React.FC<ComentsProductProps> = ({ productId }) => {
           <span className="text-white text-lg">🌿</span>
         </div>
         <h2 className="text-2xl font-bold bg-gradient-to-r from-green-700 to-green-600 dark:from-green-400 dark:to-green-300 bg-clip-text text-transparent">
-          {t("opinionUsuario")}
+          {t("opinionUsuarios")}
         </h2>
         <div className="ml-auto px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-sm rounded-full font-medium">
-          {comments.length} {("comentarios")}
+          {comments.length} {t("comentarios")}
         </div>
       </div>
 
@@ -266,7 +266,7 @@ const ComentsProduct: React.FC<ComentsProductProps> = ({ productId }) => {
                                 type="button"
                                 onClick={() => handleRemoveNewImage(i, true)}
                                 className="absolute -top-2 -right-2 bg-red-500 hover:bg-red-600 text-white rounded-full p-1.5 opacity-0 group-hover:opacity-100 transition-all duration-200 shadow-lg"
-                                title="Eliminar"
+                                title={t("eliminar")}
                               >
                                 <X size={12} />
                               </button>
@@ -289,13 +289,13 @@ const ComentsProduct: React.FC<ComentsProductProps> = ({ productId }) => {
                           onClick={() => handleSaveEdit(c.id)}
                           className="px-4 py-2 text-white bg-green-600 hover:bg-green-700 dark:bg-green-500 dark:hover:bg-green-600 rounded-xl transition-all duration-200 font-medium shadow-lg hover:shadow-xl"
                         >
-                          Guardar
+                          {t("guardar")}
                         </button>
                         <button
                           onClick={handleCancelEdit}
                           className="px-4 py-2 text-gray-700 dark:text-gray-300 bg-gray-200 hover:bg-gray-300 dark:bg-gray-600 dark:hover:bg-gray-500 rounded-xl transition-all duration-200 font-medium"
                         >
-                          Cancelar
+                          {t("cancelar")}
                         </button>
                       </div>
                     </div>
@@ -328,14 +328,14 @@ const ComentsProduct: React.FC<ComentsProductProps> = ({ productId }) => {
                   <button
                     onClick={() => handleDeleteComment(c.id)}
                     className="p-2 rounded-full text-red-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 transition-all duration-200 group"
-                    title="Eliminar"
+                    title={t("eliminar")}
                   >
                     <Trash2 size={18} className="group-hover:scale-110 transition-transform" />
                   </button>
                   <button
                     onClick={() => handleEditComment(c.id, c.comment)}
                     className="p-2 rounded-full text-blue-500 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-all duration-200 group"
-                    title="Editar"
+                    title={t("editar")}
                   >
                     <Edit2 size={18} className="group-hover:scale-110 transition-transform" />
                   </button>
@@ -350,10 +350,10 @@ const ComentsProduct: React.FC<ComentsProductProps> = ({ productId }) => {
             <span className="text-2xl">💬</span>
           </div>
           <p className="text-gray-500 dark:text-gray-400 text-lg font-medium mb-2">
-            Aún no hay comentarios
+            {t("noComentarios")}
           </p>
           <p className="text-gray-400 dark:text-gray-500 text-sm">
-            ¡Sé el primero en compartir tu opinión!
+            {t("sePrimeroOpinar")}
           </p>
         </div>
       )}
@@ -362,7 +362,7 @@ const ComentsProduct: React.FC<ComentsProductProps> = ({ productId }) => {
       <div className="flex items-center gap-3 my-8">
         <div className="flex-1 h-px bg-gradient-to-r from-transparent via-gray-300 dark:via-gray-600 to-transparent"></div>
         <div className="px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-xs rounded-full font-medium">
-          Escribe tu opinión
+          {t("escribeOpinion")}
         </div>
         <div className="flex-1 h-px bg-gradient-to-r from-transparent via-gray-300 dark:via-gray-600 to-transparent"></div>
       </div>
@@ -373,7 +373,7 @@ const ComentsProduct: React.FC<ComentsProductProps> = ({ productId }) => {
           <textarea
             value={newComment}
             onChange={(e) => setNewComment(e.target.value)}
-            placeholder="Comparte tu experiencia con este producto..."
+            placeholder={t("placeholderComentario")}
             className="w-full px-4 py-4 border border-gray-300 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 dark:focus:ring-green-400 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 transition-all duration-200 min-h-[100px] resize-none"
           />
           <div className="absolute bottom-3 right-3 text-xs text-gray-400 dark:text-gray-500">
@@ -387,7 +387,7 @@ const ComentsProduct: React.FC<ComentsProductProps> = ({ productId }) => {
             <div className="flex items-center gap-2 mb-3">
               <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
               <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                Imágenes adjuntas ({newImages.length})
+                {t("imagenesAdjuntas")} ({newImages.length})
               </span>
             </div>
             <div className="flex flex-wrap gap-3">
@@ -425,7 +425,7 @@ const ComentsProduct: React.FC<ComentsProductProps> = ({ productId }) => {
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
               </svg>
-              Agregar fotos
+              {t("agregarFotos")}
             </div>
           </label>
 
@@ -435,7 +435,7 @@ const ComentsProduct: React.FC<ComentsProductProps> = ({ productId }) => {
             className="bg-gradient-to-r from-green-600 to-green-700 dark:from-green-500 dark:to-green-600 hover:from-green-700 hover:to-green-800 dark:hover:from-green-600 dark:hover:to-green-700 text-white px-6 py-3 rounded-xl flex items-center space-x-2 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed font-semibold shadow-lg hover:shadow-xl hover:scale-105 group"
           >
             <Send size={18} className="group-hover:scale-110 transition-transform" />
-            <span>{loading ? "Enviando..." : "Publicar"}</span>
+            <span>{loading ? (t("enviando")) : (t("publicar"))}</span>
             {loading && (
               <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin ml-1"></div>
             )}

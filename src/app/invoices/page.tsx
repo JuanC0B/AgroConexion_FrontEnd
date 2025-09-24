@@ -10,6 +10,7 @@ import { ChevronDown, ChevronUp, ReceiptText, Moon, Sun, FileText } from 'lucide
 import Link from 'next/link';
 import { toast } from 'react-hot-toast';
 import NotAuthenticated from "@/components/errores/Authorization";
+import { useLanguage } from '@/context/LanguageContext';
 
 /**
  * Componente principal que lista todas las facturas del usuario.
@@ -26,6 +27,7 @@ import NotAuthenticated from "@/components/errores/Authorization";
 const ListInvoices = () => {
   const router = useRouter();
 
+  const { t } = useLanguage();
   // Estado que guarda la lista de facturas obtenidas de la API
   const [invoices, setInvoices] = useState<Invoice[]>([]);
   // Estado de carga para mostrar "Cargando..."
@@ -80,7 +82,7 @@ const ListInvoices = () => {
         );
         setInvoices(sorted);
       } catch (error) {
-        toast.error('Error al cargar las facturas');
+        toast.error(t("errorFacturas"));
         console.error(error);
       } finally {
         setLoading(false);
@@ -130,7 +132,7 @@ const ListInvoices = () => {
     <div className="min-h-screen bg-gradient-to-br from-green-50 to-amber-50 dark:from-gray-900 dark:to-gray-800 flex items-center justify-center">
       <div className="text-center">
         <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-green-600 dark:border-green-400 mx-auto mb-4"></div>
-        <p className="text-gray-600 dark:text-gray-300 text-lg">Cargando facturas...</p>
+        <p className="text-gray-600 dark:text-gray-300 text-lg">{t("cargandoFacturas")}</p>
       </div>
     </div>
   );
@@ -145,16 +147,16 @@ const ListInvoices = () => {
           <FileText className="w-12 h-12 text-gray-400 dark:text-gray-500 mx-auto" />
         </div>
         <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-3">
-          No tienes facturas
+          {t("noFacturas")}
         </h2>
         <p className="text-gray-600 dark:text-gray-400 mb-6">
-          Aún no has registrado ninguna factura. Cuando realices tu primera compra, aparecerá aquí.
+          {t("textoNoFacturas")}
         </p>
         <Link 
           href="/productos" 
           className="inline-flex items-center px-6 py-3 bg-green-600 dark:bg-green-500 text-white font-medium rounded-lg hover:bg-green-700 dark:hover:bg-green-600 transition-colors duration-200"
         >
-          Explorar productos
+          {t("explorarProductos")}
         </Link>
       </div>
     </div>
@@ -175,7 +177,7 @@ const ListInvoices = () => {
         <div>
           <Link href={`/invoices/${invoice.id}`}>
             <h2 className="text-lg font-bold hover:text-green-100 transition-colors duration-200">
-              Factura #{invoice.id}
+              {t("factura")} #{invoice.id}
             </h2>
           </Link>
           <p className="text-sm opacity-90 text-green-100">
@@ -215,11 +217,11 @@ const ListInvoices = () => {
             <table className="w-full text-sm rounded-lg overflow-hidden shadow-sm">
               <thead>
                 <tr className="bg-green-200 dark:bg-gray-700 text-green-900 dark:text-gray-100">
-                  <th className="py-3 px-4 text-left font-semibold">🌽 Producto</th>
-                  <th className="py-3 px-4 text-left font-semibold">👨‍🌾 Vendedor</th>
-                  <th className="py-3 px-4 text-left font-semibold">📦 Cantidad</th>
-                  <th className="py-3 px-4 text-left font-semibold">💲 Precio Unitario</th>
-                  <th className="py-3 px-4 text-left font-semibold">🧾 Subtotal</th>
+                  <th className="py-3 px-4 text-left font-semibold">🌽 {t("producto")}</th>
+                  <th className="py-3 px-4 text-left font-semibold">👨‍🌾 {t("vendedor")}</th>
+                  <th className="py-3 px-4 text-left font-semibold">📦 {t("cantidad")}</th>
+                  <th className="py-3 px-4 text-left font-semibold">💲 {t("precioUnitario")}</th>
+                  <th className="py-3 px-4 text-left font-semibold">🧾 {t("subtotal")}</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-green-100 dark:divide-gray-600">
@@ -294,10 +296,10 @@ const ListInvoices = () => {
         <div className="flex justify-between items-center mb-10">
           <div className="text-center flex-1">
             <h1 className="text-4xl sm:text-5xl font-extrabold text-green-900 dark:text-green-100 mb-2">
-              🌾 Mis Facturas
+              🌾 {t("misFacturas")}
             </h1>
             <p className="text-green-700 dark:text-green-300 text-lg">
-              Historial completo de tus compras
+              {t("historialCompras")}
             </p>
           </div>
         </div>
@@ -305,17 +307,17 @@ const ListInvoices = () => {
         {/* Estadísticas rápidas */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg border border-green-100 dark:border-gray-700">
-            <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">Total de Facturas</h3>
+            <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">{t("totalFacturas")}</h3>
             <p className="text-2xl font-bold text-green-600 dark:text-green-400">{invoices.length}</p>
           </div>
           <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg border border-green-100 dark:border-gray-700">
-            <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">Última Compra</h3>
+            <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">{t("ultimaCompra")}</h3>
             <p className="text-lg font-semibold text-gray-800 dark:text-gray-200">
               {formatDate(invoices[0]?.date_created)}
             </p>
           </div>
           <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg border border-green-100 dark:border-gray-700">
-            <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">Monto Total</h3>
+            <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">{t("montoTotal")}</h3>
             <p className="text-lg font-bold text-green-600 dark:text-green-400">
               {formatCurrency(
                 invoices.reduce((sum, invoice) => sum + parseFloat(invoice.total), 0).toString()
@@ -347,8 +349,8 @@ const ListInvoices = () => {
         {/* Footer con información adicional */}
         <div className="mt-12 text-center">
           <p className="text-gray-600 dark:text-gray-400 text-sm">
-            Mostrando {invoices.length} factura{invoices.length !== 1 ? 's' : ''} • 
-            Última actualización: {new Date().toLocaleDateString('es-CO')}
+            {t("mostrandoFacturas")} {invoices.length} {t("factura")}{invoices.length !== 1 ? 's' : ''} •  
+            {t("ultimaActualizacion")} {new Date().toLocaleDateString('es-CO')}
           </p>
         </div>
       </div>
