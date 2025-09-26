@@ -97,11 +97,6 @@ export default function FavoriteCategories() {
             <p className="text-gray-600 dark:text-gray-400 mb-8 max-w-md mx-auto leading-relaxed transition-colors duration-300">
               Explora nuestras categorías y guarda tus preferidas para acceder a ellas rápidamente
             </p>
-            <button className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-green-600 to-emerald-700 dark:from-green-500 dark:to-emerald-600 text-white rounded-2xl font-semibold shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 hover:scale-105 group">
-              <Grid3X3 className="w-5 h-5 group-hover:rotate-12 transition-transform duration-300" />
-              <span>Explorar Categorías</span>
-              <div className="w-2 h-2 bg-white/50 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            </button>
           </div>
         ) : (
           /* Grid de categorías mejorado */
@@ -118,7 +113,7 @@ export default function FavoriteCategories() {
                 <div className="relative overflow-hidden">
                   <div className="aspect-[4/3] bg-gradient-to-br from-green-100 to-emerald-100 dark:from-green-900/30 dark:to-emerald-900/30 transition-colors duration-300">
                     <Image
-                      src={`http://127.0.0.1:8000${fav.category.image}`}
+                      src={`${process.env.NEXT_PUBLIC_MEDIA_URL}${fav.category.image}`}
                       alt={fav.category.name}
                       width={400}
                       height={300}

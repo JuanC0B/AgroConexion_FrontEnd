@@ -39,7 +39,7 @@ export default function SearchPage() {
       setError(null)
       try {
         // Construimos la URL de forma segura
-        const url = new URL(`${process.env.NEXT_PUBLIC_API_UR}/products/`)
+        const url = new URL(`${process.env.NEXT_PUBLIC_API_UR}/products/list-products/`)
         url.searchParams.set('search', query)
 
         // Si tu backend acepta filtro por categoría, descomenta UNA de estas dos:

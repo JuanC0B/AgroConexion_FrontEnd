@@ -1,124 +1,149 @@
 // src/app/cart/page.tsx
 
-'use client'
+"use client";
 
 // 📦 Importaciones necesarias
-import { useState, useEffect } from 'react'
-import api from '@/lib/axios'
-import Image from 'next/image'
-import { Minus, Plus, Trash2, Loader2, Router } from 'lucide-react'
-import BuyCart from '@/components/cart/ComprarCarrito'
-import { toast } from 'react-hot-toast'
-import { useRouter } from 'next/navigation'
-import { ROUTES } from '@/lib/constants'
+import { useState, useEffect } from "react";
+import api from "@/lib/axios";
+import Image from "next/image";
+import { Minus, Plus, Trash2, Loader2 } from "lucide-react";
+import BuyCart from "@/components/cart/ComprarCarrito";
+import { toast } from "react-hot-toast";
+import { useRouter } from "next/navigation";
+import { ROUTES } from "@/lib/constants";
+import { AxiosError } from "axios";
 /* 
  📑 Tipado local para un producto dentro del carrito.
  Esto asegura que cada item tenga la forma correcta.
 */
 interface CartProduct {
-  id: number
+  id: number;
   product: {
-    id: number
-    name: string
-    description: string
-    price: number
-    images: { image: string }[]
-  }
-  quantity: number
+    id: number;
+    name: string;
+    description: string;
+    price: number;
+    images: { image: string }[];
+  };
+  quantity: number;
 }
 
 // 🔢 Función para formatear precios en pesos colombianos (COP)
 const formatPrice = (value = 0) =>
-  new Intl.NumberFormat('es-CO', {
-    style: 'currency',
-    currency: 'COP',
+  new Intl.NumberFormat("es-CO", {
+    style: "currency",
+    currency: "COP",
     minimumFractionDigits: 0,
-  }).format(value)
+  }).format(value);
 
 const GetCarrito = () => {
   // 🗂️ Estados locales
-  const [cartProducts, setCartProducts] = useState<CartProduct[]>([]) // productos actuales
-  const [loading, setLoading] = useState<boolean>(true) // estado de carga inicial
-  const [updatingId, setUpdatingId] = useState<number | null>(null) // id del producto en actualización
-  const [refreshKey, setRefreshKey] = useState(0) // trigger para recargar datos
-  const router =  useRouter()
-  // 📥 Obtener productos del carrito desde el backend
+  const [cartProducts, setCartProducts] = useState<CartProduct[]>([]); // productos actuales
+  const [loading, setLoading] = useState<boolean>(true); // estado de carga inicial
+  const [updatingId, setUpdatingId] = useState<number | null>(null); // id del producto en actualización
+  const [refreshKey, setRefreshKey] = useState(0); // trigger para recargar datos
+  const router = useRouter();
+
   const fetchCart = async () => {
-    setLoading(true)
+    setLoading(true);
     try {
-      const response = await api.get('/cart/my-cart/')
-      const data = response.data
+      const response = await api.get("/cart/my-cart/");
+      const data = response.data;
 
       // 🛠️ Normalizar siempre a un array
       const items: CartProduct[] = Array.isArray(data)
         ? data
         : Array.isArray(data?.products)
         ? data.products
-        : []
+        : [];
 
-      setCartProducts(items)
-    } catch (err: any) {
-      // console.error('Error al obtener el carrito', err?.response?.data ?? err?.message ?? err)
-      toast.error('No se pudo cargar el carrito. Intenta recargar la página o verifica que estes logeado.')
+      setCartProducts(items);
+    } catch (err: unknown) {
+      if (err instanceof AxiosError) {
+        // Error proveniente de Axios
+        console.error("Error al obtener el carrito:", err.response?.data);
+        toast.error(
+          err.response?.data?.detail ??
+            "No se pudo cargar el carrito. Intenta recargar la página o verifica que estés logeado."
+        );
+      } else {
+        // Error inesperado
+        console.error("Error inesperado:", err);
+        toast.error("Ocurrió un error inesperado al cargar el carrito.");
+      }
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   // 🌀 Cargar carrito al iniciar y cada vez que cambie refreshKey
   useEffect(() => {
-    fetchCart()
-  }, [refreshKey])
+    fetchCart();
+  }, [refreshKey]);
 
-  const Comprar=() =>{
-    router.push(ROUTES.HOME)
-  }
+  const Comprar = () => {
+    router.push(ROUTES.HOME);
+  };
   // 🔔 Escuchar evento global "cartUpdated"
   useEffect(() => {
-    const handler = () => setRefreshKey((k) => k + 1)
-    window.addEventListener('cartUpdated', handler)
-    return () => window.removeEventListener('cartUpdated', handler)
-  }, [])
+    const handler = () => setRefreshKey((k) => k + 1);
+    window.addEventListener("cartUpdated", handler);
+    return () => window.removeEventListener("cartUpdated", handler);
+  }, []);
 
   // 🔄 Cambiar cantidad de un producto (usando DELETE + POST)
-  const handleQuantityChange = async (productId: number, newQuantity: number) => {
-    if (newQuantity < 1) return
+  const handleQuantityChange = async (
+    productId: number,
+    newQuantity: number
+  ) => {
+    if (newQuantity < 1) return;
 
-    const prevState = [...cartProducts]
-    setUpdatingId(productId)
+    const prevState = [...cartProducts];
+    setUpdatingId(productId);
 
     // 🟢 Optimismo en UI (mostramos el cambio antes de confirmación del backend)
     setCartProducts((prev) =>
       prev.map((item) =>
-        item.product.id === productId ? { ...item, quantity: newQuantity } : item
+        item.product.id === productId
+          ? { ...item, quantity: newQuantity }
+          : item
       )
-    )
+    );
 
     try {
       // 1. Eliminar el producto actual
-      await api.delete(`/cart/delete-product/${productId}/`)
+      await api.delete(`/cart/delete-product/${productId}/`);
       // 2. Volver a agregarlo con la nueva cantidad
-      await api.post('/cart/my-cart/', {
+      await api.post("/cart/my-cart/", {
         product_id: productId,
         quantity: newQuantity,
-      })
-      toast.success('Cantidad actualizada ✅')
-      fetchCart() // 🔄 refrescar carrito
-    } catch (err: any) {
-      console.error('Error al actualizar cantidad', err?.response?.data ?? err?.message ?? err)
-      toast.error('No se pudo actualizar la cantidad ❌')
-      setCartProducts(prevState) // rollback en caso de error
+      });
+      toast.success("Cantidad actualizada ✅");
+      fetchCart(); // 🔄 refrescar carrito
+    } catch (err:unknown) {
+      if (err instanceof AxiosError) {
+        console.error(
+        "Error al actualizar cantidad",
+        err?.response?.data ?? err?.message ?? err
+      );
+      toast.error("No se pudo actualizar la cantidad ❌");
+      setCartProducts(prevState); // rollback en caso de error
+      } else {
+        // Error inesperado
+        console.error("Error inesperado:", err);
+        toast.error("Ocurrió un error inesperado");
+      }
     } finally {
-      setUpdatingId(null)
+      setUpdatingId(null);
     }
-  }
+  };
 
   // 📊 Totales de carrito
-  const totalItems = cartProducts.reduce((sum, item) => sum + item.quantity, 0)
+  const totalItems = cartProducts.reduce((sum, item) => sum + item.quantity, 0);
   const totalPrice = cartProducts.reduce(
     (sum, item) => sum + item.quantity * item.product.price,
     0
-  )
+  );
 
   // 🎨 Renderizado principal
   return (
@@ -135,8 +160,13 @@ const GetCarrito = () => {
               // ⏳ Loader mientras carga
               <div className="flex items-center justify-center py-20">
                 <div className="flex flex-col items-center gap-4">
-                  <Loader2 className="animate-spin text-green-600 dark:text-green-400" size={48} />
-                  <p className="text-gray-600 dark:text-gray-300">Cargando tu carrito...</p>
+                  <Loader2
+                    className="animate-spin text-green-600 dark:text-green-400"
+                    size={48}
+                  />
+                  <p className="text-gray-600 dark:text-gray-300">
+                    Cargando tu carrito...
+                  </p>
                 </div>
               </div>
             ) : cartProducts.length === 0 ? (
@@ -150,7 +180,10 @@ const GetCarrito = () => {
                   Explora nuestros productos y agrégalos al carrito.
                 </p>
                 <div className="mt-6">
-                  <button onClick={Comprar} className="px-6 py-3 bg-gradient-to-r from-green-500 to-green-600 dark:from-green-600 dark:to-green-700 text-white rounded-full font-medium hover:shadow-lg hover:scale-105 transition-all duration-200">
+                  <button
+                    onClick={Comprar}
+                    className="px-6 py-3 bg-gradient-to-r from-green-500 to-green-600 dark:from-green-600 dark:to-green-700 text-white rounded-full font-medium hover:shadow-lg hover:scale-105 transition-all duration-200"
+                  >
                     Ir a comprar
                   </button>
                 </div>
@@ -167,12 +200,12 @@ const GetCarrito = () => {
                     <Image
                       src={
                         item.product.images?.[0]?.image
-                          ? `http://127.0.0.1:8000${item.product.images[0].image}`
-                          : '/placeholder.png'
+                          ? `${process.env.NEXT_PUBLIC_MEDIA_URL}${item.product.images[0].image}`
+                          : "/placeholder.png"
                       }
                       alt={item.product.name}
                       fill
-                      style={{ objectFit: 'cover' }}
+                      style={{ objectFit: "cover" }}
                       className="group-hover:scale-110 transition-transform duration-300"
                     />
                     <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition-all duration-300"></div>
@@ -193,7 +226,9 @@ const GetCarrito = () => {
                         <div className="text-lg font-bold bg-gradient-to-r from-green-600 to-green-500 dark:from-green-400 dark:to-green-300 bg-clip-text text-transparent">
                           {formatPrice(item.product.price)}
                         </div>
-                        <div className="text-sm text-gray-400 dark:text-gray-500">c/u</div>
+                        <div className="text-sm text-gray-400 dark:text-gray-500">
+                          c/u
+                        </div>
                       </div>
                     </div>
 
@@ -211,7 +246,10 @@ const GetCarrito = () => {
                           disabled={updatingId === item.product.id}
                           className="w-9 h-9 flex items-center justify-center bg-gray-100 dark:bg-gray-700 rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 disabled:opacity-50 transition-all duration-200 hover:scale-110"
                         >
-                          <Minus size={16} className="text-gray-600 dark:text-gray-300" />
+                          <Minus
+                            size={16}
+                            className="text-gray-600 dark:text-gray-300"
+                          />
                         </button>
 
                         {/* Cantidad */}
@@ -222,18 +260,24 @@ const GetCarrito = () => {
                         {/* Botón + */}
                         <button
                           onClick={() =>
-                            handleQuantityChange(item.product.id, item.quantity + 1)
+                            handleQuantityChange(
+                              item.product.id,
+                              item.quantity + 1
+                            )
                           }
                           disabled={updatingId === item.product.id}
                           className="w-9 h-9 flex items-center justify-center bg-gray-100 dark:bg-gray-700 rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 disabled:opacity-50 transition-all duration-200 hover:scale-110"
                         >
-                          <Plus size={16} className="text-gray-600 dark:text-gray-300" />
+                          <Plus
+                            size={16}
+                            className="text-gray-600 dark:text-gray-300"
+                          />
                         </button>
 
                         {/* Loader de actualización */}
                         {updatingId === item.product.id && (
                           <div className="ml-3 text-sm text-gray-500 dark:text-gray-400 flex items-center gap-2">
-                            <Loader2 className="animate-spin" size={16} /> 
+                            <Loader2 className="animate-spin" size={16} />
                             <span>Actualizando...</span>
                           </div>
                         )}
@@ -241,7 +285,9 @@ const GetCarrito = () => {
 
                       {/* Subtotal */}
                       <div className="ml-auto md:ml-6 text-right">
-                        <div className="text-sm text-gray-500 dark:text-gray-400">Subtotal</div>
+                        <div className="text-sm text-gray-500 dark:text-gray-400">
+                          Subtotal
+                        </div>
                         <div className="text-md font-semibold bg-gradient-to-r from-green-600 to-green-500 dark:from-green-400 dark:to-green-300 bg-clip-text text-transparent">
                           {formatPrice(item.quantity * item.product.price)}
                         </div>
@@ -253,11 +299,13 @@ const GetCarrito = () => {
                       <button
                         onClick={async () => {
                           try {
-                            await api.delete(`/cart/delete-product/${item.product.id}/`)
-                            toast.success('Producto eliminado 🗑️')
-                            fetchCart()
+                            await api.delete(
+                              `/cart/delete-product/${item.product.id}/`
+                            );
+                            toast.success("Producto eliminado 🗑️");
+                            fetchCart();
                           } catch {
-                            toast.error('No se pudo eliminar el producto ❌')
+                            toast.error("No se pudo eliminar el producto ❌");
                           }
                         }}
                         className="flex items-center gap-2 text-sm text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 hover:bg-red-50 dark:hover:bg-red-900/20 px-3 py-2 rounded-lg transition-all duration-200"
@@ -276,22 +324,28 @@ const GetCarrito = () => {
           <aside className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-xl border border-gray-200 dark:border-gray-700 sticky top-24 transition-all duration-300">
             <div className="flex items-center gap-2 mb-4">
               <div className="w-3 h-3 bg-gradient-to-r from-green-500 to-green-600 rounded-full"></div>
-              <div className="text-lg font-semibold text-gray-800 dark:text-white">Resumen</div>
+              <div className="text-lg font-semibold text-gray-800 dark:text-white">
+                Resumen
+              </div>
             </div>
-            
+
             <div className="space-y-4">
               <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-xl">
                 <div>
                   <div className="text-lg font-medium text-gray-900 dark:text-white">
                     {totalItems} productos
                   </div>
-                  <div className="text-sm text-gray-500 dark:text-gray-400">Artículos en tu carrito</div>
+                  <div className="text-sm text-gray-500 dark:text-gray-400">
+                    Artículos en tu carrito
+                  </div>
                 </div>
               </div>
 
               <div className="border-t border-gray-200 dark:border-gray-600 pt-4">
                 <div className="flex items-center justify-between">
-                  <span className="text-lg font-medium text-gray-900 dark:text-white">Total:</span>
+                  <span className="text-lg font-medium text-gray-900 dark:text-white">
+                    Total:
+                  </span>
                   <div className="text-right">
                     <div className="text-2xl font-extrabold bg-gradient-to-r from-green-600 to-green-500 dark:from-green-400 dark:to-green-300 bg-clip-text text-transparent">
                       {formatPrice(totalPrice)}
@@ -313,7 +367,7 @@ const GetCarrito = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default GetCarrito
+export default GetCarrito;

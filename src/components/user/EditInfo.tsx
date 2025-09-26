@@ -421,23 +421,6 @@ export default function EditInfo() {
                   placeholder="Ingresa tu dirección"
                 />
               </div>
-
-              {/* User Type */}
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                  Tipo de usuario
-                </label>
-                <select
-                  name="user_type"
-                  value={formData.user_type}
-                  onChange={handleChange}
-                  className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
-                >
-                  <option value="common">Usuario común</option>
-                  <option value="premium">Usuario premium</option>
-                  <option value="business">Empresa</option>
-                </select>
-              </div>
             </div>
 
             {/* Submit Button */}

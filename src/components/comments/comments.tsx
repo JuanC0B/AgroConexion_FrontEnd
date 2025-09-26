@@ -209,14 +209,6 @@ const ComentsProduct: React.FC<ComentsProductProps> = ({ productId }) => {
                         {c.user?.username || "Usuario"}
                       </span>
                       <span className="w-1 h-1 bg-gray-400 rounded-full"></span>
-                      <span className="text-xs text-gray-500 dark:text-gray-400">
-                        {new Date().toLocaleDateString('es-ES', { 
-                          day: 'numeric', 
-                          month: 'short',
-                          hour: '2-digit',
-                          minute: '2-digit'
-                        })}
-                      </span>
                     </div>
                   </div>
 

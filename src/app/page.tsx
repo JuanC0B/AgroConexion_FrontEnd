@@ -31,7 +31,7 @@ export default function HomePage() {
     const fetchProducts = async () => {
       try {
         const res = await axios.get(
-          "http://127.0.0.1:8000/api/products/list-products/"
+          `${process.env.NEXT_PUBLIC_API_URL}/products/list-products/`
         );
         setProducts(res.data);
       } catch (err) {
@@ -45,16 +45,16 @@ export default function HomePage() {
   }, []);
 
   const ofertas = products.slice(0, 3);
-  const masVendidos = products.slice(3, 6);
+  const masVendidos = products.slice(0, 5);
   const recomendados = products.slice(6, 9);
 
   const selectedSlides = products
     .filter((p) => p.images?.[0]?.image)
     .sort(() => 0.5 - Math.random())
-    .slice(0, 3)
+    .slice(0, 10)
     .map((p) => ({
       id: p.id,
-      src: `http://127.0.0.1:8000${p.images[0].image}`,
+      src: `${p.images[0].image}`,
       alt: p.name,
     }));
 
