@@ -117,6 +117,9 @@ const translations: Record<string, [string, string]> = {
   cargando: ["Cargando...", "Loading..."],
   crearCuenta: ["Crear Cuenta", "Create Account"],
   recuperarContraseña: ["Recuperar Contraseña", "Forgot Password"],
+  ingresaNombreUsuario: ["Ingresa tu nombre de usuario", "Enter your username"],
+  ingresarContrasena: ["Ingresa tu contraseña", "Enter your password"],
+
 
   // RegisterForm
   unetePlataforma: ["Únete a nuestra plataforma", "Join our platform"],
@@ -165,8 +168,7 @@ const translations: Record<string, [string, string]> = {
 
   // ComprarProducto
   cantidad: ["Cantidad", "Quantity"],
-  procesandoCompra: ["Procesando compra...", "Processing purchase..."],
-  comprarAhora: ["Comprar", "Buy now"],
+ comprarAhora: ["Comprar", "Buy now"],
 
   errorCantidad: ["❌ La cantidad debe ser mayor a 0", "❌ Quantity must be greater than 0"],
 
@@ -333,7 +335,6 @@ const translations: Record<string, [string, string]> = {
   // Table headers
   producto: ["Producto", "Product"],
   precioUnitario: ["Precio Unitario", "Unit Price"],
-  subtotal: ["Subtotal", "Subtotal"],
 
   // Footer
   mostrandoFacturas: ["Mostrando", "Showing"],
@@ -360,6 +361,37 @@ const translations: Record<string, [string, string]> = {
   tipoOrganizacion: ["Tipo de organización", "Organization type"],
   representante: ["Representante", "Representative"],
   cedula: ["Cédula", "ID"],
+
+  cartTitle: ["🛒 Tu carrito", "🛒 Your cart"],
+  loading: ["Cargando tu carrito...", "Loading your cart..."],
+  emptyTitle: ["Tu carrito está vacío", "Your cart is empty"],
+  emptyDescription: ["Explora nuestros productos y agrégalos al carrito.", "Browse our products and add them to the cart."],
+  goShopping: ["Ir a comprar", "Go Shopping"],
+  updatedQuantity: ["Cantidad actualizada ✅", "Quantity updated ✅"],
+  updateError: ["No se pudo actualizar la cantidad ❌", "Could not update quantity ❌"],
+  productRemoved: ["Producto eliminado 🗑️", "Product removed 🗑️"],
+  removeError: ["No se pudo eliminar el producto ❌", "Failed to remove product ❌"],
+  updating: ["Actualizando...", "Updating..."],
+  subtotal: ["Subtotal", "Subtotal"],
+  each: ["c/u", "each"],
+  summary: ["Resumen", "Summary"],
+  items: ["productos", "items"],
+  itemsInCart: ["Artículos en tu carrito", "Items in your cart"],
+  total: ["Total:", "Total:"],
+  remove: ["Eliminar", "Remove"],
+
+  carritoVacio: ["Tu carrito está vacío ❌", "Your cart is empty ❌"],
+  compraExitosa: ["✅ Compra realizada con éxito", "✅ Purchase completed successfully"],
+  facturaGenerada: ["Factura generada", "Invoice generated"],
+  verFactura: ["Ver factura", "View invoice"],
+  errorCompra: ["Error al realizar la compra ❌", "Error processing purchase ❌"],
+  resumenCompra: ["Resumen de tu compra", "Your purchase summary"],
+  productosEnCarrito: ["producto(s) en tu carrito", "item(s) in your cart"],
+  totalAPagar: ["Total a pagar", "Total to pay"],
+  procesandoCompra: ["Procesando compra...", "Processing purchase..."],
+  comprarTodo: ["Comprar todo el carrito", "Buy entire cart"],
+  explorarMas: ["Explorar más productos", "Browse more products"],
+  notaFactura: ["*Factura disponible en tu historial de compras", "*Invoice available in your purchase history"],
 
 
 };

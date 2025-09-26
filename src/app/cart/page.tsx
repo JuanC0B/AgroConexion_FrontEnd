@@ -11,6 +11,8 @@ import BuyCart from '@/components/cart/ComprarCarrito'
 import { toast } from 'react-hot-toast'
 import { useRouter } from 'next/navigation'
 import { ROUTES } from '@/lib/constants'
+import { useLanguage } from '@/context/LanguageContext';
+
 /* 
  📑 Tipado local para un producto dentro del carrito.
  Esto asegura que cada item tenga la forma correcta.
@@ -37,6 +39,7 @@ const formatPrice = (value = 0) =>
 
 const GetCarrito = () => {
   // 🗂️ Estados locales
+  const { t } = useLanguage();
   const [cartProducts, setCartProducts] = useState<CartProduct[]>([]) // productos actuales
   const [loading, setLoading] = useState<boolean>(true) // estado de carga inicial
   const [updatingId, setUpdatingId] = useState<number | null>(null) // id del producto en actualización
@@ -102,11 +105,11 @@ const GetCarrito = () => {
         product_id: productId,
         quantity: newQuantity,
       })
-      toast.success('Cantidad actualizada ✅')
+      toast.success(t('updatedQuantity'))
       fetchCart() // 🔄 refrescar carrito
     } catch (err: any) {
       console.error('Error al actualizar cantidad', err?.response?.data ?? err?.message ?? err)
-      toast.error('No se pudo actualizar la cantidad ❌')
+      toast.error(t('updateError'))
       setCartProducts(prevState) // rollback en caso de error
     } finally {
       setUpdatingId(null)
@@ -125,7 +128,7 @@ const GetCarrito = () => {
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 py-10 transition-all duration-300">
       <div className="max-w-7xl mx-auto px-4">
         <h2 className="text-3xl font-extrabold text-gray-900 dark:text-white mb-6 text-center bg-gradient-to-r from-green-600 to-blue-600 dark:from-green-400 dark:to-blue-400 bg-clip-text text-transparent">
-          🛒 Tu carrito
+          {t("cartTitle")}
         </h2>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -136,7 +139,7 @@ const GetCarrito = () => {
               <div className="flex items-center justify-center py-20">
                 <div className="flex flex-col items-center gap-4">
                   <Loader2 className="animate-spin text-green-600 dark:text-green-400" size={48} />
-                  <p className="text-gray-600 dark:text-gray-300">Cargando tu carrito...</p>
+                  <p className="text-gray-600 dark:text-gray-300">{t("loading")}</p>
                 </div>
               </div>
             ) : cartProducts.length === 0 ? (
@@ -144,14 +147,14 @@ const GetCarrito = () => {
               <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 text-center shadow-lg border border-gray-200 dark:border-gray-700 transition-all duration-300">
                 <div className="text-6xl mb-4">🛒</div>
                 <h3 className="text-xl font-semibold text-gray-800 dark:text-white mb-2">
-                  Tu carrito está vacío
+                  {t("emptyTitle")}
                 </h3>
                 <p className="text-gray-600 dark:text-gray-400">
-                  Explora nuestros productos y agrégalos al carrito.
+                  {t("emptyDescription")}
                 </p>
                 <div className="mt-6">
                   <button onClick={Comprar} className="px-6 py-3 bg-gradient-to-r from-green-500 to-green-600 dark:from-green-600 dark:to-green-700 text-white rounded-full font-medium hover:shadow-lg hover:scale-105 transition-all duration-200">
-                    Ir a comprar
+                    {t("goShopping")}
                   </button>
                 </div>
               </div>
@@ -234,7 +237,7 @@ const GetCarrito = () => {
                         {updatingId === item.product.id && (
                           <div className="ml-3 text-sm text-gray-500 dark:text-gray-400 flex items-center gap-2">
                             <Loader2 className="animate-spin" size={16} /> 
-                            <span>Actualizando...</span>
+                            <span>{t("updating")}</span>
                           </div>
                         )}
                       </div>
@@ -254,16 +257,16 @@ const GetCarrito = () => {
                         onClick={async () => {
                           try {
                             await api.delete(`/cart/delete-product/${item.product.id}/`)
-                            toast.success('Producto eliminado 🗑️')
+                            toast.success(t("productRemoved"))
                             fetchCart()
                           } catch {
-                            toast.error('No se pudo eliminar el producto ❌')
+                            toast.error(t("removeError"))
                           }
                         }}
                         className="flex items-center gap-2 text-sm text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 hover:bg-red-50 dark:hover:bg-red-900/20 px-3 py-2 rounded-lg transition-all duration-200"
                       >
                         <Trash2 size={16} />
-                        <span>Eliminar</span>
+                        <span>{t("remove")}</span>
                       </button>
                     </div>
                   </div>
@@ -276,22 +279,22 @@ const GetCarrito = () => {
           <aside className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-xl border border-gray-200 dark:border-gray-700 sticky top-24 transition-all duration-300">
             <div className="flex items-center gap-2 mb-4">
               <div className="w-3 h-3 bg-gradient-to-r from-green-500 to-green-600 rounded-full"></div>
-              <div className="text-lg font-semibold text-gray-800 dark:text-white">Resumen</div>
+              <div className="text-lg font-semibold text-gray-800 dark:text-white">{t("summary")}</div>
             </div>
             
             <div className="space-y-4">
               <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-xl">
                 <div>
                   <div className="text-lg font-medium text-gray-900 dark:text-white">
-                    {totalItems} productos
+                    {totalItems} {t("items")}
                   </div>
-                  <div className="text-sm text-gray-500 dark:text-gray-400">Artículos en tu carrito</div>
+                  <div className="text-sm text-gray-500 dark:text-gray-400">{t("itemsInCart")}</div>
                 </div>
               </div>
 
               <div className="border-t border-gray-200 dark:border-gray-600 pt-4">
                 <div className="flex items-center justify-between">
-                  <span className="text-lg font-medium text-gray-900 dark:text-white">Total:</span>
+                  <span className="text-lg font-medium text-gray-900 dark:text-white">{t("total")}</span>
                   <div className="text-right">
                     <div className="text-2xl font-extrabold bg-gradient-to-r from-green-600 to-green-500 dark:from-green-400 dark:to-green-300 bg-clip-text text-transparent">
                       {formatPrice(totalPrice)}

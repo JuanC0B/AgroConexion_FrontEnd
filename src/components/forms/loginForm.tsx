@@ -85,7 +85,7 @@ export function LoginForm() {
               <input
                 type="text"
                 id="username"
-                placeholder="Ingresa tu nombre de usuario"
+                placeholder={t("ingresaNombreUsuario")}
                 {...register('username')}
                 className={`w-full rounded-xl border-2 px-4 py-3 focus:outline-none focus:ring-2 transition-all duration-200 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 ${
                   formErrors.username || errors.username
@@ -121,7 +121,7 @@ export function LoginForm() {
               <input
                 type={showPassword ? 'text' : 'password'}
                 id="password"
-                placeholder="Ingresa tu contraseña"
+                placeholder={t("ingresarContrasena")}
                 {...register('password')}
                 className={`w-full rounded-xl border-2 px-4 py-3 pr-12 focus:outline-none focus:ring-2 transition-all duration-200 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 ${
                   formErrors.password || errors.password

@@ -6,23 +6,23 @@ import { toast } from 'sonner'
 import { ShoppingCart, Loader2, PackageSearch } from 'lucide-react'
 import axios from 'axios'
 import Link from 'next/link'
+import { useLanguage } from '@/context/LanguageContext';
 
 interface ComprarCarritoProps {
   totalItems?: number
   totalPrice?: number
   onCartCleared?: () => void // callback opcional
 }
-
 const ComprarCarrito = ({
   totalItems = 0,
   totalPrice = 0,
   onCartCleared,
 }: ComprarCarritoProps) => {
   const [loading, setLoading] = useState(false)
-
+  const { t } = useLanguage();
   const handleBuyCart = async () => {
     if (totalItems === 0) {
-      toast.error('Tu carrito está vacío ❌')
+      toast.error(t('carritoVacio'))
       return
     }
 
@@ -30,11 +30,12 @@ const ComprarCarrito = ({
     try {
       // 1️⃣ Generar factura en el backend desde el carrito
       const { data } = await api.post('/invoices/from-cart/')
+      
 
       // 2️⃣ Mostrar notificación con acceso directo a la factura
       toast.success(
         <div className="flex flex-col gap-1">
-          <span>✅ Compra realizada con éxito</span>
+          <span>{t("compraExitosa")}</span>
           <span className="text-sm text-gray-500">
             Factura #{data?.id} generada
           </span>
@@ -42,7 +43,7 @@ const ComprarCarrito = ({
             href={`/facturas/${data?.id}`}
             className="text-blue-600 underline text-sm hover:text-blue-800 mt-1"
           >
-            Ver factura
+            {t("verFactura")}
           </Link>
         </div>,
         { duration: 6000 }
@@ -68,17 +69,17 @@ const ComprarCarrito = ({
       <div className="flex items-center justify-between">
         <div>
           <h3 className="text-lg font-semibold text-gray-800">
-            Resumen de tu compra
+            {t("resumenCompra")}
           </h3>
           <p className="text-sm text-gray-500">
-            {totalItems} producto(s) en tu carrito
+            {totalItems} {t("productosEnCarrito")}
           </p>
         </div>
         <div className="text-right">
           <span className="text-xl font-bold text-green-600">
             ${totalPrice.toLocaleString()}
           </span>
-          <p className="text-sm text-gray-500">Total a pagar</p>
+          <p className="text-sm text-gray-500">{t("totalAPagar")}</p>
         </div>
       </div>
 
@@ -91,12 +92,12 @@ const ComprarCarrito = ({
         {loading ? (
           <>
             <Loader2 className="animate-spin" size={20} />
-            Procesando compra...
+            {t("procesandoCompra")}
           </>
         ) : (
           <>
             <ShoppingCart size={20} />
-            Comprar todo el carrito
+            {t("comprarTodo")}
           </>
         )}
       </button>
@@ -107,11 +108,11 @@ const ComprarCarrito = ({
         className="w-full flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl font-semibold shadow-md transition"
       >
         <PackageSearch size={20} />
-        Explorar más productos
+        {t("explorarMas")}
       </Link>
 
       <p className="text-xs text-gray-400 text-center">
-        *Factura disponible en tu historial de compras
+        {t("notaFactura")}
       </p>
     </div>
   )

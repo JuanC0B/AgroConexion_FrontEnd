@@ -89,7 +89,7 @@ return (
                 id="username"
                 type="text"
                 {...register('username')}
-                placeholder="Ingresa tu nombre de usuario"
+                placeholder={t("ingresaNombreUsuario")}
                 className={`w-full rounded-xl border-2 px-4 py-3 focus:outline-none focus:ring-2 transition-all duration-200 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 ${
                   formErrors.username || errors.username
                     ? 'border-red-400 dark:border-red-500 focus:ring-red-200 dark:focus:ring-red-800'
