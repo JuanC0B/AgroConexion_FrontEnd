@@ -107,7 +107,7 @@ const Footer: React.FC = () => {
         <div>
           <h3 className="font-semibold text-lg mb-3">{t("contactoTitle")}</h3>
           <p className="text-sm">📍 Funza, Cundinamarca</p>
-          <p className="text-sm">📧 contacto@agroconexion.com</p>
+          <p className="text-sm">📧 agroconexions@gmail.com</p>
           <p className="text-sm">📞 +57 350 742 7337</p>
         </div>
       </div>

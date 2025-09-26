@@ -16,7 +16,7 @@ const GetAllCategories = () => {
     const GetCategory = async () => {
       try {
         const response = await axios.get(
-          'http://127.0.0.1:8000/api/products/categories/'
+          `${process.env.NEXT_PUBLIC_API_URL}/products/categories/`
         )
         setCategory(response.data)
       } catch (error) {

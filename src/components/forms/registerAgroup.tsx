@@ -26,7 +26,7 @@ const RegisterAgropu = () => {
     // Permite navegar
     const router = useRouter();
     // URL de la solicitud
-    const BACKEND_URL = " http://127.0.0.1:8000/api/users/group/register/";
+    const BACKEND_URL = `${process.env.NEXT_PUBLIC_API_UR}/users/group/register/`;
     // Funcion para actualizar el estado de la vision de la contraseña
     const [showPassword, setShowPassword] = useState(false);
     const [showPassword2, setShowPassword2] = useState(false);

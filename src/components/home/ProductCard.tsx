@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import axios from 'axios'
 import ProductCard from '@/components/products/ProductCard'
+import api from '@/lib/axios'
 
 type ApiImage = { id: number; image: string }
 type ApiProduct = {
@@ -38,14 +39,14 @@ export default function SearchPage() {
       setError(null)
       try {
         // Construimos la URL de forma segura
-        const url = new URL('http://127.0.0.1:8000/api/products/')
+        const url = new URL(`${process.env.NEXT_PUBLIC_API_UR}/products/list-products/`)
         url.searchParams.set('search', query)
 
         // Si tu backend acepta filtro por categoría, descomenta UNA de estas dos:
         // url.searchParams.set('category', category)          // si envías nombre/slug
         // url.searchParams.set('category_id', category)       // si envías id
 
-        const response = await axios.get<ApiResponse>(url.toString(), {
+        const response = await api.get<ApiResponse>(url.toString(), {
           // withCredentials: true, // si tu API usa cookies/sesión
         })
 

@@ -9,7 +9,7 @@ const Login2FA = () => {
     // Obtenemos el parametro
     const email = searchParams.get('email') || '';
     // Url a la cual se le ara la peticion
-    const URL = 'http://127.0.0.1:8000/api/users/login/step2/'
+    const URL = '/users/login/step2/'
     // Llamamos la componente para hacer la peticion
     return <VerifyAccount email={email} URL={URL}/>;
 }

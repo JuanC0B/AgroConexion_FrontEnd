@@ -42,12 +42,12 @@ export const Carousel = ({ slides }: Props) => {
 
   // Autoplay
   useEffect(() => {
-    if (validSlides.length === 0) return
-    const interval = setInterval(() => {
-      setCurrent((prev) => (prev + 1) % validSlides.length)
-    }, 5000)
-    return () => clearInterval(interval)
-  }, [validSlides])
+    const filtered = slides.filter((slide) => !!slide.src) // solo descarta vacíos
+    setValidSlides(filtered.length > 0 ? filtered : [
+      { id: 0, src: "/default.jpg", alt: "Producto destacado" }
+    ])
+  }, [slides])
+
 
   if (validSlides.length === 0) return null
 

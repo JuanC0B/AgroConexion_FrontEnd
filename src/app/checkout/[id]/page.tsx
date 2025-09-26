@@ -31,7 +31,7 @@ export default function CheckoutPage() {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const res = await axios.get(`http://127.0.0.1:8000/api/products/detail/${productId}/`);
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/products/detail/${productId}/`);
         setProduct(res.data);
       } catch (err) {
         toast.error("No se pudo cargar el producto.");
@@ -110,7 +110,7 @@ export default function CheckoutPage() {
               <div className="flex-shrink-0">
                 <div className="relative group">
                   <Image
-                    src={`http://127.0.0.1:8000${product.images[0]?.image}`}
+                    src={`${process.env.NEXT_PUBLIC_MEDIA_URL}${product.images[0]?.image}`}
                     alt={product.name}
                     width={140}
                     height={140}

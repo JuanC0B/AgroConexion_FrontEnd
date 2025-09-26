@@ -7,7 +7,7 @@ import { toast } from 'react-hot-toast';
 // Componente API para hacer peticiones 
 const api = axios.create({
     // Indicamos la URL base a la hora de hacer las peticiones
-    baseURL: process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000/api',
+    baseURL: process.env.NEXT_PUBLIC_API_URL,
     // Informacion que enviararemos junto a la peticion
     headers: {
         // Tipo de forma en la que enviaremos y resiviremos los datos

@@ -45,7 +45,7 @@ const CreateProduct = () => {
   }, [router])
 
   // Endpoints de la API
-  const UrlNewProduct: string = '/products/form/new-product/'
+  const UrlNewProduct: string = '/products/new-product/'
   const UrlCategories: string = '/products/categories/'
 
   /**

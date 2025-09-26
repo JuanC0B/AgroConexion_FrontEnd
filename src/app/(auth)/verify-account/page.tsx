@@ -7,7 +7,7 @@ const VerifyAccountPage = () => {
     // Obtenemos el email del usuario enviuado por la url
     const searchParams = useSearchParams();
     const email = searchParams.get('email') || '';
-    const URL = 'http://127.0.0.1:8000/api/users/verify-account/'
+    const URL = '/users/verify-account/'
     // Formulario de codigo para el incio de sesion
     return <VerifyAccount email={email} URL={URL}/>;
 }

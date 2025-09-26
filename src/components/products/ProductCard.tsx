@@ -35,7 +35,8 @@ const ProductCard: React.FC<ProductCardProps & { defaultFavorite?: boolean }> = 
   const [inCart, setInCart] = useState(false)
   const [rating, setRating] = useState<number>(0)
   const [commentsCount, setCommentsCount] = useState<number>(0)
-
+  const [average, setAverage] = useState<number | null>(null)
+  const [total, setTotal] = useState(0)
   // ---------------- Efectos ----------------
   useEffect(() => {
     setIsFavorite(defaultFavorite)
@@ -98,18 +99,32 @@ const ProductCard: React.FC<ProductCardProps & { defaultFavorite?: boolean }> = 
 
   /** Obtener calificación promedio */
   const fetchRating = async () => {
-    try {
-      const res = await axios.get(`http://127.0.0.1:8000/api/products/stats_rating/${id}/`)
-      setRating(res.data.average || 0)
-    } catch (error) {
-      console.error('Error obteniendo rating:', error)
+      try {
+        const res = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/products/stats_rating/${id}/`
+        )
+
+        const data = res.data
+        setTotal(data.total_ratings)
+        console.log(data)
+        // Calcular promedio
+        let sum = 0
+        data.stars.forEach((s: any) => {
+          sum += s.star * s.count
+        })
+
+        const avg = data.total_ratings > 0 ? sum / data.total_ratings : 0
+        setAverage(avg)
+        console.log(avg)
+      } catch (err) {
+        console.error('Error obteniendo calificación:', err)
+      }
     }
-  }
 
   /** Obtener cantidad de comentarios */
   const fetchComments = async () => {
     try {
-      const res = await api.get(`http://127.0.0.1:8000/api/comments/product-comments/${id}/`)
+      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/comments/product-comments/${id}/`)
       setCommentsCount(res.data.length || 0)
     } catch (error) {
       console.error('Error obteniendo comentarios:', error)
@@ -132,7 +147,7 @@ const ProductCard: React.FC<ProductCardProps & { defaultFavorite?: boolean }> = 
           <div className="absolute inset-0 bg-gradient-to-r from-green-100 via-amber-100 to-green-100 dark:from-gray-700 dark:via-gray-600 dark:to-gray-700 animate-pulse" />
         )}
         <Image
-          src={`http://127.0.0.1:8000${imageUrl}`}
+          src={`${process.env.NEXT_PUBLIC_MEDIA_URL}${imageUrl}`}
           alt={name}
           fill
           className={`transition-all duration-700 group-hover:scale-105 object-cover ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
@@ -161,7 +176,7 @@ const ProductCard: React.FC<ProductCardProps & { defaultFavorite?: boolean }> = 
           </span>
           <div className="flex items-center space-x-1 text-yellow-500">
             <Star className="w-4 h-4 fill-yellow-400" />
-            <span className="text-sm text-gray-700 dark:text-gray-300">{rating.toFixed(1)}</span>
+            <span className="text-sm text-gray-700 dark:text-gray-300">{average !== null ? average.toFixed(1) : "0.0"}</span>
           </div>
         </div>
 

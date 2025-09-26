@@ -25,6 +25,7 @@ export const ROUTES = {
   FACTURACION: '/invoices',
   ESTADISTICAS: '/finansas',
   PERFIL: '/profile',
+  EDITINFO:'/profile/edit-info',
   FAVORITOS: '/favorites',
   MYPRODUCTS: '/profile/Products',
   FAVORITECATEGORIES: '/favorites/categories',

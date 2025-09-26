@@ -232,7 +232,7 @@ const ListInvoices = () => {
                       index % 2 === 0 
                         ? 'bg-white dark:bg-gray-800' 
                         : 'bg-green-50 dark:bg-gray-750'
-                    } text-gray-800 dark:text-gray-200 hover:bg-green-100 dark:hover:bg-gray-600 transition-colors duration-150`}
+                    } text-gray-800 dark:text-gray-200 hover:bg-green-100 dark:bg-gray-600 transition-colors duration-150`}
                   >
                     <td className="py-3 px-4 font-medium text-gray-900 dark:text-white">
                       {item.product_name}

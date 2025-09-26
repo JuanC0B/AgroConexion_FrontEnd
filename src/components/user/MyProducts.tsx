@@ -64,7 +64,7 @@ return (
         <div className="relative w-full h-48 bg-gray-100 dark:bg-gray-700">
           {product.images?.length > 0 ? (
             <Image
-              src={`http://127.0.0.1:8000${product.images[0].image}`}
+              src={`${process.env.NEXT_PUBLIC_MEDIA_URL}${product.images[0].image}`}
               alt={`Imagen de ${product.name}`}
               fill
               className="object-cover hover:scale-105 transition-transform duration-300"

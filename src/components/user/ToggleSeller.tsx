@@ -64,15 +64,17 @@ export default function ToggleSeller() {
     );
   }
 
-  return (
+    return (
     <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 p-6 transition-all duration-300 hover:shadow-2xl">
       {/* Header con icono */}
       <div className="flex items-center justify-center mb-6">
-        <div className={`inline-flex items-center justify-center w-16 h-16 rounded-full mb-2 transition-colors duration-300 ${
-          isSeller 
-            ? 'bg-blue-100 dark:bg-blue-900/30' 
-            : 'bg-purple-100 dark:bg-purple-900/30'
-        }`}>
+        <div
+          className={`inline-flex items-center justify-center w-16 h-16 rounded-full mb-2 transition-colors duration-300 ${
+            isSeller
+              ? "bg-blue-100 dark:bg-blue-900/30"
+              : "bg-purple-100 dark:bg-purple-900/30"
+          }`}
+        >
           {isSeller ? (
             <Store className="w-8 h-8 text-blue-600 dark:text-blue-400" />
           ) : (
@@ -93,16 +95,20 @@ export default function ToggleSeller() {
 
       {/* Estado actual */}
       <div className="text-center mb-6">
-        <div className={`inline-flex items-center px-4 py-2 rounded-full text-sm font-semibold transition-all duration-300 ${
-          isSeller
-            ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300'
-            : 'bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-300'
-        }`}>
-          <div className={`w-2 h-2 rounded-full mr-2 transition-colors duration-300 ${
-            isSeller 
-              ? 'bg-blue-500 dark:bg-blue-400' 
-              : 'bg-purple-500 dark:bg-purple-400'
-          }`}></div>
+        <div
+          className={`inline-flex items-center px-4 py-2 rounded-full text-sm font-semibold transition-all duration-300 ${
+            isSeller
+              ? "bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300"
+              : "bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-300"
+          }`}
+        >
+          <div
+            className={`w-2 h-2 rounded-full mr-2 transition-colors duration-300 ${
+              isSeller
+                ? "bg-blue-500 dark:bg-blue-400"
+                : "bg-purple-500 dark:bg-purple-400"
+            }`}
+          ></div>
           {isSeller ? "Vendedor" : "Comprador"}
         </div>
       </div>
@@ -110,10 +116,9 @@ export default function ToggleSeller() {
       {/* Descripción del estado */}
       <div className="text-center mb-6">
         <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
-          {isSeller 
+          {isSeller
             ? "Tienes permisos para crear y gestionar productos en tu tienda. Los compradores pueden ver tu inventario."
-            : "Puedes navegar y comprar productos de los vendedores registrados en la plataforma."
-          }
+            : "Puedes navegar y comprar productos de los vendedores registrados en la plataforma."}
         </p>
       </div>
 
@@ -131,13 +136,14 @@ export default function ToggleSeller() {
                   Miembro de agrupación
                 </h4>
                 <p className="text-sm text-amber-700 dark:text-amber-300 leading-relaxed">
-                  No puedes cambiar tu estado de vendedor porque perteneces a una agrupación. 
-                  Los permisos son gestionados por el administrador del grupo.
+                  No puedes cambiar tu estado de vendedor porque perteneces a
+                  una agrupación. Los permisos son gestionados por el
+                  administrador del grupo.
                 </p>
               </div>
             </div>
           </div>
-          
+
           <div className="text-center">
             <button
               disabled
@@ -149,41 +155,18 @@ export default function ToggleSeller() {
           </div>
         </div>
       ) : (
-        /* Usuario sin agrupación - Puede cambiar */
+        /* Usuario sin agrupación */
         <div className="space-y-4">
-          {/* Beneficios del estado contrario */}
-          <div className="p-4 bg-gray-50 dark:bg-gray-700/50 rounded-xl border border-gray-100 dark:border-gray-600/50">
-            <h4 className="text-sm font-semibold text-gray-800 dark:text-gray-200 mb-3 flex items-center">
-              {isSeller ? (
-                <>
-                  <ShoppingBag className="w-4 h-4 mr-2 text-purple-600 dark:text-purple-400" />
-                  Beneficios del modo comprador:
-                </>
-              ) : (
-                <>
+          {/* Solo mostrar beneficios y botón si NO es vendedor */}
+          {!isSeller && (
+            <>
+              {/* Beneficios del modo vendedor */}
+              <div className="p-4 bg-gray-50 dark:bg-gray-700/50 rounded-xl border border-gray-100 dark:border-gray-600/50">
+                <h4 className="text-sm font-semibold text-gray-800 dark:text-gray-200 mb-3 flex items-center">
                   <Store className="w-4 h-4 mr-2 text-blue-600 dark:text-blue-400" />
                   Beneficios del modo vendedor:
-                </>
-              )}
-            </h4>
-            <ul className="text-xs text-gray-600 dark:text-gray-400 space-y-2">
-              {isSeller ? (
-                <>
-                  <li className="flex items-center">
-                    <CheckCircle2 className="w-3 h-3 text-purple-500 mr-2 flex-shrink-0" />
-                    Interfaz simplificada para navegación
-                  </li>
-                  <li className="flex items-center">
-                    <CheckCircle2 className="w-3 h-3 text-purple-500 mr-2 flex-shrink-0" />
-                    Acceso completo al catálogo de productos
-                  </li>
-                  <li className="flex items-center">
-                    <CheckCircle2 className="w-3 h-3 text-purple-500 mr-2 flex-shrink-0" />
-                    Sistema de reseñas y calificaciones
-                  </li>
-                </>
-              ) : (
-                <>
+                </h4>
+                <ul className="text-xs text-gray-600 dark:text-gray-400 space-y-2">
                   <li className="flex items-center">
                     <CheckCircle2 className="w-3 h-3 text-blue-500 mr-2 flex-shrink-0" />
                     Crear y gestionar tu propia tienda
@@ -196,38 +179,35 @@ export default function ToggleSeller() {
                     <CheckCircle2 className="w-3 h-3 text-blue-500 mr-2 flex-shrink-0" />
                     Panel de estadísticas y ventas
                   </li>
-                </>
-              )}
-            </ul>
-          </div>
+                </ul>
+              </div>
 
-          {/* Botón de cambio */}
-          <div className="text-center">
-            <button
-              onClick={handleToggle}
-              disabled={updating}
-              className={`inline-flex items-center px-6 py-3 rounded-xl font-semibold text-white transition-all duration-200 disabled:cursor-not-allowed transform hover:scale-105 disabled:scale-100 focus:outline-none focus:ring-4 ${
-                isSeller
-                  ? 'bg-purple-600 hover:bg-purple-700 dark:bg-purple-600 dark:hover:bg-purple-700 focus:ring-purple-200 dark:focus:ring-purple-900/30'
-                  : 'bg-blue-600 hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-700 focus:ring-blue-200 dark:focus:ring-blue-900/30'
-              } shadow-lg disabled:opacity-70 disabled:hover:scale-100`}
-            >
-              {updating ? (
-                <>
-                  <Loader2 className="w-5 h-5 animate-spin mr-2" />
-                  Cambiando...
-                </>
-              ) : (
-                <>
-                  <Repeat className="w-5 h-5 mr-2" />
-                  {isSeller ? "Cambiar a comprador" : "Cambiar a vendedor"}
-                </>
-              )}
-            </button>
-          </div>
+              {/* Botón de cambio */}
+              <div className="text-center">
+                <button
+                  onClick={handleToggle}
+                  disabled={updating}
+                  className="inline-flex items-center px-6 py-3 rounded-xl font-semibold text-white transition-all duration-200 disabled:cursor-not-allowed transform hover:scale-105 disabled:scale-100 focus:outline-none focus:ring-4 bg-blue-600 hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-700 focus:ring-blue-200 dark:focus:ring-blue-900/30 shadow-lg disabled:opacity-70 disabled:hover:scale-100"
+                >
+                  {updating ? (
+                    <>
+                      <Loader2 className="w-5 h-5 animate-spin mr-2" />
+                      Cambiando...
+                    </>
+                  ) : (
+                    <>
+                      <Repeat className="w-5 h-5 mr-2" />
+                      Cambiar a vendedor
+                    </>
+                  )}
+                </button>
+              </div>
+            </>
+          )}
         </div>
       )}
     </div>
   );
+
 }
 

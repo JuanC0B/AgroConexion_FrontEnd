@@ -95,7 +95,7 @@ const ChanguePassword = ({ email, URL}: VerifyAccountProps) => {
 
         try {
             // Hacemos la peticion
-            const response = await axios.post(URL, data,{
+            const response = await axios.post(`${process.env.NEXT_PUBLIC_API_UR}${URL}`, data,{
                 headers: {
                     "Authorization": `Bearer ${access}`,
                      "Content-Type": "application/json" }

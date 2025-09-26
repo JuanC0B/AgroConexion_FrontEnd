@@ -13,7 +13,7 @@ export default function RatingStats({ productId }: Props) {
     try {
       setLoading(true)
       const res = await axios.get(
-        `http://127.0.0.1:8000/api/products/stats_rating/${productId}/`
+        `${process.env.NEXT_PUBLIC_API_URL}/products/stats_rating/${productId}/`
       )
       setStats(res.data)
     } catch (err) {

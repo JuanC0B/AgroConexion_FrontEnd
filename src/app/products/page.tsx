@@ -21,7 +21,7 @@ import { useLanguage } from '@/context/LanguageContext';
  */
 const ListProducts = () => {
   // URL del endpoint de productos
-  const URL = 'http://127.0.0.1:8000/api/products/list-products/'
+  const URL = `${process.env.NEXT_PUBLIC_API_URL}/products/list-products/`
 
   // Estado con todos los productos
   const [products, setProducts] = useState<Product[]>([])

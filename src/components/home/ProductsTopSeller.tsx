@@ -23,7 +23,7 @@ const TopProductsBuy = () => {
     const GetProducts = async () => {
       try {
         const response = await axios.get(
-          "http://127.0.0.1:8000/api/invoices/top-selling/"
+          `${process.env.NEXT_PUBLIC_API_URL}/invoices/top-selling/`
         );
         setProducts(response.data);
       } catch (error) {
@@ -62,7 +62,7 @@ const TopProductsBuy = () => {
                     {products.map((product) => {
                         const imageUrl =
                             product.images && product.images.length > 0
-                                ? `http://127.0.0.1:8000${product.images[0].image}`
+                                ? `${process.env.NEXT_PUBLIC_MEDIA_URL}${product.images[0].image}`
                                 : `https://via.placeholder.com/800x400/10b981/ffffff?text=${encodeURIComponent(
                                     product.name
                                 )}`;

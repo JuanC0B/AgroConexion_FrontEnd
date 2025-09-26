@@ -42,7 +42,7 @@ const DetailProduct = () => {
       try {
         setLoading(true);
         const res = await axios.get(
-          `http://127.0.0.1:8000/api/products/detail/${productId}/`
+          `${process.env.NEXT_PUBLIC_API_URL}/products/detail/${productId}/`
         );
         setProduct(res.data);
 
@@ -155,7 +155,7 @@ const DetailProduct = () => {
               )}
               {selectedImage && (
                 <Image
-                  src={`http://127.0.0.1:8000${selectedImage}`}
+                  src={`${process.env.NEXT_PUBLIC_MEDIA_URL}${selectedImage}`}
                   alt={product.name}
                   fill
                   className={`object-cover transition-all duration-500 hover:scale-105 ${
@@ -185,7 +185,7 @@ const DetailProduct = () => {
                     style={{ animationDelay: `${index * 100}ms` }}
                   >
                     <Image
-                      src={`http://127.0.0.1:8000${img.image}`}
+                      src={`${process.env.NEXT_PUBLIC_MEDIA_URL}${img.image}`}
                       alt={product.name}
                       width={80}
                       height={80}

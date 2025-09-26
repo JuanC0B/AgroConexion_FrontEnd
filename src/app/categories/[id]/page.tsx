@@ -21,8 +21,7 @@ import Footer from "@/components/home/footer";
 import api from "@/lib/axios";
 import toast from "react-hot-toast";
 import { useLanguage } from '@/context/LanguageContext';
-
-
+import axios from "axios";
 /** Tipado del producto */
 interface Product {
   id: number;
@@ -61,15 +60,9 @@ export default function CategoriaPage() {
   useEffect(() => {
     const fetchCategory = async () => {
       try {
-        // Llamada a la API del backend (Django o FastAPI según tu implementación)
-        const res = await fetch(
-          `http://127.0.0.1:8000/api/products/categories/${id}/`
-        );
-        if (!res.ok) throw new Error(t("errorCategoria"));
-
-        // Conversión de la respuesta a JSON con tipado de Category
-        const categoryData: Category = await res.json();
-        setCategory(categoryData);
+        // Llamada a la API del backend usando axios
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/products/categories/${id}/`);
+        setCategory(res.data as Category);
       } catch (error) {
         console.error(error);
       } finally {
