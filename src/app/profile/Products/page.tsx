@@ -41,7 +41,6 @@ export default function MyProductsPage() {
 
   return (
     <div className="p-6">
-      <h1 className="text-2xl font-bold mb-6 text-center">{t("misProductos")}</h1>
       {/* Header mejorado */}
       <div className="text-center mb-8 lg:mb-12">
         <div className="inline-flex items-center gap-4 mb-4">
@@ -55,7 +54,7 @@ export default function MyProductsPage() {
           </div>
           <div>
             <h1 className="text-3xl lg:text-4xl font-bold bg-gradient-to-r from-blue-700 via-indigo-600 to-purple-600 dark:from-blue-400 dark:via-indigo-300 dark:to-purple-300 bg-clip-text text-transparent">
-              Mis Productos
+              {t("misProductos")}
             </h1>
             <div className="flex items-center gap-2 mt-2">
               <Star className="w-4 h-4 text-orange-500 fill-orange-500 animate-pulse" />

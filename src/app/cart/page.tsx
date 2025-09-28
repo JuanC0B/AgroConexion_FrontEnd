@@ -153,7 +153,6 @@ const GetCarrito = () => {
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 py-10 transition-all duration-300">
       <div className="max-w-7xl mx-auto px-4">
         <h2 className="text-3xl font-extrabold text-gray-900 dark:text-white mb-6 text-center bg-gradient-to-r from-green-600 to-blue-600 dark:from-green-400 dark:to-blue-400 bg-clip-text text-transparent">
-          🛒 {t('cart')}
           {t("cartTitle")}
         </h2>
 

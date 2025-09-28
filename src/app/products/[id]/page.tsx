@@ -11,7 +11,7 @@ import { useParams } from "next/navigation";
 import AgregarCarrito from "@/components/cart/agregar";
 import BuyProduct from "@/components/cart/ComprarProducto";
 import ComentsProduct from "@/components/comments/comments";
-import { useLanguage } from '@/context/LanguageContext';
+import { useLanguage } from "@/context/LanguageContext";
 
 import {
   Home,
@@ -24,7 +24,6 @@ import {
 import Link from "next/link";
 import RatingStats from "@/components/products/ratingProdfuct";
 import NewRating from "@/components/products/NewRating";
-
 
 const DetailProduct = () => {
   const [product, setProduct] = useState<Product | null>(null);
@@ -60,33 +59,33 @@ const DetailProduct = () => {
   }, [productId]);
 
   const toggleFavorite = async () => {
-  if (!product) return;
+    if (!product) return;
 
-  try {
-    if (favorites.includes(product.id)) {
-      // Si ya está en favoritos, eliminar
-      await api.delete(`/cart/delete-favorites/${product.id}/`);
-      setFavorites(favorites.filter((id) => id !== product.id));
-    } else {
-      // Intentamos agregarlo
-      await api.post(`/cart/favorites/`, { product: product.id });
-      setFavorites([...favorites, product.id]);
-    }
-  } catch (error: any) {
-    // Revisamos si el error es 400 y corresponde a "ya agregado"
-    if (error.response?.status === 400) {
-      console.log("El producto ya estaba en favoritos, se eliminará.");
-      try {
+    try {
+      if (favorites.includes(product.id)) {
+        // Si ya está en favoritos, eliminar
         await api.delete(`/cart/delete-favorites/${product.id}/`);
         setFavorites(favorites.filter((id) => id !== product.id));
-      } catch (deleteError) {
-        console.error("Error al eliminar favorito duplicado:", deleteError);
+      } else {
+        // Intentamos agregarlo
+        await api.post(`/cart/favorites/`, { product: product.id });
+        setFavorites([...favorites, product.id]);
       }
-    } else {
-      console.error("Error al manejar favoritos:", error);
+    } catch (error: any) {
+      // Revisamos si el error es 400 y corresponde a "ya agregado"
+      if (error.response?.status === 400) {
+        console.log("El producto ya estaba en favoritos, se eliminará.");
+        try {
+          await api.delete(`/cart/delete-favorites/${product.id}/`);
+          setFavorites(favorites.filter((id) => id !== product.id));
+        } catch (deleteError) {
+          console.error("Error al eliminar favorito duplicado:", deleteError);
+        }
+      } else {
+        console.error("Error al manejar favoritos:", error);
+      }
     }
-  }
-};
+  };
 
   if (loading) {
     return (
@@ -129,11 +128,17 @@ const DetailProduct = () => {
         <div className="max-w-6xl mx-auto px-4 py-3">
           <nav className="flex items-center space-x-2 text-sm text-gray-500 dark:text-gray-400">
             <Home className="w-4 h-4 text-gray-400 dark:text-gray-500" />
-            <Link href="/" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200">
+            <Link
+              href="/"
+              className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200"
+            >
               {t("inicio")}
             </Link>
             <ChevronRight className="w-4 h-4 text-gray-400 dark:text-gray-500" />
-            <Link href="/products" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200">
+            <Link
+              href="/products"
+              className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200"
+            >
               {t("productos")}
             </Link>
             <ChevronRight className="w-4 h-4 text-gray-400 dark:text-gray-500" />
@@ -145,8 +150,8 @@ const DetailProduct = () => {
       </div>
 
       {/* 📦 Contenido */}
-      <div className="container mx-auto px-6 py-6 max-w-7xl bg-white dark:bg-gray-900 transition-colors duration-300">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+      <div className="container mx-auto px-4 sm:px-6 py-6 max-w-7xl bg-white dark:bg-gray-900 transition-colors duration-300">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
           {/* 🖼️ Imágenes */}
           <div className="space-y-6">
             <div className="relative aspect-square rounded-2xl border border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-800 overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300">
@@ -177,7 +182,7 @@ const DetailProduct = () => {
                       setSelectedImage(img.image);
                       setImageLoaded(false);
                     }}
-                    className={`w-20 h-20 rounded-xl overflow-hidden border-2 shadow-sm flex-shrink-0 transition-all duration-200 hover:scale-105 ${
+                    className={`w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden border-2 shadow-sm flex-shrink-0 transition-all duration-200 hover:scale-105 ${
                       selectedImage === img.image
                         ? "border-blue-500 dark:border-blue-400 ring-2 ring-blue-200 dark:ring-blue-800"
                         : "border-gray-200 dark:border-gray-600 hover:border-gray-400 dark:hover:border-gray-500"
@@ -203,25 +208,25 @@ const DetailProduct = () => {
           </div>
 
           {/* 📝 Información */}
-          <div className="space-y-8">
+          <div className="space-y-6 lg:space-y-8">
             <div>
-              <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-2 leading-tight">
+              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white mb-2 leading-tight">
                 {product.name}
               </h1>
               <div className="h-1 w-20 bg-gradient-to-r from-blue-500 to-purple-500 dark:from-blue-400 dark:to-purple-400 rounded-full"></div>
             </div>
 
             {/* 💰 Bloque de precios + rating + stock */}
-            <div className="p-6 bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-xl border border-gray-100 dark:border-gray-700 transition-all duration-300">
-              <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+            <div className="p-4 sm:p-6 bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-xl border border-gray-100 dark:border-gray-700 transition-all duration-300">
+              <div className="flex flex-col space-y-4 sm:space-y-6">
                 {/* Precios */}
                 <div className="space-y-2">
-                  <div className="flex items-center gap-3">
-                    <p className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 bg-clip-text text-transparent">
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
+                    <p className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 bg-clip-text text-transparent">
                       ${discountedPrice.toLocaleString("es-CO")}
                     </p>
                     {discountPercentage > 0 && (
-                      <span className="bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 text-sm px-3 py-1 rounded-full font-semibold animate-pulse">
+                      <span className="bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 text-sm px-3 py-1 rounded-full font-semibold animate-pulse self-start">
                         -{discountPercentage}%
                       </span>
                     )}
@@ -229,7 +234,7 @@ const DetailProduct = () => {
 
                   {discountPercentage > 0 && (
                     <div className="space-y-1">
-                      <p className="text-lg text-gray-500 dark:text-gray-400 line-through">
+                      <p className="text-base sm:text-lg text-gray-500 dark:text-gray-400 line-through">
                         ${originalPrice.toLocaleString("es-CO")}
                       </p>
                       <p className="text-sm text-green-600 dark:text-green-400 font-semibold flex items-center gap-2">
@@ -240,8 +245,8 @@ const DetailProduct = () => {
                   )}
                 </div>
 
-                {/* ⭐ Nuevo rating + stock */}
-                <div className="space-y-4">
+                {/* ⭐ Rating + stock en layout responsivo */}
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                   <div className="bg-gray-50 dark:bg-gray-700 rounded-xl p-3">
                     <NewRating productId={product.id} />
                   </div>
@@ -249,60 +254,107 @@ const DetailProduct = () => {
                     <div className="w-3 h-3 bg-green-500 dark:bg-green-400 rounded-full animate-pulse"></div>
                     <p className="text-sm text-gray-600 dark:text-gray-400">
                       {t("stockDisponible")}{" "}
-                      <span className="font-semibold text-green-600 dark:text-green-400">{product.stock}</span>
+                      <span className="font-semibold text-green-600 dark:text-green-400">
+                        {product.stock}
+                      </span>
                     </p>
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* 🛒 Acciones */}
-            <div className="flex items-center space-x-4 mb-6">
-              <div className="flex-1">
-                <AgregarCarrito productId={product.id} />
+            {/* 🛒 Acciones - Layout completamente responsivo */}
+            <div className="space-y-4">
+              {/* Versión móvil: Stack vertical */}
+              <div className="block sm:hidden space-y-4">
+                <div className="w-full">
+                  <AgregarCarrito productId={product.id} />
+                </div>
+                <div className="w-full">
+                  <BuyProduct productId={product.id} />
+                </div>
+                <div className="flex justify-center">
+                  <button
+                    onClick={toggleFavorite}
+                    className={`p-4 rounded-2xl border-2 shadow-lg transition-all duration-300 hover:scale-105 group min-w-[56px] min-h-[56px] flex items-center justify-center ${
+                      favorites.includes(product.id)
+                        ? "bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 border-red-300 dark:border-red-600 shadow-red-200 dark:shadow-red-900/50"
+                        : "bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-400 border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700"
+                    }`}
+                  >
+                    <Heart
+                      className={`w-6 h-6 transition-transform duration-200 ${
+                        favorites.includes(product.id)
+                          ? "fill-current animate-pulse"
+                          : "group-hover:scale-110"
+                      }`}
+                    />
+                  </button>
+                </div>
               </div>
-              <div className="flex-1">
-                <BuyProduct productId={product.id} />
+
+              {/* Versión tablet/desktop: Layout horizontal */}
+              <div className="hidden sm:flex items-start space-x-4">
+                <div className="flex-1">
+                  <AgregarCarrito productId={product.id} />
+                </div>
+                <div className="flex-1">
+                  <BuyProduct productId={product.id} />
+                </div>
+                <button
+                  onClick={toggleFavorite}
+                  className={`p-4 rounded-2xl border-2 shadow-lg transition-all duration-300 hover:scale-105 group flex-shrink-0 ${
+                    favorites.includes(product.id)
+                      ? "bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 border-red-300 dark:border-red-600 shadow-red-200 dark:shadow-red-900/50"
+                      : "bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-400 border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700"
+                  }`}
+                >
+                  <Heart
+                    className={`w-6 h-6 transition-transform duration-200 ${
+                      favorites.includes(product.id)
+                        ? "fill-current animate-pulse"
+                        : "group-hover:scale-110"
+                    }`}
+                  />
+                </button>
               </div>
-              <button
-                onClick={toggleFavorite}
-                className={`p-4 rounded-2xl border-2 shadow-lg transition-all duration-300 hover:scale-105 group ${
-                  favorites.includes(product.id)
-                    ? "bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 border-red-300 dark:border-red-600 shadow-red-200 dark:shadow-red-900/50"
-                    : "bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-400 border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700"
-                }`}
-              >
-                <Heart className={`w-6 h-6 transition-transform duration-200 ${favorites.includes(product.id) ? 'fill-current animate-pulse' : 'group-hover:scale-110'}`} />
-              </button>
             </div>
 
             {/* 📜 Descripción */}
-            <div className="bg-gray-50 dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700 shadow-md hover:shadow-lg transition-all duration-300">
+            <div className="bg-gray-50 dark:bg-gray-800 rounded-2xl p-4 sm:p-6 border border-gray-200 dark:border-gray-700 shadow-md hover:shadow-lg transition-all duration-300">
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-500 dark:from-blue-400 dark:to-purple-400 rounded-lg flex items-center justify-center">
                   <span className="text-white text-sm font-bold">📝</span>
                 </div>
-                <h2 className="text-xl font-semibold text-gray-800 dark:text-white">{t("descripcion")}</h2>
+                <h2 className="text-lg sm:text-xl font-semibold text-gray-800 dark:text-white">
+                  {t("descripcion")}
+                </h2>
               </div>
-              <p className="text-gray-700 dark:text-gray-300 leading-relaxed">{product.description}</p>
+              <p className="text-gray-700 dark:text-gray-300 leading-relaxed text-sm sm:text-base">
+                {product.description}
+              </p>
             </div>
 
             {/* 🎁 Info extra */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-4">
               {product.coupon ? (
-                <div className="flex items-center space-x-4 bg-white dark:bg-gray-800 border border-purple-200 dark:border-purple-700 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 group">
+                <div className="flex items-center space-x-4 bg-white dark:bg-gray-800 border border-purple-200 dark:border-purple-700 rounded-2xl p-4 sm:p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 group">
                   <div className="flex-shrink-0">
-                    <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 dark:from-purple-400 dark:to-pink-400 rounded-xl flex items-center justify-center group-hover:rotate-12 transition-transform duration-300">
-                      <Tag className="text-white w-6 h-6" />
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-r from-purple-500 to-pink-500 dark:from-purple-400 dark:to-pink-400 rounded-xl flex items-center justify-center group-hover:rotate-12 transition-transform duration-300">
+                      <Tag className="text-white w-5 h-5 sm:w-6 sm:h-6" />
                     </div>
                   </div>
                   <div className="flex-1 min-w-0">
-                    <h3 className="font-semibold text-purple-700 dark:text-purple-300 mb-1">{t("cuponDisponible")}</h3>
-                    <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
+                    <h3 className="font-semibold text-purple-700 dark:text-purple-300 mb-1 text-sm sm:text-base">
+                      {t("cuponDisponible")}
+                    </h3>
+                    <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
                       Compra un mínimo de $
-                      {parseFloat(product.coupon.min_purchase_amount).toLocaleString("es-CO")}
+                      {parseFloat(
+                        product.coupon.min_purchase_amount
+                      ).toLocaleString("es-CO")}
                     </p>
-                    <div className="mt-2 inline-flex items-center gap-2 bg-purple-100 dark:bg-purple-900/30 px-3 py-1 rounded-full">
+                    <div className="mt-2 inline-flex items-center gap-2 bg-purple-100 dark:bg-purple-900/30 px-2 sm:px-3 py-1 rounded-full">
                       <span className="text-xs text-purple-700 dark:text-purple-300 font-mono font-bold">
                         {product.coupon.code}
                       </span>
@@ -310,31 +362,35 @@ const DetailProduct = () => {
                   </div>
                 </div>
               ) : (
-                <div className="flex items-center space-x-4 bg-white dark:bg-gray-800 border border-green-200 dark:border-green-700 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 group">
+                <div className="flex items-center space-x-4 bg-white dark:bg-gray-800 border border-green-200 dark:border-green-700 rounded-2xl p-4 sm:p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 group">
                   <div className="flex-shrink-0">
-                    <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-emerald-500 dark:from-green-400 dark:to-emerald-400 rounded-xl flex items-center justify-center group-hover:rotate-12 transition-transform duration-300">
-                      <Truck className="text-white w-6 h-6" />
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-r from-green-500 to-emerald-500 dark:from-green-400 dark:to-emerald-400 rounded-xl flex items-center justify-center group-hover:rotate-12 transition-transform duration-300">
+                      <Truck className="text-white w-5 h-5 sm:w-6 sm:h-6" />
                     </div>
                   </div>
                   <div className="flex-1">
-                    <h3 className="font-semibold text-green-700 dark:text-green-300 mb-1">{t("productosPremium")}</h3>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">
+                    <h3 className="font-semibold text-green-700 dark:text-green-300 mb-1 text-sm sm:text-base">
+                      {t("productosPremium")}
+                    </h3>
+                    <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
                       {t("disfrutaProductos")}
                     </p>
                   </div>
                 </div>
               )}
 
-              <div className="flex items-center space-x-4 bg-white dark:bg-gray-800 border border-blue-200 dark:border-blue-700 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 group">
+              <div className="flex items-center space-x-4 bg-white dark:bg-gray-800 border border-blue-200 dark:border-blue-700 rounded-2xl p-4 sm:p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 group">
                 <div className="flex-shrink-0">
-                  <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-cyan-500 dark:from-blue-400 dark:to-cyan-400 rounded-xl flex items-center justify-center group-hover:rotate-12 transition-transform duration-300">
-                    <ShieldCheck className="text-white w-6 h-6" />
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-r from-blue-500 to-cyan-500 dark:from-blue-400 dark:to-cyan-400 rounded-xl flex items-center justify-center group-hover:rotate-12 transition-transform duration-300">
+                    <ShieldCheck className="text-white w-5 h-5 sm:w-6 sm:h-6" />
                   </div>
                 </div>
                 <div className="flex-1">
-                  <h3 className="font-semibold text-blue-700 dark:text-blue-300 mb-1">{t("garantiaTotal")}</h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">
-                    {t("garantiaCalidad")} 
+                  <h3 className="font-semibold text-blue-700 dark:text-blue-300 mb-1 text-sm sm:text-base">
+                    {t("garantiaTotal")}
+                  </h3>
+                  <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
+                    {t("garantiaCalidad")}
                   </p>
                 </div>
               </div>
@@ -343,12 +399,14 @@ const DetailProduct = () => {
         </div>
 
         {/* 💬 Comentarios */}
-        <div className="mt-16 bg-gray-50 dark:bg-gray-800 rounded-2xl p-8 border border-gray-200 dark:border-gray-700">
+        <div className="mt-12 sm:mt-16 bg-gray-50 dark:bg-gray-800 rounded-2xl p-6 sm:p-8 border border-gray-200 dark:border-gray-700">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 bg-gradient-to-r from-orange-500 to-red-500 dark:from-orange-400 dark:to-red-400 rounded-xl flex items-center justify-center">
-              <span className="text-white text-lg">💬</span>
+            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-r from-orange-500 to-red-500 dark:from-orange-400 dark:to-red-400 rounded-xl flex items-center justify-center">
+              <span className="text-white text-base sm:text-lg">💬</span>
             </div>
-            <h2 className="text-2xl font-bold text-gray-800 dark:text-white">{t("comentariosYResenas")}</h2>
+            <h2 className="text-xl sm:text-2xl font-bold text-gray-800 dark:text-white">
+              {t("comentariosYResenas")}
+            </h2>
           </div>
           <ComentsProduct productId={product.id} />
         </div>
@@ -356,9 +414,15 @@ const DetailProduct = () => {
 
       {/* Elementos decorativos de fondo */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden -z-10">
-        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-blue-200/10 dark:bg-blue-900/5 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-200/10 dark:bg-purple-900/5 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
-        <div className="absolute top-1/2 right-1/3 w-32 h-32 bg-green-200/10 dark:bg-green-900/5 rounded-full blur-2xl animate-pulse" style={{ animationDelay: '4s' }}></div>
+        <div className="absolute top-1/4 left-1/4 w-32 h-32 sm:w-64 sm:h-64 bg-blue-200/10 dark:bg-blue-900/5 rounded-full blur-3xl animate-pulse"></div>
+        <div
+          className="absolute bottom-1/4 right-1/4 w-48 h-48 sm:w-96 sm:h-96 bg-purple-200/10 dark:bg-purple-900/5 rounded-full blur-3xl animate-pulse"
+          style={{ animationDelay: "2s" }}
+        ></div>
+        <div
+          className="absolute top-1/2 right-1/3 w-16 h-16 sm:w-32 sm:h-32 bg-green-200/10 dark:bg-green-900/5 rounded-full blur-2xl animate-pulse"
+          style={{ animationDelay: "4s" }}
+        ></div>
       </div>
     </>
   );

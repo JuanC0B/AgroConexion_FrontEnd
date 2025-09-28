@@ -1,13 +1,12 @@
 // src/components/cart/agregar.tsx
 
-'use client';
+"use client";
 
-import { useState } from 'react';
-import api from '@/lib/axios'; // cliente Axios configurado
-import { toast } from 'sonner'; // librería de notificaciones
-import { Loader2, ShoppingCart } from 'lucide-react'; // iconos (algunos no usados en el render final)
-import { useLanguage } from '@/context/LanguageContext';
-
+import { useState } from "react";
+import api from "@/lib/axios"; // cliente Axios configurado
+import { toast } from "sonner"; // librería de notificaciones
+import { Loader2, ShoppingCart } from "lucide-react"; // iconos (algunos no usados en el render final)
+import { useLanguage } from "@/context/LanguageContext";
 
 /**
  * Componente AgregarCarrito
@@ -21,12 +20,12 @@ import { useLanguage } from '@/context/LanguageContext';
  * - productId: número que identifica el producto a agregar
  * - onError?: callback opcional para manejar errores desde el padre
  */
-const AgregarCarrito = ({ 
-  productId, 
-  onError 
-}: { 
-  productId: number; 
-  onError?: (msg: string) => void 
+const AgregarCarrito = ({
+  productId,
+  onError,
+}: {
+  productId: number;
+  onError?: (msg: string) => void;
 }) => {
   const [loading, setLoading] = useState(false); // estado de carga
   const { t } = useLanguage();
@@ -41,13 +40,13 @@ const AgregarCarrito = ({
   const handleAddToCart = async () => {
     try {
       setLoading(true);
-      await api.post('/cart/my-cart/', {
+      await api.post("/cart/my-cart/", {
         product_id: productId,
         quantity: 1,
       });
       toast.success(t("productoAgregado")); // Notificación de éxito
     } catch (error: any) {
-      const msg = error?.response?.data?.detail || (t("errorAgregar")); // Mensaje de error
+      const msg = error?.response?.data?.detail || t("errorAgregar"); // Mensaje de error
       toast.error(msg);
       if (onError) onError(msg); // 🔥 Avisamos al padre si mandó callback
     } finally {
@@ -59,32 +58,40 @@ const AgregarCarrito = ({
     <button
       onClick={handleAddToCart}
       disabled={loading}
-      className="flex-1 flex items-center justify-center gap-3 bg-gradient-to-r from-blue-600 to-blue-700 dark:from-blue-500 dark:to-blue-600 text-white py-4 px-6 rounded-xl 
+      className="w-full flex items-center justify-center gap-2 sm:gap-3 
+                 bg-gradient-to-r from-blue-600 to-blue-700 dark:from-blue-500 dark:to-blue-600 
+                 text-white py-3 sm:py-4 px-4 sm:px-6 rounded-xl 
                  hover:from-blue-700 hover:to-blue-800 dark:hover:from-blue-600 dark:hover:to-blue-700 
-                 transition-all duration-300 font-semibold text-base shadow-lg hover:shadow-xl
-                 disabled:opacity-50 disabled:cursor-not-allowed hover:scale-105 group relative overflow-hidden"
+                 transition-all duration-300 font-semibold text-sm sm:text-base 
+                 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed 
+                 hover:scale-105 group relative overflow-hidden
+                 min-h-[44px] sm:min-h-[48px]"
     >
       {/* Efecto de brillo en hover */}
       <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12 transform -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
-      
-      <div className="relative flex items-center gap-3">
+
+      <div className="relative flex items-center gap-2 sm:gap-3">
         {loading ? (
           <>
-            {/* Spinner de carga */}
-            <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-            <span>{t("agregando")}</span>
-            <div className="flex gap-1">
+            <div className="w-4 h-4 sm:w-5 sm:h-5 border-2 border-white border-t-transparent rounded-full animate-spin flex-shrink-0"></div>
+            <span className="truncate">{t("agregando")}</span>
+            <div className="hidden sm:flex gap-1">
               <div className="w-1 h-1 bg-white/60 rounded-full animate-bounce"></div>
-              <div className="w-1 h-1 bg-white/60 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-              <div className="w-1 h-1 bg-white/60 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+              <div
+                className="w-1 h-1 bg-white/60 rounded-full animate-bounce"
+                style={{ animationDelay: "0.1s" }}
+              ></div>
+              <div
+                className="w-1 h-1 bg-white/60 rounded-full animate-bounce"
+                style={{ animationDelay: "0.2s" }}
+              ></div>
             </div>
           </>
         ) : (
           <>
-            {/* Ícono del carrito mejorado */}
-            <div className="relative">
+            <div className="relative flex-shrink-0">
               <svg
-                className="w-5 h-5 group-hover:scale-110 transition-transform duration-200"
+                className="w-4 h-4 sm:w-5 sm:h-5 group-hover:scale-110 transition-transform duration-200"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -96,24 +103,28 @@ const AgregarCarrito = ({
                   d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.5 5M7 13l2.5 5M17 13v6a2 2 0 01-2 2H9a2 2 0 01-2-2v-6"
                 />
               </svg>
-              {/* Indicador de cantidad (opcional) */}
-              <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-400 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                <div className="w-1 h-1 bg-white rounded-full"></div>
+              <div className="absolute -top-1 -right-1 w-2 h-2 sm:w-3 sm:h-3 bg-green-400 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                <div className="w-0.5 h-0.5 sm:w-1 sm:h-1 bg-white rounded-full"></div>
               </div>
             </div>
 
-            <span className="group-hover:tracking-wide transition-all duration-200">
-              {t("agregarAlCarrito")}
+            <span className="group-hover:tracking-wide transition-all duration-200 truncate min-w-0">
+              <span className="sm:hidden">{t("agregarCarrito")}</span>
+              <span className="hidden sm:inline">{t("agregarAlCarrito")}</span>
             </span>
 
-            {/* Flecha decorativa */}
-            <svg 
-              className="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-200 opacity-0 group-hover:opacity-100" 
-              fill="none" 
-              stroke="currentColor" 
+            <svg
+              className="w-3 h-3 sm:w-4 sm:h-4 transform group-hover:translate-x-1 transition-transform duration-200 opacity-0 group-hover:opacity-100 flex-shrink-0"
+              fill="none"
+              stroke="currentColor"
               viewBox="0 0 24 24"
             >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M9 5l7 7-7 7"
+              />
             </svg>
           </>
         )}
