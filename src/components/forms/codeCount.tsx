@@ -6,6 +6,8 @@ import {VerifyAccountProps, VerifyPayload} from '@/types/auth.types'
 import { useRouter } from "next/navigation";
 import { authService } from '@/features/auth/services/authService'
 import { ROUTES } from "@/lib/constants";
+import { useAuth } from '@/features/auth/hooks/useAuth';
+import { setStoredTokens } from '@/lib/auth';
 
 // Funcion para verificar la cuenta recibe como parametro el email del usuario y la ruta del ENDPOINT 
 const VerifyAccount = ({ email, URL }: VerifyAccountProps) => {
@@ -17,7 +19,7 @@ const VerifyAccount = ({ email, URL }: VerifyAccountProps) => {
     const [success, setSuccess] = useState("");
     // Guardara una array de inputs
     const inputsRef = useRef<Array<HTMLInputElement | null>>([]);
-
+    const { setUser } = useAuth();
     // L afuncion se ejecutara cuando cambia de inpurt
     const handleChange = (idx: number, value: string) => {
         // Verifica que el input solo reciba 1 digito y un numero
@@ -83,13 +85,15 @@ const VerifyAccount = ({ email, URL }: VerifyAccountProps) => {
              
             // verificamos que el usuario este inciando sesion
             if(response.data.access && response.data.refresh){
-                // Guardamos los tokens en el local storage
-                localStorage.setItem('access_token', response.data.access)
-                localStorage.setItem('refresh_token', response.data.refresh)
-                
                 // Obtenemos los datos del usuario
-                const user = await authService.getUserInfo(response.data.access);
-                localStorage.setItem("user", JSON.stringify(user));
+                // 2. Guardar tokens
+                      setStoredTokens(response.data.access, response.data.refresh);
+                
+                      // 3. Obtener usuario completo con el access token
+                      const user = await authService.getUserInfo(response.data.access);
+                
+                      // 4. Actualizar el store con la información real del backend
+                      setUser(user);
                 // Redirigimos al home
                 router.push(ROUTES.HOME)
             }else{

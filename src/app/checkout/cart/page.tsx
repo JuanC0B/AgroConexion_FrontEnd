@@ -6,6 +6,7 @@ import ComprarCarrito from '@/components/cart/ComprarCarrito'
 import { toast } from 'sonner'
 import Image from 'next/image'
 import { Minus, Plus, Trash2, Tag, X, Check } from 'lucide-react'
+import { AxiosError } from 'axios'
 
 interface CartProduct {
   id: number
@@ -84,13 +85,15 @@ const CartPage = () => {
       // Limpiar el input del cupón
       setCoupons(prev => ({ ...prev, [itemId]: '' }))
       
-    } catch (err: any) {
-      if (err.response?.status === 404) {
+    } catch (err: unknown) {
+      if(err instanceof AxiosError){
+        if (err.response?.status === 404) {
         toast.error('Cupón no válido o expirado')
       } else if (err.response?.status === 400) {
         toast.error('Este cupón no es válido para este producto')
       } else {
         toast.error('Error al aplicar el cupón')
+      }
       }
     } finally {
       setApplyingCoupon(prev => ({ ...prev, [itemId]: false }))
@@ -118,7 +121,10 @@ const CartPage = () => {
       ))
       toast.success('Cantidad actualizada')
     } catch (err) {
-      toast.error('Error al actualizar cantidad')
+      if(err instanceof AxiosError){
+        toast.error('Error al actualizar cantidad')
+      }
+      
     }
   }
 
@@ -129,7 +135,9 @@ const CartPage = () => {
       setCartItems(prev => prev.filter(item => item.id !== itemId))
       toast.success('Producto eliminado del carrito')
     } catch (err) {
-      toast.error('Error al eliminar producto')
+      if(err instanceof AxiosError){
+        toast.error('Error al eliminar producto')
+      }
     }
   }
 

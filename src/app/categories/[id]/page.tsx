@@ -22,6 +22,9 @@ import api from "@/lib/axios";
 import toast from "react-hot-toast";
 import { useLanguage } from '@/context/LanguageContext';
 import axios from "axios";
+import { AxiosError } from "axios";
+import Link from "next/link";
+import { ROUTES } from "@/lib/constants";
 /** Tipado del producto */
 interface Product {
   id: number;
@@ -79,9 +82,8 @@ export default function CategoriaPage() {
     try {
       await api.post("/cart/categories/", { category: Number(id) });
       toast.success(t("categoriaFavorito"));
-    } catch (error: any) {
-      // Si la API devuelve error porque ya está añadida
-      if (error.response?.status === 400) {
+    } catch (error: unknown) {
+      if(error instanceof AxiosError){
         toast.error(t("yaFavorito"));
       } else {
         toast.error(t("errorFavorito"));
@@ -187,12 +189,12 @@ export default function CategoriaPage() {
           {t("textoFinalCategoria")}
         </p>
         <section className="bg-gradient-to-r from-orange-500 via-amber-500 to-yellow-500 text-white text-center py-8 px-6 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <a
+            <Link
               href="/"
               className="inline-block bg-white text-orange-600 font-semibold px-6 py-3 rounded-xl shadow-md hover:bg-amber-100 transition"
             >
               {t("verMasProductos")}
-            </a>
+            </Link>
 
             <button
               onClick={handleAddFavorite}

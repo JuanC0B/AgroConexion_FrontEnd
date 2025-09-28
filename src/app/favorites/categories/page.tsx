@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import api from "@/lib/axios";
 import Image from "next/image";
 import toast from "react-hot-toast";
-import { Trash2, Heart, Star, Sparkles, Grid3X3, Eye } from "lucide-react";
+import { Trash2, Heart, Star, Sparkles, Eye } from "lucide-react";
 import { FavoriteCategory } from "@/types/product.types";
 import { useRouter } from "next/navigation";
 

@@ -1,17 +1,24 @@
 'use client'
-import VerifyAccount from '@/components/forms/codeCount'
-import { useSearchParams } from 'next/navigation';
 
-// Funcion que permite inciar sesion en dos pasos
+import VerifyAccount from '@/components/forms/codeCount'
+import { useSearchParams } from 'next/navigation'
+import { Suspense } from 'react'
+
+// Componente que usa useSearchParams
+const Login2FAContent = () => {
+  const searchParams = useSearchParams()
+  const email = searchParams.get('email') || ''
+  const URL = '/users/login/step2/'
+
+  return <VerifyAccount email={email} URL={URL} />
+}
+
 const Login2FA = () => {
-    // Obtenemos el parametro pasado en la url
-    const searchParams = useSearchParams();
-    // Obtenemos el parametro
-    const email = searchParams.get('email') || '';
-    // Url a la cual se le ara la peticion
-    const URL = '/users/login/step2/'
-    // Llamamos la componente para hacer la peticion
-    return <VerifyAccount email={email} URL={URL}/>;
+  return (
+    <Suspense fallback={<div>Cargando...</div>}>
+      <Login2FAContent />
+    </Suspense>
+  )
 }
 
 export default Login2FA

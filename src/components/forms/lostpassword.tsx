@@ -6,7 +6,7 @@ import {LostPassword} from '@/types/auth.types'
 import Image from "next/image"
 import { ROUTES } from "@/lib/constants";
 const RecoverPassword =()=>{
-    const URL = 'http://127.0.0.1:8000/api/users/password-reset/request/'
+    const URL = '/users/password-reset/request/'
     const router = useRouter();
     const [form, setForm] = useState({
         email: ""
@@ -38,7 +38,7 @@ const RecoverPassword =()=>{
 
         try {
             // Hacemos la peticion
-            const response = await axios.post(`${process.env.NEXT_PUBLIC_API_UR}${URL}`, data, {
+            const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}${URL}`, data, {
                 headers: { "Content-Type": "application/json" }
             });
         

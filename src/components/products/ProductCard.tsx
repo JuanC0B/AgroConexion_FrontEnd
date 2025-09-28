@@ -9,6 +9,7 @@ import { toast } from 'sonner'
 import api from '@/lib/axios'
 import { useLanguage } from '@/context/LanguageContext';
 import axios from 'axios'
+
 /**
  * ProductCard → Componente de tarjeta para mostrar información de productos.
  *
@@ -18,6 +19,7 @@ import axios from 'axios'
  * - Botón para añadir/quitar del carrito 🛒.
  * - Muestra calificación ⭐ y número de comentarios 💬.
  * - Totalmente responsivo y con soporte para **modo oscuro**.
+ * - **Botones siempre en la parte inferior** sin importar el contenido.
  */
 const ProductCard: React.FC<ProductCardProps & { defaultFavorite?: boolean }> = ({
   id,
@@ -37,6 +39,7 @@ const ProductCard: React.FC<ProductCardProps & { defaultFavorite?: boolean }> = 
   const [commentsCount, setCommentsCount] = useState<number>(0)
   const [average, setAverage] = useState<number | null>(null)
   const [total, setTotal] = useState(0)
+
   // ---------------- Efectos ----------------
   useEffect(() => {
     setIsFavorite(defaultFavorite)
@@ -134,7 +137,7 @@ const ProductCard: React.FC<ProductCardProps & { defaultFavorite?: boolean }> = 
   // ---------------- Render ----------------
   return (
     <div
-      className="group relative bg-white dark:bg-gray-900/90 backdrop-blur-sm rounded-2xl overflow-hidden transition-all duration-500 hover:shadow-xl hover:-translate-y-1 border border-green-500/50 dark:border-green-400/30"
+      className="group relative bg-white dark:bg-gray-900/90 backdrop-blur-sm rounded-2xl overflow-hidden transition-all duration-500 hover:shadow-xl hover:-translate-y-1 border border-green-500/50 dark:border-green-400/30 h-full flex flex-col"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -142,7 +145,7 @@ const ProductCard: React.FC<ProductCardProps & { defaultFavorite?: boolean }> = 
       <div className="absolute inset-0 bg-gradient-to-br from-green-50/20 to-amber-50/20 dark:from-green-800/20 dark:to-amber-800/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 pointer-events-none" />
 
       {/* Imagen */}
-      <div className="relative w-full h-56 overflow-hidden bg-gradient-to-br from-green-50 to-amber-50 dark:from-gray-800 dark:to-gray-700">
+      <div className="relative w-full h-56 overflow-hidden bg-gradient-to-br from-green-50 to-amber-50 dark:from-gray-800 dark:to-gray-700 flex-shrink-0">
         {!imageLoaded && (
           <div className="absolute inset-0 bg-gradient-to-r from-green-100 via-amber-100 to-green-100 dark:from-gray-700 dark:via-gray-600 dark:to-gray-700 animate-pulse" />
         )}
@@ -157,37 +160,40 @@ const ProductCard: React.FC<ProductCardProps & { defaultFavorite?: boolean }> = 
         {/* Botón favoritos */}
         <button
           onClick={toggleFavorite}
-          className="absolute top-4 right-4 bg-white/90 dark:bg-gray-800/90 p-2 rounded-full shadow-md hover:scale-110 transition"
+          className="absolute top-4 right-4 bg-white/90 dark:bg-gray-800/90 p-2 rounded-full shadow-md hover:scale-110 transition z-20"
         >
           <Heart className={`w-5 h-5 ${isFavorite ? 'fill-red-500 text-red-500' : 'text-gray-600 dark:text-gray-300'}`} />
         </button>
       </div>
 
-      {/* Info del producto */}
-      <div className="p-5 space-y-3">
-        <h2 className="text-lg font-bold text-gray-900 dark:text-gray-100 leading-snug line-clamp-2">
-          {description}
-        </h2>
+      {/* Contenido que se expande */}
+      <div className="flex flex-col flex-grow p-5">
+        {/* Info del producto - Se expande para ocupar el espacio disponible */}
+        <div className="flex-grow space-y-3">
+          <h2 className="text-lg font-bold text-gray-900 dark:text-gray-100 leading-snug line-clamp-2">
+            {description}
+          </h2>
 
-        {/* Precio y rating */}
-        <div className="flex items-center justify-between">
-          <span className="text-xl font-bold bg-gradient-to-r from-green-600 to-lime-600 bg-clip-text text-transparent">
-            ${price}
-          </span>
-          <div className="flex items-center space-x-1 text-yellow-500">
-            <Star className="w-4 h-4 fill-yellow-400" />
-            <span className="text-sm text-gray-700 dark:text-gray-300">{average !== null ? average.toFixed(1) : "0.0"}</span>
+          {/* Precio y rating */}
+          <div className="flex items-center justify-between">
+            <span className="text-xl font-bold bg-gradient-to-r from-green-600 to-lime-600 bg-clip-text text-transparent">
+              ${price}
+            </span>
+            <div className="flex items-center space-x-1 text-yellow-500">
+              <Star className="w-4 h-4 fill-yellow-400" />
+              <span className="text-sm text-gray-700 dark:text-gray-300">{average !== null ? average.toFixed(1) : "0.0"}</span>
+            </div>
+          </div>
+
+          {/* Comentarios */}
+          <div className="flex items-center text-gray-500 dark:text-gray-400 text-sm space-x-2">
+            <MessageSquare className="w-4 h-4" />
+            <span>{commentsCount} {t("comentarios")}</span>
           </div>
         </div>
 
-        {/* Comentarios */}
-        <div className="flex items-center text-gray-500 dark:text-gray-400 text-sm space-x-2">
-          <MessageSquare className="w-4 h-4" />
-          <span>{commentsCount} {t("comentarios")}</span>
-        </div>
-
-        {/* Botones */}
-        <div className="flex gap-3 mt-3">
+        {/* Botones - Siempre en la parte inferior */}
+        <div className="flex gap-3 mt-4 flex-shrink-0">
           {/* Carrito */}
           <button
             onClick={toggleCart}

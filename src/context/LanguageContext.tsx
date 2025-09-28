@@ -141,6 +141,7 @@ const translations: Record<string, [string, string]> = {
   ventas: ["Ventas", "Sales"],
   cerrarSesion: ["Cerrar sesión", "Log out"],
   registrarse: ["Registrarse", "Register"],
+  estadistica: ['Estadisticas','Statistics'],
 
   // DetailProduct
   cargandoProducto: ["Cargando producto...", "Loading product..."],
@@ -164,7 +165,7 @@ const translations: Record<string, [string, string]> = {
   // AgregarCarrito
   productoAgregado: ["Producto agregado al carrito 🛒", "Product added to cart 🛒"],
   errorAgregar: ["Error al agregar al carrito", "Error adding to cart"],
-
+  cart:['Mi carrito','My cart'],
   agregando: ["Agregando...", "Adding..."],
   agregarAlCarrito: ["Agregar al carrito", "Add to cart"],
 

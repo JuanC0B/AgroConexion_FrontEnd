@@ -13,7 +13,6 @@ import { useRouter } from 'next/navigation'
 import { ROUTES } from '@/lib/constants'
 import { useLanguage } from '@/context/LanguageContext';
 import { AxiosError } from "axios";
-
 /* 
  📑 Tipado local para un producto dentro del carrito.
  Esto asegura que cada item tenga la forma correcta.
@@ -46,7 +45,7 @@ const GetCarrito = () => {
   const [updatingId, setUpdatingId] = useState<number | null>(null) // id del producto en actualización
   const [refreshKey, setRefreshKey] = useState(0) // trigger para recargar datos
   const router =  useRouter()
-  // 📥 Obtener productos del carrito desde el backend
+  // 📥 Obtener productos del carrito desde el backend  const { t }= useLanguage()
   const fetchCart = async () => {
     setLoading(true);
     try {
@@ -64,11 +63,12 @@ const GetCarrito = () => {
     } catch (err: unknown) {
       if (err instanceof AxiosError) {
         // Error proveniente de Axios
-        console.error("Error al obtener el carrito:", err.response?.data);
         toast.error(
-          err.response?.data?.detail ??
             "No se pudo cargar el carrito. Intenta recargar la página o verifica que estés logeado."
         );
+        setTimeout(() => {
+          router.push(ROUTES.LOGIN)
+        }, 2000);
       } else {
         // Error inesperado
         console.error("Error inesperado:", err);
@@ -153,6 +153,7 @@ const GetCarrito = () => {
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 py-10 transition-all duration-300">
       <div className="max-w-7xl mx-auto px-4">
         <h2 className="text-3xl font-extrabold text-gray-900 dark:text-white mb-6 text-center bg-gradient-to-r from-green-600 to-blue-600 dark:from-green-400 dark:to-blue-400 bg-clip-text text-transparent">
+          🛒 {t('cart')}
           {t("cartTitle")}
         </h2>
 

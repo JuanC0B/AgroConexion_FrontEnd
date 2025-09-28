@@ -107,11 +107,11 @@ export function Navbar() {
           {/* Carrito */}
           <Link href="/cart" className="relative text-white hover:text-gray-200 transition-colors">
             <ShoppingCart size={24} />
-            {cartCount > 0 && (
+            {/* {cartCount > 0 && (
               <span className="absolute -top-1 -right-2 bg-red-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center shadow">
                 {cartCount > 99 ? '99+' : cartCount}
               </span>
-            )}
+            )} */}
           </Link>
 
           {/* Categorías favoritas - Oculto en móvil pequeño */}

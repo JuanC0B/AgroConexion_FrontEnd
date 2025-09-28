@@ -64,12 +64,16 @@ class AuthService {
 
     // Peticion que nos permite obtenmer la informacion del usuario
     async getUserInfo(access: string): Promise<User> {
-        const response = await api.get(AUTH_ENDPOINTS.MYINFO, {
-            headers: {
-                Authorization: `Bearer ${access}`,
-            },
-        });
-        return response.data;
+        try {
+            const response = await api.get(AUTH_ENDPOINTS.MYINFO, {
+                headers: {
+                    Authorization: `Bearer ${access}`,
+                },
+            });
+            return response.data as User;
+        } catch (error) {
+            throw error;
+        }
     }
 }
 

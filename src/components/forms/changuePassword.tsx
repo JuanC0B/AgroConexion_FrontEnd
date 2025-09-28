@@ -6,11 +6,10 @@ import {VerifyAccountProps, NewPassword} from '@/types/auth.types'
 import { useRouter } from "next/navigation";
 import { useAuth } from '@/features/auth/hooks/useAuth'
 import { ROUTES } from "@/lib/constants";
+import api from "@/lib/axios";
 // Funcion para verificar la cuenta recibe como parametro el email del usuario y la ruta del ENDPOINT 
 const ChanguePassword = ({ email, URL}: VerifyAccountProps) => {
     const {logout} = useAuth()
-    const access = localStorage.getItem('access_token')
-    const refresh = localStorage.getItem('refresh_token')
     const router = useRouter();
     // Funcion que actualiza el estadoi del codigo
     const [code, setCode] = useState(["", "", "", "", "", ""]);
@@ -95,16 +94,9 @@ const ChanguePassword = ({ email, URL}: VerifyAccountProps) => {
 
         try {
             // Hacemos la peticion
-            const response = await axios.post(`${process.env.NEXT_PUBLIC_API_UR}${URL}`, data,{
-                headers: {
-                    "Authorization": `Bearer ${access}`,
-                     "Content-Type": "application/json" }
-            })
-            // verificamos que tengamos lso tokens
-            if (access && refresh) {
+            await api.post(`${process.env.NEXT_PUBLIC_API_URL}${URL}`, data,)
                 // cerramos sesion 
-                await logout()
-            }
+            await logout()
             // redirigimos al usuario al login
             router.push(ROUTES.CHANGUEPASSWORD)
         } catch (error: any) {
