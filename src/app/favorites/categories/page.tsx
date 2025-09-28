@@ -8,11 +8,15 @@ import toast from "react-hot-toast";
 import { Trash2, Heart, Star, Sparkles, Eye } from "lucide-react";
 import { FavoriteCategory } from "@/types/product.types";
 import { useRouter } from "next/navigation";
+import { useLanguage } from '@/context/LanguageContext';
+
 
 export default function FavoriteCategories() {
   const [favorites, setFavorites] = useState<FavoriteCategory[]>([]);
   const [loading, setLoading] = useState(false);
   const route = useRouter()
+  const { t } = useLanguage();
+
   // Cargar las categorías favoritas
   useEffect(() => {
     const fetchFavorites = async () => {
@@ -20,7 +24,7 @@ export default function FavoriteCategories() {
         const res = await api.get("/cart/categories/");
         setFavorites(res.data);
       } catch (error) {
-        toast.error("❌ Error al cargar categorías favoritas");
+        toast.error(t("errorCargaCategorias"));
       }
     };
     fetchFavorites();
@@ -32,9 +36,9 @@ export default function FavoriteCategories() {
     try {
       await api.delete(`/cart/delete-category/${id}/`);
       setFavorites((prev) => prev.filter((fav) => fav.id !== id));
-      toast.success("✅ Eliminado de favoritos");
+      toast.success(t("eliminadoFavoritos"));
     } catch (error) {
-      toast.error("❌ Error al eliminar");
+      toast.error(t("errorEliminar"));
     } finally {
       setLoading(false);
     }
@@ -59,18 +63,19 @@ export default function FavoriteCategories() {
             </div>
             <div>
               <h1 className="text-3xl lg:text-4xl font-bold bg-gradient-to-r from-green-700 via-emerald-600 to-teal-600 dark:from-green-400 dark:via-emerald-300 dark:to-teal-300 bg-clip-text text-transparent">
-                Mis Categorías Favoritas
+                {t("misCategoriasFavoritas")}
               </h1>
               <div className="flex items-center gap-2 mt-2">
                 <Star className="w-4 h-4 text-orange-500 fill-orange-500 animate-pulse" />
-                <p className="text-gray-600 dark:text-gray-300 text-sm transition-colors duration-300">
-                  {favorites.length} categoría{favorites.length !== 1 ? 's' : ''} guardada{favorites.length !== 1 ? 's' : ''}
+                <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                  {t("categoriasGuardadas")
+                    .replace("{count}", favorites.length.toString())}
                 </p>
               </div>
             </div>
           </div>
           <p className="text-gray-600 dark:text-gray-300 text-sm sm:text-base max-w-3xl mx-auto transition-colors duration-300 leading-relaxed">
-            Tus categorías preferidas en un solo lugar. Explora y gestiona tus intereses favoritos de manera fácil y rápida
+            {t("descripcionCategorias")}
           </p>
         </div>
 
@@ -92,10 +97,10 @@ export default function FavoriteCategories() {
               <div className="absolute -bottom-4 -right-4 w-4 h-4 bg-emerald-400 dark:bg-emerald-500 rounded-full animate-bounce" style={{ animationDelay: '0.5s' }}></div>
             </div>
             <h3 className="text-2xl lg:text-3xl font-bold text-gray-800 dark:text-white mb-4 transition-colors duration-300">
-              ¡Aún no tienes favoritos!
+              {t("sinFavoritos")}
             </h3>
             <p className="text-gray-600 dark:text-gray-400 mb-8 max-w-md mx-auto leading-relaxed transition-colors duration-300">
-              Explora nuestras categorías y guarda tus preferidas para acceder a ellas rápidamente
+              {t("descripcionSinFavoritos")}
             </p>
           </div>
         ) : (
@@ -123,10 +128,10 @@ export default function FavoriteCategories() {
                       }}
                     />
                   </div>
-                  
+
                   {/* Overlay con gradiente */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  
+
                   {/* Badge de favorito */}
                   <div className="absolute top-4 right-4">
                     <div className="w-10 h-10 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110">
@@ -141,7 +146,7 @@ export default function FavoriteCategories() {
                       className="px-6 py-3 bg-white/95 dark:bg-gray-800/95 backdrop-blur-md rounded-2xl text-gray-800 dark:text-white font-semibold shadow-xl hover:shadow-2xl transition-all duration-200 flex items-center gap-3 hover:scale-105 border border-white/20 dark:border-gray-600/50"
                     >
                       <Eye className="w-4 h-4" />
-                      <span>Ver categoría</span>
+                      <span>{t("verCategoria")}</span>
                     </button>
                   </div>
 
@@ -171,14 +176,14 @@ export default function FavoriteCategories() {
                       className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-green-600 to-emerald-700 dark:from-green-500 dark:to-emerald-600 text-white rounded-xl font-medium shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5 hover:scale-105 group"
                     >
                       <Eye className="w-4 h-4 group-hover:scale-110 transition-transform duration-200" />
-                      <span>Ver</span>
+                      <span>{t("ver")}</span>
                     </button>
-                    
+
                     <button
                       onClick={() => handleDelete(fav.id)}
                       disabled={loading}
                       className="flex items-center justify-center gap-2 px-4 py-3 bg-red-500 dark:bg-red-600 hover:bg-red-600 dark:hover:bg-red-700 text-white rounded-xl font-medium shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 group"
-                      title="Eliminar de favoritos"
+                      title={t("eliminarFavoritos")}
                     >
                       {loading ? (
                         <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
@@ -194,7 +199,7 @@ export default function FavoriteCategories() {
                   <div className="absolute inset-0 bg-white/90 dark:bg-gray-800/90 backdrop-blur-md flex items-center justify-center transition-all duration-300">
                     <div className="flex items-center gap-3 bg-white dark:bg-gray-700 px-4 py-3 rounded-xl shadow-lg border border-gray-200 dark:border-gray-600">
                       <div className="w-5 h-5 border-2 border-green-600 dark:border-green-400 border-t-transparent rounded-full animate-spin" />
-                      <span className="text-gray-700 dark:text-gray-300 font-medium">Eliminando...</span>
+                      <span className="text-gray-700 dark:text-gray-300 font-medium">{t("eliminando")}</span>
                     </div>
                   </div>
                 )}
@@ -214,5 +219,5 @@ export default function FavoriteCategories() {
         </div>
       </div>
     </div>
-);
+  );
 }

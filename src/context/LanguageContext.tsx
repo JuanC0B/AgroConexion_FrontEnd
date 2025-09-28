@@ -731,6 +731,176 @@ const translations: Record<string, [string, string]> = {
     "Los cupones aumentan la fidelidad del cliente y las ventas repetidas. Considera ofrecer descuentos por volumen o por temporada de cosecha.",
     "Coupons increase customer loyalty and repeat sales. Consider offering discounts for bulk purchases or harvest seasons.",
   ],
+
+
+  errorCargaCupones: [
+    "❌ Error cargando los cupones",
+    "❌ Error loading coupons"
+  ],
+  NoCuponesdisponibles: [
+    "🎟️ No hay cupones disponibles",
+    "🎟️ No coupons available"
+  ],
+  misCupones: [
+    "Mis Cupones",
+    "My Coupons"
+  ],
+  disponibles: [
+    "disponibles",
+    "available"
+  ],
+  descripcionCupones: [
+    "Aprovecha tus descuentos disponibles y ahorra en tu próxima compra",
+    "Take advantage of your available discounts and save on your next purchase"
+  ],
+  cuponEspecial: [
+    "Cupón especial",
+    "Special coupon"
+  ],
+  usado: [
+    "Usado",
+    "Used"
+  ],
+  expirado: [
+    "Expirado",
+    "Expired"
+  ],
+  disponible: [
+    "Disponible",
+    "Available"
+  ],
+  descuento: [
+    "de descuento",
+    "discount"
+  ],
+  compraMinima: [
+    "Compra mínima:",
+    "Minimum purchase:"
+  ],
+  validoHasta: [
+    "Válido hasta:",
+    "Valid until:"
+  ],
+  codigo: [
+    "Código:",
+    "Code:"
+  ],
+  usarCupon: [
+    "Usar cupón",
+    "Use coupon"
+  ],
+  cuponUtilizado: [
+    "Cupón Utilizado",
+    "Coupon Used"
+  ],
+  cuponExpirado: [
+    "Cupón Expirado",
+    "Coupon Expired"
+  ],
+  yaUsado: [
+    "Ya has usado este cupón",
+    "You have already used this coupon"
+  ],
+  fechaExpirada: [
+    "La fecha de validez ha expirado",
+    "The validity date has expired"
+  ],
+  sinCupones: [
+    "No tienes cupones disponibles",
+    "You have no available coupons"
+  ],
+  descripcionSinCupones: [
+    "Los cupones aparecerán aquí cuando estén disponibles",
+    "Coupons will appear here when they are available"
+  ],
+  obtenerCupones: [
+    "Compra productos para obtener cupones",
+    "Buy products to get coupons"
+  ],
+
+
+
+  errorCargaCategorias: [
+    "❌ Error al cargar categorías favoritas",
+    "❌ Error loading favorite categories"
+  ],
+  eliminadoFavoritos: [
+    "✅ Eliminado de favoritos",
+    "✅ Removed from favorites"
+  ],
+  errorEliminar: [
+    "❌ Error al eliminar",
+    "❌ Error deleting"
+  ],
+  misCategoriasFavoritas: [
+    "Mis Categorías Favoritas",
+    "My Favorite Categories"
+  ],
+  categoriasGuardadas: [
+    "{count} categoría(s) guardada(s)",
+    "{count} saved category(ies)"
+  ],
+
+  descripcionCategorias: [
+    "Tus categorías preferidas en un solo lugar. Explora y gestiona tus intereses favoritos de manera fácil y rápida",
+    "Your favorite categories in one place. Explore and manage your interests easily and quickly"
+  ],
+  sinFavoritos: [
+    "¡Aún no tienes favoritos!",
+    "You don't have any favorites yet!"
+  ],
+  descripcionSinFavoritos: [
+    "Explora nuestras categorías y guarda tus preferidas para acceder a ellas rápidamente",
+    "Browse our categories and save your favorites to access them quickly"
+  ],
+  verCategoria: [
+    "Ver categoría",
+    "View category"
+  ],
+  ver: [
+    "Ver",
+    "View"
+  ],
+  eliminarFavoritos: [
+    "Eliminar de favoritos",
+    "Remove from favorites"
+  ],
+  eliminando: [
+    "Eliminando...",
+    "Deleting..."
+  ],
+
+
+  editProduct: ["Editar producto", "Edit product"],
+  subtituloEditar: ["Modifica los detalles de tu producto", "Modify your product details"],
+
+
+  nombreProducto: ["Nombre del producto", "Product name"],
+  placeholderNombre: ["Ej. Café orgánico premium", "E.g. Premium organic coffee"],
+
+  placeholderDescripcion: ["Agrega detalles sobre el producto...", "Add details about the product..."],
+
+  precio: ["Precio (COP)", "Price (COP)"],
+
+  imagenesActuales: ["Imágenes actuales", "Current images"],
+  deshacer: ["Deshacer", "Undo"],
+  noHayImagenes: ["No hay imágenes registradas", "No images registered"],
+
+  agregarImagenes: ["Agregar nuevas imágenes", "Add new images"],
+  limiteImagen: ["(Máximo 5MB por imagen)", "(Maximum 5MB per image)"],
+  arrastrar: ["Arrastra imágenes aquí", "Drag images here"],
+  soltar: ["¡Suelta las imágenes aquí!", "Drop images here!"],
+  oHazClick: ["o haz clic para seleccionar archivos", "or click to select files"],
+  formatosImagen: ["PNG, JPG, GIF hasta 5MB cada una", "PNG, JPG, GIF up to 5MB each"],
+
+  nuevasImagenes: ["Nuevas imágenes", "New images"],
+  quitar: ["Quitar", "Remove"],
+  nuevo: ["Nuevo", "New"],
+  notaNuevasImagenes: ["💡 Estas imágenes se subirán al guardar los cambios", "💡 These images will be uploaded when saving changes"],
+
+  guardarCambios: ["Guardar cambios", "Save changes"],
+  guardandoCambios: ["Guardando cambios...", "Saving changes..."],
+
 };
 
 /* ============================================================
