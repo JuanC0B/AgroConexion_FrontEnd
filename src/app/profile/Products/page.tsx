@@ -8,13 +8,13 @@ import { Product } from "@/types/product.types";
 import { Package, Sparkles, Star, ShoppingBag, Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { ROUTES } from "@/lib/constants";
-import { useLanguage } from '@/context/LanguageContext';
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function MyProductsPage() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const { t } = useLanguage();
-  const router = useRouter()
+  const router = useRouter();
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -31,9 +31,9 @@ export default function MyProductsPage() {
     fetchProducts();
   }, []);
 
-  const Router=()=>{
-    router.push(ROUTES.NEWPRODUCT)
-  }
+  const Router = () => {
+    router.push(ROUTES.NEWPRODUCT);
+  };
 
   if (loading) {
     return <p className="p-6">{t("cargandoProductos")}</p>;
@@ -59,15 +59,15 @@ export default function MyProductsPage() {
             <div className="flex items-center gap-2 mt-2">
               <Star className="w-4 h-4 text-orange-500 fill-orange-500 animate-pulse" />
               <p className="text-gray-600 dark:text-gray-300 text-sm transition-colors duration-300">
-                {products.length} producto{products.length !== 1 ? "s" : ""}{" "}
-                registrado{products.length !== 1 ? "s" : ""}
+                {products.length} {t("myproductsparrafo")}
+                {products.length !== 1 ? "s" : ""} {t("myproductsparrafo2")}
+                {products.length !== 1 ? "s" : ""}
               </p>
             </div>
           </div>
         </div>
         <p className="text-gray-600 dark:text-gray-300 text-sm sm:text-base max-w-3xl mx-auto transition-colors duration-300 leading-relaxed">
-          Administra y visualiza todos tus productos de manera fácil y
-          organizada
+          {t("myproductsparrafo3")}
         </p>
       </div>
 
@@ -88,23 +88,21 @@ export default function MyProductsPage() {
             </div>
 
             <h3 className="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-4">
-              ¡Aún no tienes productos!
+              {t("noproductos")}
             </h3>
 
             <p className="text-gray-600 dark:text-gray-400 mb-8 leading-relaxed">
-              Comienza agregando tu primer producto para ver todo organizado
-              aquí. Es rápido y fácil de configurar.
+              {t("mensaje")}
             </p>
 
             <div className="space-y-4">
-              <button onClick={Router} className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+              <button
+                onClick={Router}
+                className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+              >
                 <Plus className="w-5 h-5 inline-block mr-2" />
-                Agregar mi primer producto
+                {t("agregar")}
               </button>
-
-              <p className="text-xs text-gray-500 dark:text-gray-400">
-                💡 Tip: Los productos te ayudan a mantener todo organizado
-              </p>
             </div>
           </div>
         </div>

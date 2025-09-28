@@ -5,7 +5,7 @@ import Image from "next/image";
 import api from "@/lib/axios";
 import { toast } from "react-hot-toast";
 import { X, Upload, ImageIcon, Plus } from "lucide-react";
-
+import { useRouter } from "next/navigation";
 interface Category {
   id: number;
   name: string;
@@ -34,6 +34,7 @@ interface NewImagePreview {
 }
 
 export default function EditProductForm({ productId }: { productId: number }) {
+  const router =  useRouter()
   const [product, setProduct] = useState<Product | null>(null);
   const [categories, setCategories] = useState<Category[]>([]);
   const [selectedCategories, setSelectedCategories] = useState<number[]>([]);
@@ -192,7 +193,7 @@ export default function EditProductForm({ productId }: { productId: number }) {
         }
       });
       setNewImages([]);
-      
+      router.push(`/products/${productId}`)
     } catch (error) {
       toast.error("❌ Error al actualizar producto");
       console.error(error);

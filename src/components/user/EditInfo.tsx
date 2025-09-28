@@ -4,20 +4,22 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import api from "@/lib/axios";
 import { useAuth } from "@/features/auth/hooks/useAuth";
-import { authService } from '@/features/auth/services/authService';
+import { authService } from "@/features/auth/services/authService";
 import { toast } from "react-hot-toast";
 import ChangePassword from "@/components/user/ChanguePassword";
-import { 
-  User, 
-  Phone, 
-  Mail, 
-  MapPin, 
-  Camera, 
-  Save, 
+import { useRouter } from "next/navigation";
+import {
+  User,
+  Phone,
+  Mail,
+  MapPin,
+  Camera,
+  Save,
   Loader2,
   Upload,
-  X
+  X,
 } from "lucide-react";
+import { ROUTES } from "@/lib/constants";
 
 interface GroupProfile {
   id?: number;
@@ -42,6 +44,7 @@ interface UserFormData {
 
 export default function EditInfo() {
   const { user } = useAuth();
+  const router = useRouter();
   const [formData, setFormData] = useState<UserFormData>({
     username: "",
     email: "",
@@ -77,17 +80,19 @@ export default function EditInfo() {
             user_type: userData.user_type,
             is_seller: userData.is_seller,
           });
-          
+
           // Guardar la URL original del backend
           const imageUrl = userData.profile_image;
           if (imageUrl) {
             setOriginalImageUrl(imageUrl);
             // Si la URL ya es completa (http/https), úsala directamente
-            if (imageUrl.startsWith('http')) {
+            if (imageUrl.startsWith("http")) {
               setPreviewImage(imageUrl);
             } else {
               // Si es una URL relativa, agregar el dominio del backend
-              setPreviewImage(`${process.env.NEXT_PUBLIC_MEDIA_URL}${imageUrl}`);
+              setPreviewImage(
+                `${process.env.NEXT_PUBLIC_MEDIA_URL}${imageUrl}`
+              );
             }
           }
         })
@@ -118,10 +123,12 @@ export default function EditInfo() {
   };
 
   // Manejo de inputs normales
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     const { name, value, type } = e.target;
     const checked = (e.target as HTMLInputElement).checked;
-    
+
     setFormData((prev) => ({
       ...prev,
       [name]: type === "checkbox" ? checked : value,
@@ -129,9 +136,9 @@ export default function EditInfo() {
 
     // Limpiar error del campo cuando el usuario empiece a escribir
     if (errors[name]) {
-      setErrors(prev => ({
+      setErrors((prev) => ({
         ...prev,
-        [name]: ""
+        [name]: "",
       }));
     }
   };
@@ -140,13 +147,13 @@ export default function EditInfo() {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
-      
+
       // Validar tipo de archivo
-      if (!file.type.startsWith('image/')) {
+      if (!file.type.startsWith("image/")) {
         toast.error("Por favor selecciona una imagen válida");
         return;
       }
-      
+
       // Validar tamaño (max 5MB)
       if (file.size > 5 * 1024 * 1024) {
         toast.error("La imagen debe ser menor a 5MB");
@@ -157,7 +164,7 @@ export default function EditInfo() {
         ...prev,
         profile_image: file,
       }));
-      
+
       // Crear URL del objeto para vista previa
       const objectUrl = URL.createObjectURL(file);
       setPreviewImage(objectUrl);
@@ -166,17 +173,19 @@ export default function EditInfo() {
 
   // Remover imagen
   const removeImage = () => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       profile_image: null,
     }));
-    
+
     // Limpiar preview y volver a la imagen original si existe
     if (originalImageUrl) {
-      if (originalImageUrl.startsWith('http')) {
+      if (originalImageUrl.startsWith("http")) {
         setPreviewImage(originalImageUrl);
       } else {
-        setPreviewImage(`${process.env.NEXT_PUBLIC_MEDIA_URL}${originalImageUrl}`);
+        setPreviewImage(
+          `${process.env.NEXT_PUBLIC_MEDIA_URL}${originalImageUrl}`
+        );
       }
     } else {
       setPreviewImage(null);
@@ -186,7 +195,7 @@ export default function EditInfo() {
   // Enviar datos al backend
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       toast.error("Por favor corrige los errores en el formulario");
       return;
@@ -217,16 +226,20 @@ export default function EditInfo() {
       if (hasFiles) {
         const fd = new FormData();
 
-        ["username", "phone_number", "address", "user_type", "is_seller"].forEach(
-          (k) => {
-            if (
-              (dataToSend as any)[k] !== undefined &&
-              (dataToSend as any)[k] !== null
-            ) {
-              fd.append(k, String((dataToSend as any)[k]));
-            }
+        [
+          "username",
+          "phone_number",
+          "address",
+          "user_type",
+          "is_seller",
+        ].forEach((k) => {
+          if (
+            (dataToSend as any)[k] !== undefined &&
+            (dataToSend as any)[k] !== null
+          ) {
+            fd.append(k, String((dataToSend as any)[k]));
           }
-        );
+        });
 
         if (dataToSend.profile_image instanceof File) {
           fd.append("profile_image", dataToSend.profile_image);
@@ -250,13 +263,15 @@ export default function EditInfo() {
         await api.put("/users/update/", fd, {
           headers: { "Content-Type": "multipart/form-data" },
         });
+        router.push(ROUTES.PERFIL);
       } else {
         await api.put("/users/update/", dataToSend, {
           headers: { "Content-Type": "application/json" },
         });
+        router.push(ROUTES.PERFIL);
       }
 
-      const access = localStorage.getItem("access_token")
+      const access = localStorage.getItem("access_token");
       const user = await authService.getUserInfo(access!);
 
       // 4. Actualizar el store con la información real del backend
@@ -264,7 +279,8 @@ export default function EditInfo() {
       toast.success("Perfil actualizado exitosamente ✅");
     } catch (err: any) {
       console.error("PUT /users/update/ error:", err.response?.data ?? err);
-      const errorMessage = err.response?.data?.message || "No se pudo actualizar el perfil";
+      const errorMessage =
+        err.response?.data?.message || "No se pudo actualizar el perfil";
       toast.error(errorMessage);
     } finally {
       setSaving(false);
@@ -276,7 +292,9 @@ export default function EditInfo() {
       <div className="flex items-center justify-center min-h-screen bg-gray-50 dark:bg-gray-900">
         <div className="text-center">
           <Loader2 className="w-12 h-12 animate-spin text-blue-600 dark:text-blue-400 mx-auto mb-4" />
-          <p className="text-gray-600 dark:text-gray-400 text-lg">Cargando información...</p>
+          <p className="text-gray-600 dark:text-gray-400 text-lg">
+            Cargando información...
+          </p>
         </div>
       </div>
     );
@@ -328,13 +346,13 @@ export default function EditInfo() {
                   </div>
                 )}
               </div>
-              
+
               <label className="cursor-pointer inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors shadow-md">
                 <Upload className="w-4 h-4 mr-2" />
                 Cambiar foto
-                <input 
-                  type="file" 
-                  accept="image/*" 
+                <input
+                  type="file"
+                  accept="image/*"
                   onChange={handleFileChange}
                   className="hidden"
                 />
@@ -358,12 +376,16 @@ export default function EditInfo() {
                   value={formData.username}
                   onChange={handleChange}
                   className={`w-full px-4 py-3 border rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors ${
-                    errors.username ? 'border-red-500 dark:border-red-400' : 'border-gray-300 dark:border-gray-600'
+                    errors.username
+                      ? "border-red-500 dark:border-red-400"
+                      : "border-gray-300 dark:border-gray-600"
                   }`}
                   placeholder="Ingresa tu nombre de usuario"
                 />
                 {errors.username && (
-                  <p className="text-red-500 dark:text-red-400 text-sm mt-1">{errors.username}</p>
+                  <p className="text-red-500 dark:text-red-400 text-sm mt-1">
+                    {errors.username}
+                  </p>
                 )}
               </div>
 
@@ -397,12 +419,16 @@ export default function EditInfo() {
                   value={formData.phone_number ?? ""}
                   onChange={handleChange}
                   className={`w-full px-4 py-3 border rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors ${
-                    errors.phone_number ? 'border-red-500 dark:border-red-400' : 'border-gray-300 dark:border-gray-600'
+                    errors.phone_number
+                      ? "border-red-500 dark:border-red-400"
+                      : "border-gray-300 dark:border-gray-600"
                   }`}
                   placeholder="Ej: +57 300 123 4567"
                 />
                 {errors.phone_number && (
-                  <p className="text-red-500 dark:text-red-400 text-sm mt-1">{errors.phone_number}</p>
+                  <p className="text-red-500 dark:text-red-400 text-sm mt-1">
+                    {errors.phone_number}
+                  </p>
                 )}
               </div>
 
@@ -442,9 +468,9 @@ export default function EditInfo() {
                   </>
                 )}
               </button>
-                <div className="mt-8">
-                  <ChangePassword/>
-                </div>
+              <div className="mt-8">
+                <ChangePassword />
+              </div>
             </div>
           </form>
         </div>

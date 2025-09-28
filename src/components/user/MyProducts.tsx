@@ -6,10 +6,9 @@ import Image from "next/image";
 import { Product } from "@/types/product.types";
 import api from "@/lib/axios";
 import toast from "react-hot-toast";
-import { Edit2, Trash2, Tag, Gift, AlertTriangle } from 'lucide-react';
-import { useLanguage } from '@/context/LanguageContext';
-
-
+import { Edit2, Trash2, Tag, Gift, AlertTriangle } from "lucide-react";
+import { useLanguage } from "@/context/LanguageContext";
+import { ROUTES } from "@/lib/constants";
 interface Props {
   products: Product[];
 }
@@ -27,10 +26,10 @@ const UserProducts: React.FC<Props> = ({ products }) => {
       });
       toast.success(t("userProductsOfertaDesactivada"));
 
-      router.refresh();
+      router.push(ROUTES.MYPRODUCTS);
     } catch (error) {
       toast.error(t("userProductsErrorDesactivarOferta"));
-      console.log(error)
+      console.log(error);
     }
   };
 
@@ -41,164 +40,175 @@ const UserProducts: React.FC<Props> = ({ products }) => {
         active: false,
       });
       toast.success(t("userProductsCuponDesactivado"));
-      router.refresh();
+      router.push(ROUTES.MYPRODUCTS);
     } catch (error) {
       toast.error(t("userProductsErrorDesactivarCupon"));
     }
   };
-  
+
   const handleDeleteProduct = async (productId: number) => {
     try {
-        await api.put(`/products/delete-product/${productId}/`,);
+      await api.put(`/products/delete-product/${productId}/`);
       toast.success(t("userProductsEliminado"));
-      router.refresh();
-    } catch (error) {
-        
-    }
-  }
-  
+      router.push(ROUTES.MYPRODUCTS);
+    } catch (error) {}
+  };
 
-return (
-  <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-    {products.map((product) => (
-      <div
-        key={product.id}
-        className="bg-white dark:bg-gray-800 shadow-lg dark:shadow-gray-900/20 rounded-2xl overflow-hidden hover:shadow-xl dark:hover:shadow-gray-900/30 transition-shadow duration-300 flex flex-col border dark:border-gray-700"
-      >
-        {/* Imagen principal */}
-        <div className="relative w-full h-48 bg-gray-100 dark:bg-gray-700">
-          {product.images?.length > 0 ? (
-            <Image
-              src={`${product.images[0].image}`}
-              alt={`Imagen de ${product.name}`}
-              fill
-              className="object-cover hover:scale-105 transition-transform duration-300"
-              onError={(e) => {
-                e.currentTarget.src = '/placeholder-product.jpg';
-              }}
-            />
-          ) : (
-            <div className="w-full h-full flex items-center justify-center text-gray-400 dark:text-gray-500">
-              <span className="text-sm">{t("userProductsSinImagen")}</span>
-            </div>
-          )}
-          
-          {/* Badges de estado */}
-          <div className="absolute top-2 right-2 flex flex-col gap-1">
-            {product.offers && (
-              <span className="bg-red-500 dark:bg-red-600 text-white text-xs px-2 py-1 rounded-full shadow-sm">
-                {t("userProductsOferta")}
-              </span>
+  return (
+    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {products.map((product) => (
+        <div
+          key={product.id}
+          className="bg-white dark:bg-gray-800 shadow-lg dark:shadow-gray-900/20 rounded-2xl overflow-hidden hover:shadow-xl dark:hover:shadow-gray-900/30 transition-shadow duration-300 flex flex-col border dark:border-gray-700"
+        >
+          {/* Imagen principal */}
+          <div className="relative w-full h-48 bg-gray-100 dark:bg-gray-700">
+            {product.images?.length > 0 ? (
+              <Image
+                src={`${product.images[0].image}`}
+                alt={`Imagen de ${product.name}`}
+                fill
+                className="object-cover hover:scale-105 transition-transform duration-300"
+                onError={(e) => {
+                  e.currentTarget.src = "/placeholder-product.jpg";
+                }}
+              />
+            ) : (
+              <div className="w-full h-full flex items-center justify-center text-gray-400 dark:text-gray-500">
+                <span className="text-sm">{t("userProductsSinImagen")}</span>
+              </div>
             )}
-            {product.coupon && (
-              <span className="bg-green-500 dark:bg-green-600 text-white text-xs px-2 py-1 rounded-full shadow-sm">
-                {t("userProductsCupon")}
-              </span>
-            )}
-            {product.stock <= 0 && (
-              <span className="bg-gray-500 dark:bg-gray-600 text-white text-xs px-2 py-1 rounded-full shadow-sm">
-                {t("userProductsSinStock")}
-              </span>
-            )}
-          </div>
-        </div>
 
-        {/* Información del producto */}
-        <div className="p-4 flex-1 flex flex-col">
-          <h2 className="text-lg font-bold text-gray-800 dark:text-gray-100 mb-2 line-clamp-2">
-            {product.name}
-          </h2>
-          
-          <p className="text-sm text-gray-600 dark:text-gray-300 mb-3 line-clamp-3 flex-1">
-            {product.description || t("userProductsSinDescripcion")}
-          </p>
-          
-          <div className="space-y-2 mb-4">
-            <p className="text-xl font-bold text-green-600 dark:text-green-400">
-              ${product.price?.toLocaleString() || '0'} 
-              <span className="text-sm font-normal text-gray-500 dark:text-gray-400">
-                / {product.unit_of_measure || 'unidad'}
-              </span>
-            </p>
-            
-            <p className={`text-sm ${product.stock <= 10 ? 'text-orange-600 dark:text-orange-400' : 'text-gray-500 dark:text-gray-400'}`}>
-              Stock: {product.stock || 0} 
-              {product.stock <= 10 && product.stock > 0 && (
-                <AlertTriangle className="inline w-4 h-4 ml-1" />
+            {/* Badges de estado */}
+            <div className="absolute top-2 right-2 flex flex-col gap-1">
+              {product.offers && (
+                <span className="bg-red-500 dark:bg-red-600 text-white text-xs px-2 py-1 rounded-full shadow-sm">
+                  {t("userProductsOferta")}
+                </span>
               )}
+              {product.coupon && (
+                <span className="bg-green-500 dark:bg-green-600 text-white text-xs px-2 py-1 rounded-full shadow-sm">
+                  {t("userProductsCupon")}
+                </span>
+              )}
+              {product.stock <= 0 && (
+                <span className="bg-gray-500 dark:bg-gray-600 text-white text-xs px-2 py-1 rounded-full shadow-sm">
+                  {t("userProductsSinStock")}
+                </span>
+              )}
+            </div>
+          </div>
+
+          {/* Información del producto */}
+          <div className="p-4 flex-1 flex flex-col">
+            <h2 className="text-lg font-bold text-gray-800 dark:text-gray-100 mb-2 line-clamp-2">
+              {product.name}
+            </h2>
+
+            <p className="text-sm text-gray-600 dark:text-gray-300 mb-3 line-clamp-3 flex-1">
+              {product.description || t("userProductsSinDescripcion")}
             </p>
-          </div>
 
-          {/* Botones de ofertas y cupones */}
-          <div className="grid grid-cols-2 gap-2 mb-3">
-            {product.offers ? (
-              <button
-                onClick={() => handleDeactivateOffer(product.offers!.id)}
-                className="flex items-center justify-center gap-1 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-400 py-2 px-3 rounded-lg hover:bg-red-100 dark:hover:bg-red-900/30 transition-colors text-sm font-medium"
-                aria-label={`Desactivar oferta de ${product.name}`}
-              >
-                <Tag className="w-4 h-4" />
-                {t("userProductsQuitarOferta")}
-              </button>
-            ) : (
-              <button
-                onClick={() => router.push(`/products/Offert_And_Coupon/offert/${product.id}`)}
-                className="flex items-center justify-center gap-1 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 text-blue-700 dark:text-blue-400 py-2 px-3 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-colors text-sm font-medium"
-                aria-label={`Añadir oferta a ${product.name}`}
-              >
-                <Tag className="w-4 h-4" />
-                {t("userProductsAnadirOferta")}
-              </button>
-            )}
+            <div className="space-y-2 mb-4">
+              <p className="text-xl font-bold text-green-600 dark:text-green-400">
+                ${product.price?.toLocaleString() || "0"}
+                <span className="text-sm font-normal text-gray-500 dark:text-gray-400">
+                  / {product.unit_of_measure || "unidad"}
+                </span>
+              </p>
 
-            {product.coupon ? (
-              <button
-                onClick={() => handleDeactivateCoupon(product.coupon!.id)}
-                className="flex items-center justify-center gap-1 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-400 py-2 px-3 rounded-lg hover:bg-red-100 dark:hover:bg-red-900/30 transition-colors text-sm font-medium"
-                aria-label={`Desactivar cupón de ${product.name}`}
+              <p
+                className={`text-sm ${
+                  product.stock <= 10
+                    ? "text-orange-600 dark:text-orange-400"
+                    : "text-gray-500 dark:text-gray-400"
+                }`}
               >
-                <Gift className="w-4 h-4" />
-                {t("userProductsQuitarCupon")}
-              </button>
-            ) : (
-              <button
-                onClick={() => router.push(`/products/Offert_And_Coupon/coupon/${product.id}`)}
-                className="flex items-center justify-center gap-1 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 text-green-700 dark:text-green-400 py-2 px-3 rounded-lg hover:bg-green-100 dark:hover:bg-green-900/30 transition-colors text-sm font-medium"
-                aria-label={`Añadir cupón a ${product.name}`}
-              >
-                <Gift className="w-4 h-4" />
-                {t("userProductsAnadirCupon")}
-              </button>
-            )}
-          </div>
+                Stock: {product.stock || 0}
+                {product.stock <= 10 && product.stock > 0 && (
+                  <AlertTriangle className="inline w-4 h-4 ml-1" />
+                )}
+              </p>
+            </div>
 
-          {/* Botones de acción principales */}
-          <div className="grid grid-cols-2 gap-2">
-            <button
-              onClick={() => router.push(`/products/edit/${product.id}`)}
-              className="flex items-center justify-center gap-2 bg-amber-500 dark:bg-amber-600 text-white py-2.5 px-4 rounded-lg hover:bg-amber-600 dark:hover:bg-amber-700 transition-colors font-medium shadow-sm"
-              aria-label={`Editar producto ${product.name}`}
-            >
-              <Edit2 className="w-4 h-4" />
-              {t("userProductsEditar")}
-            </button>
-            
-            <button
-              onClick={() => {handleDeleteProduct(product.id)}}
-              className="flex items-center justify-center gap-2 bg-red-500 dark:bg-red-600 text-white py-2.5 px-4 rounded-lg hover:bg-red-600 dark:hover:bg-red-700 transition-colors font-medium shadow-sm"
-              aria-label={`Eliminar producto ${product.name}`}
-            >
-              <Trash2 className="w-4 h-4" />
-              {t("userProductsEliminar")}
-            </button>
+            {/* Botones de ofertas y cupones */}
+            <div className="grid grid-cols-2 gap-2 mb-3">
+              {product.offers ? (
+                <button
+                  onClick={() => handleDeactivateOffer(product.offers!.id)}
+                  className="flex items-center justify-center gap-1 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-400 py-2 px-3 rounded-lg hover:bg-red-100 dark:hover:bg-red-900/30 transition-colors text-sm font-medium"
+                  aria-label={`Desactivar oferta de ${product.name}`}
+                >
+                  <Tag className="w-4 h-4" />
+                  {t("userProductsQuitarOferta")}
+                </button>
+              ) : (
+                <button
+                  onClick={() =>
+                    router.push(
+                      `/products/Offert_And_Coupon/offert/${product.id}`
+                    )
+                  }
+                  className="flex items-center justify-center gap-1 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 text-blue-700 dark:text-blue-400 py-2 px-3 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-colors text-sm font-medium"
+                  aria-label={`Añadir oferta a ${product.name}`}
+                >
+                  <Tag className="w-4 h-4" />
+                  {t("userProductsAnadirOferta")}
+                </button>
+              )}
+
+              {product.coupon ? (
+                <button
+                  onClick={() => handleDeactivateCoupon(product.coupon!.id)}
+                  className="flex items-center justify-center gap-1 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-400 py-2 px-3 rounded-lg hover:bg-red-100 dark:hover:bg-red-900/30 transition-colors text-sm font-medium"
+                  aria-label={`Desactivar cupón de ${product.name}`}
+                >
+                  <Gift className="w-4 h-4" />
+                  {t("userProductsQuitarCupon")}
+                </button>
+              ) : (
+                <button
+                  onClick={() =>
+                    router.push(
+                      `/products/Offert_And_Coupon/coupon/${product.id}`
+                    )
+                  }
+                  className="flex items-center justify-center gap-1 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 text-green-700 dark:text-green-400 py-2 px-3 rounded-lg hover:bg-green-100 dark:hover:bg-green-900/30 transition-colors text-sm font-medium"
+                  aria-label={`Añadir cupón a ${product.name}`}
+                >
+                  <Gift className="w-4 h-4" />
+                  {t("userProductsAnadirCupon")}
+                </button>
+              )}
+            </div>
+
+            {/* Botones de acción principales */}
+            <div className="grid grid-cols-2 gap-2">
+              <button
+                onClick={() => router.push(`/products/edit/${product.id}`)}
+                className="flex items-center justify-center gap-2 bg-amber-500 dark:bg-amber-600 text-white py-2.5 px-4 rounded-lg hover:bg-amber-600 dark:hover:bg-amber-700 transition-colors font-medium shadow-sm"
+                aria-label={`Editar producto ${product.name}`}
+              >
+                <Edit2 className="w-4 h-4" />
+                {t("userProductsEditar")}
+              </button>
+
+              <button
+                onClick={() => {
+                  handleDeleteProduct(product.id);
+                }}
+                className="flex items-center justify-center gap-2 bg-red-500 dark:bg-red-600 text-white py-2.5 px-4 rounded-lg hover:bg-red-600 dark:hover:bg-red-700 transition-colors font-medium shadow-sm"
+                aria-label={`Eliminar producto ${product.name}`}
+              >
+                <Trash2 className="w-4 h-4" />
+                {t("userProductsEliminar")}
+              </button>
+            </div>
           </div>
         </div>
-      </div>
-    ))}
-  </div>
-);
+      ))}
+    </div>
+  );
 };
 
 export default UserProducts;
-
-
