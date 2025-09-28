@@ -9,6 +9,7 @@ import { useRouter } from 'next/navigation'
 import { isAuthenticated, getStoredTokens } from '@/lib/auth'
 import axios from 'axios';
 import api from '@/lib/axios'
+import { useLanguage } from '@/context/LanguageContext';
 
 /**
  * Componente CreateProduct
@@ -23,6 +24,8 @@ import api from '@/lib/axios'
  */
 const CreateProduct = () => {
   const router = useRouter()
+
+  const { t } = useLanguage();
 
   // Estado para mensajes de error
   const [errores, setError] = useState('')
@@ -88,7 +91,7 @@ const CreateProduct = () => {
     const loadInitialData = async () => {
       try {
         if (!isAuthenticated()) {
-          setError('No estás autenticado. Serás redirigido al login...')
+          setError(t('crearProductoNoAutenticado'))
           const timeout = setTimeout(() => {
             router.push('/login')
           }, 3000)
@@ -186,12 +189,12 @@ const CreateProduct = () => {
    * Validaciones básicas del formulario
    */
   const validateForm = (): boolean => {
-    if (!form.name.trim()) { setError('El nombre del producto es requerido'); return false }
-    if (!form.description.trim()) { setError('La descripción es requerida'); return false }
-    if (form.price <= 0) { setError('El precio debe ser mayor a 0'); return false }
-    if (form.stock < 0) { setError('El stock no puede ser negativo'); return false }
-    if (form.category.length === 0) { setError('Debe seleccionar al menos una categoría'); return false }
-    if (form.unit_of_measure.length === 0) { setError('Debe seleccionar al menos una unidad de medida'); return false }
+    if (!form.name.trim()) { setError(t("crearProductoValidacionNombre")); return false }
+    if (!form.description.trim()) { setError(t("crearProductoValidacionDescripcion")); return false }
+    if (form.price <= 0) { setError(t("crearProductoValidacionPrecio")); return false }
+    if (form.stock < 0) { setError(t("crearProductoValidacionStock")); return false }
+    if (form.category.length === 0) { setError(t("crearProductoValidacionCategoria")); return false }
+    if (form.unit_of_measure.length === 0) { setError(t("crearProductoValidacionUnidad")); return false }
     setError(''); return true
   }
 
@@ -227,7 +230,7 @@ const CreateProduct = () => {
       setTimeout(() => setSuccess(false), 3000)
     } catch (error: any) {
       console.error('Error creating product:', error)
-      setError(error.response?.data?.message || 'Error al crear el producto. Inténtalo de nuevo.')
+      setError(error.response?.data?.message || t("crearProductoError"))
     } finally {
       setLoading(false)
     }
@@ -239,7 +242,7 @@ const CreateProduct = () => {
   if (!accessToken) {
     return (
       <div className="max-w-xl mx-auto mt-20 p-6 bg-white rounded-lg shadow-md text-center">
-        <p className="text-red-600 font-medium">{errores || 'Cargando...'}</p>
+        <p className="text-red-600 font-medium">{errores || t("crearProductoCargando")}</p>
       </div>
     )
   }
@@ -250,13 +253,13 @@ const CreateProduct = () => {
   return (
   <div className="max-w-4xl mx-auto p-6 bg-white dark:bg-gray-800 rounded-xl shadow-lg dark:shadow-2xl my-10 border border-gray-200 dark:border-gray-700 transition-colors duration-300">
     <h2 className="text-center text-3xl font-bold mb-6 text-green-700 dark:text-green-400">
-      🌱 Crear Nuevo Producto
+      {t("crearProductoTitulo")}
     </h2>
 
     {/* Mensajes de éxito o error */}
     {success && (
       <div className="mb-4 p-4 bg-green-100 dark:bg-green-900 border border-green-400 dark:border-green-600 text-green-700 dark:text-green-300 rounded text-center font-semibold">
-        ✅ ¡Producto creado exitosamente!
+        {t("crearProductoExito")}
       </div>
     )}
     {errores && (
@@ -271,7 +274,7 @@ const CreateProduct = () => {
       {/* Nombre */}
       <div>
         <label className="block text-sm font-semibold mb-1 text-gray-700 dark:text-gray-300">
-          Nombre del Producto
+          {t("crearProductoNombre")}
         </label>
         <input
           type="text"
@@ -287,7 +290,7 @@ const CreateProduct = () => {
       {/* Descripción */}
       <div>
         <label className="block text-sm font-semibold mb-1 text-gray-700 dark:text-gray-300">
-          Descripción
+          {t("crearProductoDescripcion")}
         </label>
         <textarea
           name="description"
@@ -295,7 +298,7 @@ const CreateProduct = () => {
           onChange={hanleChange}
           rows={4}
           className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-green-500 dark:focus:ring-green-400 resize-none transition-colors duration-200"
-          placeholder="Agrega una descripción atractiva del producto..."
+          placeholder={t("agregaDescripcion")}
           required
         />
       </div>
@@ -304,7 +307,7 @@ const CreateProduct = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
           <label className="block text-sm font-semibold mb-1 text-gray-700 dark:text-gray-300">
-            Precio
+            {t("crearProductoPrecio")}
           </label>
           <input
             type="number"
@@ -338,7 +341,7 @@ const CreateProduct = () => {
       {/* Categorías */}
       <div>
         <label className="block text-sm font-semibold mb-2 text-gray-700 dark:text-gray-300">
-          Categorías
+          {t("crearProductoCategorias")}
         </label>
         <div className="relative">
           <button
@@ -347,7 +350,7 @@ const CreateProduct = () => {
             className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-left text-gray-900 dark:text-white focus:ring-2 focus:ring-green-500 dark:focus:ring-green-400 flex justify-between items-center hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors duration-200"
           >
             <span className={form.category.length === 0 ? 'text-gray-500 dark:text-gray-400' : 'text-gray-900 dark:text-white'}>
-              {form.category.length === 0 ? 'Selecciona categorías...' : `${form.category.length} seleccionadas`}
+              {form.category.length === 0 ? t("seleccionaCategorias") : `${form.category.length} seleccionadas`}
             </span>
             <svg className={`w-5 h-5 text-gray-400 dark:text-gray-300 transition-transform duration-200 ${categoryDropdownOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
@@ -374,7 +377,7 @@ const CreateProduct = () => {
       {/* Unidades */}
       <div>
         <label className="block text-sm font-semibold mb-2 text-gray-700 dark:text-gray-300">
-          Unidades de Medida
+          {t("crearProductoUnidades")}
         </label>
         <div className="relative">
           <button
@@ -383,7 +386,7 @@ const CreateProduct = () => {
             className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-left text-gray-900 dark:text-white focus:ring-2 focus:ring-green-500 dark:focus:ring-green-400 flex justify-between items-center hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors duration-200"
           >
             <span className={form.unit_of_measure.length === 0 ? 'text-gray-500 dark:text-gray-400' : 'text-gray-900 dark:text-white'}>
-              {form.unit_of_measure.length === 0 ? 'Selecciona unidades...' : `${form.unit_of_measure.length} seleccionada(s)`}
+              {form.unit_of_measure.length === 0 ? t("seleccionaUnidades") : `${form.unit_of_measure.length} seleccionada(s)`}
             </span>
             <svg className={`w-5 h-5 text-gray-400 dark:text-gray-300 transition-transform duration-200 ${unitDropdownOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
@@ -410,21 +413,21 @@ const CreateProduct = () => {
       {/* Imágenes */}
       <div>
         <label className="block text-sm font-semibold mb-2 text-gray-700 dark:text-gray-300">
-          Imágenes del Producto
+          {t("crearProductoImagenes")}
         </label>
         <div className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-6 text-center hover:border-green-400 dark:hover:border-green-500 bg-gray-50 dark:bg-gray-700 transition-colors duration-300">
           <input type="file" multiple accept="image/*" onChange={handleImageUpload} className="hidden" id="images" />
           <label htmlFor="images" className="cursor-pointer text-green-600 dark:text-green-400 hover:text-green-800 dark:hover:text-green-300 font-medium transition-colors duration-200">
-            📷 Haz clic aquí para subir imágenes
+            {t("crearProductoImagenesSubir")}
           </label>
           <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-            Formatos soportados: JPG, PNG, GIF
+            {t("crearProductoImagenesFormatos")}
           </p>
         </div>
         {form.images.length > 0 && (
           <div className="mt-4">
             <h4 className="text-sm font-semibold mb-2 text-gray-700 dark:text-gray-300">
-              Imágenes seleccionadas:
+              {t("crearProductoImagenesSeleccionadas")}
             </h4>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
               {form.images.map((image, index) => (
@@ -460,10 +463,10 @@ const CreateProduct = () => {
               <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
               <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
             </svg>
-            🌱 Creando Producto...
+            {t("crearProductoBotonCargando")}
           </span>
         ) : (
-          '✅ Crear Producto'
+          (t("crearProductoBoton"))
         )}
       </button>
     </form>

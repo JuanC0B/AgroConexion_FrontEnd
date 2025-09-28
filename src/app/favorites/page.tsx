@@ -17,6 +17,7 @@ import ProductCard from '@/components/products/ProductCard'
 import { Loader2 } from 'lucide-react'
 import { toast } from 'sonner'
 import { useAuth } from '@/features/auth/hooks/useAuth'
+import { useLanguage } from '@/context/LanguageContext';
 
 /** Tipado de la respuesta del backend para favoritos */
 interface FavoriteResponse {
@@ -33,6 +34,8 @@ interface FavoriteResponse {
 const FavoritesPage = () => {
   /** Hook personalizado de autenticación */
   const { isAuthenticated, isLoading } = useAuth()
+
+  const { t } = useLanguage();
 
   /** Estado local con la lista de favoritos */
   const [favorites, setFavorites] = useState<FavoriteResponse[]>([])
@@ -96,10 +99,10 @@ const FavoritesPage = () => {
       {/* Título de la página */}
       <div className="dark:text-white text-center mb-10">
         <h1 className=" dark:text-white text-4xl font-extrabold text-gray-800 bg-gradient-to-r from-green-600 to-emerald-500 bg-clip-text ">
-          ❤️ Mis favoritos
+          {t("favoritosTitulo")}
         </h1>
         <p className="text-gray-500 mt-2">
-          Aquí puedes ver todos los productos que has marcado como favoritos
+          {t("favoritosDescripcion")}
         </p>
       </div>
 
@@ -118,12 +121,12 @@ const FavoritesPage = () => {
       ) : !isAuthenticated ? (
         // Caso: usuario no autenticado
         <div className="text-center text-gray-500 mt-10">
-          <p className="text-lg">🔒 Debes iniciar sesión para ver tus favoritos.</p>
+          <p className="text-lg">{t("favoritosDebesIniciarSesion")}</p>
         </div>
       ) : favorites.length === 0 ? (
         // Caso: no tiene productos favoritos
         <div className="text-center text-gray-500 mt-10">
-          <p className="text-lg">🚫 No tienes productos favoritos aún.</p>
+          <p className="text-lg">{t("favoritosVacio")}</p>
         </div>
       ) : (
         // Caso: renderizar productos favoritos

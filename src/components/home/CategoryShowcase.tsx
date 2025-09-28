@@ -79,13 +79,13 @@ export const CategoryShowcase = () => {
       name: t("frutas"),
       imageUrl: '/categories/frutas.jpg',
       icon: Apple,
-      href: '/categories/1',
+      href: '/categories/2',
     },
     {
       name: t("verduras"),
       imageUrl: '/categories/verduras.jpg',
       icon: Carrot,
-      href: '/categories/2',
+      href: '/categories/1',
     },
     {
       name: t("lacteos"),
@@ -97,13 +97,13 @@ export const CategoryShowcase = () => {
       name: t("pescados"),
       imageUrl: '/categories/pescado.jpg',
       icon: Fish,
-      href: '/categories/5',
+      href: '/categories/6',
     },
     {
       name: t("hierbas"),
       imageUrl: '/categories/hierbasa.jpg',
       icon: Leaf,
-      href: '/categories/15',
+      href: '/categories/10',
     },
   ]
 

@@ -77,7 +77,7 @@ const VerifyAccount = ({ email, URL }: VerifyAccountProps) => {
 
         try {
             // Hacemos la peticion
-            const response = await axios.post(`${process.env.NEXT_PUBLIC_API_UR}${URL}`, data,{
+            const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}${URL}`, data,{
                 headers: { "Content-Type": "application/json" }
             })
              

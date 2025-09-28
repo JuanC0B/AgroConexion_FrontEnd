@@ -147,7 +147,7 @@ const ProductCard: React.FC<ProductCardProps & { defaultFavorite?: boolean }> = 
           <div className="absolute inset-0 bg-gradient-to-r from-green-100 via-amber-100 to-green-100 dark:from-gray-700 dark:via-gray-600 dark:to-gray-700 animate-pulse" />
         )}
         <Image
-          src={`${process.env.NEXT_PUBLIC_MEDIA_URL}${imageUrl}`}
+          src={`${imageUrl}`}
           alt={name}
           fill
           className={`transition-all duration-700 group-hover:scale-105 object-cover ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}

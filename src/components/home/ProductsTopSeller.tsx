@@ -62,7 +62,7 @@ const TopProductsBuy = () => {
                     {products.map((product) => {
                         const imageUrl =
                             product.images && product.images.length > 0
-                                ? `${process.env.NEXT_PUBLIC_MEDIA_URL}${product.images[0].image}`
+                                ? `${product.images[0].image}`
                                 : `https://via.placeholder.com/800x400/10b981/ffffff?text=${encodeURIComponent(
                                     product.name
                                 )}`;

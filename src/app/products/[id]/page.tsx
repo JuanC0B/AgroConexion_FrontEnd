@@ -155,7 +155,7 @@ const DetailProduct = () => {
               )}
               {selectedImage && (
                 <Image
-                  src={`${process.env.NEXT_PUBLIC_MEDIA_URL}${selectedImage}`}
+                  src={`${selectedImage}`}
                   alt={product.name}
                   fill
                   className={`object-cover transition-all duration-500 hover:scale-105 ${

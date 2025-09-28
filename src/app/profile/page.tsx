@@ -86,7 +86,7 @@ const ProfilePage = () => {
                 : (t('usuarioComun'))}
           </p>
         </div>
-        <Link href={ROUTES.EDITINFO} className='text-lg text-gray-600 dark:text-gray-400 mt-2'>Editar</Link>
+        <Link href={ROUTES.EDITINFO} className='text-lg text-gray-600 dark:text-gray-400 mt-2'>{t("editar")}</Link>
       </div>
 
       {/* ----------------- INFORMACIÓN PRINCIPAL ----------------- */}

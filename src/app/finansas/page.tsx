@@ -3,6 +3,7 @@
 
 import { useEffect, useState } from 'react'
 import api from '@/lib/axios'
+import { useLanguage } from '@/context/LanguageContext'
 import {
   Loader2,
   TrendingUp,
@@ -29,6 +30,7 @@ export default function UserStats() {
   const [stats, setStats] = useState<StatsResponse | null>(null)
   const [loading, setLoading] = useState(true)
   const [hasMounted, setHasMounted] = useState(false)
+  const { t } = useLanguage()
 
   useEffect(() => {
     setHasMounted(true)
@@ -59,7 +61,7 @@ export default function UserStats() {
       <div className="min-h-screen flex">
         <main className="mt-16 ml-64 p-6 bg-gradient-to-br from-slate-50 to-slate-100 dark:from-gray-900 dark:to-gray-950 flex-1">
           <div className="flex items-center justify-center h-40">
-            <div className="animate-pulse text-gray-400">Cargando...</div>
+            <div className="animate-pulse text-gray-400">{t("finanzasCargando")}</div>
           </div>
         </main>
       </div>
@@ -74,7 +76,7 @@ export default function UserStats() {
             <div className="flex items-center space-x-3">
               <Loader2 className="animate-spin w-8 h-8 text-indigo-600" />
               <span className="text-lg font-medium text-gray-700 dark:text-gray-300">
-                Cargando estadísticas...
+                {t("finanzasCargandoEstadisticas")}
               </span>
             </div>
           </div>
@@ -90,10 +92,10 @@ export default function UserStats() {
           <div className="max-w-7xl mx-auto py-10">
             <div className="bg-red-50 dark:bg-red-900/40 border border-red-200 dark:border-red-700 rounded-xl p-6 text-center">
               <p className="text-red-700 dark:text-red-400 font-medium">
-                No se pudieron cargar las estadísticas.
+                {t("finanzasErrorTitulo")}
               </p>
               <p className="text-red-600 dark:text-red-500 text-sm mt-2">
-                Por favor, inténtalo de nuevo más tarde.
+                {t("finanzasErrorMensaje")}
               </p>
             </div>
           </div>
@@ -110,23 +112,23 @@ export default function UserStats() {
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 w-full">
             <StatCard
               icon={<ShoppingCart className="w-8 h-8" />}
-              title="Total Gastado"
+              title={t("finanzasTotalGastado")}
               value={`$${formatCurrency(stats.total_spent)}`}
-              description="En todas tus compras"
+              description={t("finanzasTotalGastadoDesc")}
               color="blue"
               trend="+2.5%"
             />
             <StatCard
               icon={<Wallet className="w-8 h-8" />}
-              title="Total Ganado"
+              title={t("finanzasTotalGanado")}
               value={`$${formatCurrency(stats.total_earned)}`}
-              description="De tus ventas"
+              description={t("finanzasTotalGanadoDesc")}
               color="green"
               trend="+8.2%"
             />
             <StatCard
               icon={<TrendingUp className="w-8 h-8" />}
-              title="Producto Más Vendido"
+              title={t("finanzasProductoMasVendido")}
               value={stats.most_sold_product.name}
               description={`${stats.most_sold_product.quantity} unidades`}
               color="emerald"
@@ -134,7 +136,7 @@ export default function UserStats() {
             />
             <StatCard
               icon={<Package className="w-8 h-8" />}
-              title="Producto Menos Vendido"
+              title={t("finanzasProductoMenosVendido")}
               value={stats.least_sold_product.name}
               description={`${stats.least_sold_product.quantity} unidades`}
               color="orange"
@@ -151,18 +153,18 @@ export default function UserStats() {
                   <DollarSign className="w-6 h-6 text-purple-600 dark:text-purple-400" />
                 </div>
                 <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
-                  Balance General
+                  {t("finanzasBalanceGeneral")}
                 </h3>
               </div>
               <div className="space-y-3">
                 <div className="flex justify-between items-center">
-                  <span className="text-gray-600 dark:text-gray-400">Ingresos</span>
+                  <span className="text-gray-600 dark:text-gray-400">{t("finanzasIngresos")}</span>
                   <span className="font-medium text-green-600 dark:text-green-400">
                     +${formatCurrency(stats.total_earned)}
                   </span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-gray-600 dark:text-gray-400">Gastos</span>
+                  <span className="text-gray-600 dark:text-gray-400">{t("finanzasGastos")}</span>
                   <span className="font-medium text-red-600 dark:text-red-400">
                     -${formatCurrency(stats.total_spent)}
                   </span>
@@ -170,7 +172,7 @@ export default function UserStats() {
                 <div className="border-t border-gray-200 dark:border-gray-700 pt-3">
                   <div className="flex justify-between items-center">
                     <span className="font-medium text-gray-900 dark:text-gray-200">
-                      Balance Neto
+                      {t("finanzasBalanceNeto")}
                     </span>
                     <span
                       className={`font-bold ${
@@ -193,34 +195,34 @@ export default function UserStats() {
                   <Star className="w-6 h-6 text-indigo-600 dark:text-indigo-400" />
                 </div>
                 <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
-                  Productos Destacados
+                  {t("finanzasProductosDestacados")}
                 </h3>
               </div>
               <div className="space-y-4">
                 <div className="flex items-center justify-between p-3 bg-green-50 dark:bg-green-900/30 rounded-lg">
                   <div>
                     <p className="font-medium text-gray-900 dark:text-gray-100">
-                      Más Vendido
+                      {t("finanzasMasVendido")}
                     </p>
                     <p className="text-sm text-gray-600 dark:text-gray-400">
                       {stats.most_sold_product.name}
                     </p>
                   </div>
                   <span className="px-2 py-1 bg-green-100 dark:bg-green-800 text-green-800 dark:text-green-300 text-xs font-medium rounded-full">
-                    {stats.most_sold_product.quantity} vendidos
+                    {stats.most_sold_product.quantity} {t("finanzasVendidos")}
                   </span>
                 </div>
                 <div className="flex items-center justify-between p-3 bg-orange-50 dark:bg-orange-900/30 rounded-lg">
                   <div>
                     <p className="font-medium text-gray-900 dark:text-gray-100">
-                      Menos Vendido
+                      {t("finanzasMenosVendido")}
                     </p>
                     <p className="text-sm text-gray-600 dark:text-gray-400">
                       {stats.least_sold_product.name}
                     </p>
                   </div>
                   <span className="px-2 py-1 bg-orange-100 dark:bg-orange-800 text-orange-800 dark:text-orange-300 text-xs font-medium rounded-full">
-                    {stats.least_sold_product.quantity} vendidos
+                    {stats.least_sold_product.quantity} {t("finanzasVendidos")}
                   </span>
                 </div>
               </div>

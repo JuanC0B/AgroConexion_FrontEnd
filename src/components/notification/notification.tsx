@@ -199,12 +199,12 @@ const Notifications = () => {
               <div className="w-6 h-6 bg-gradient-to-r from-green-500 to-green-600 dark:from-green-400 dark:to-green-500 rounded-lg flex items-center justify-center">
                 <Bell className="w-3 h-3 text-white" />
               </div>
-              <h3 className="font-semibold text-gray-800 dark:text-white">Notificaciones</h3>
+              <h3 className="font-semibold text-gray-800 dark:text-white">{t("notificaciones")}</h3>
             </div>
             {notifications.length > 0 && (
               <div className="flex items-center gap-2">
                 <span className="text-xs text-gray-500 dark:text-gray-400">
-                  {unreadCount} sin leer
+                  {unreadCount} {t("sinLeer")}
                 </span>
                 <div className="w-2 h-2 bg-green-500 dark:bg-green-400 rounded-full animate-pulse"></div>
               </div>
@@ -250,11 +250,8 @@ const Notifications = () => {
                   </svg>
                 </div>
                 <h4 className="font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                  Sin notificaciones
-                </h4>
-                <p className="text-gray-500 dark:text-gray-400 text-sm">
                   {t("detallenotificacion")}
-                </p>
+                </h4>
               </div>
             ) : (
               <div className="p-3">

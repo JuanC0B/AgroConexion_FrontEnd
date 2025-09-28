@@ -156,6 +156,8 @@ const translations: Record<string, [string, string]> = {
   disfrutaProductos: ["Disfruta de los mejores productos", "Enjoy the best products"],
   garantiaTotal: ["Garantía total", "Full warranty"],
   garantiaCalidad: ["Garantía de calidad", "Quality guarantee"],
+  noTienesProductos: ["No tienes productos registrados.", "You have no products registered."],
+  errorAlCargar: ["Error al cargar los productos.", "Error loading products."],
 
   comentariosYResenas: ["Comentarios y reseñas", "Comments & Reviews"],
 
@@ -168,7 +170,7 @@ const translations: Record<string, [string, string]> = {
 
   // ComprarProducto
   cantidad: ["Cantidad", "Quantity"],
- comprarAhora: ["Comprar", "Buy now"],
+  comprarAhora: ["Comprar", "Buy now"],
 
   errorCantidad: ["❌ La cantidad debe ser mayor a 0", "❌ Quantity must be greater than 0"],
 
@@ -379,6 +381,7 @@ const translations: Record<string, [string, string]> = {
   itemsInCart: ["Artículos en tu carrito", "Items in your cart"],
   total: ["Total:", "Total:"],
   remove: ["Eliminar", "Remove"],
+  sinLeer: ["sin leer", "unread"],
 
   carritoVacio: ["Tu carrito está vacío ❌", "Your cart is empty ❌"],
   compraExitosa: ["✅ Compra realizada con éxito", "✅ Purchase completed successfully"],
@@ -392,6 +395,304 @@ const translations: Record<string, [string, string]> = {
   comprarTodo: ["Comprar todo el carrito", "Buy entire cart"],
   explorarMas: ["Explorar más productos", "Browse more products"],
   notaFactura: ["*Factura disponible en tu historial de compras", "*Invoice available in your purchase history"],
+
+  panelVendedor: ["Panel de Vendedor", "Seller Panel"],
+  verPerfil: ["Ver perfil", "View profile"],
+
+
+  favoritosTitulo: ["❤️ Mis favoritos", "❤️ My favorites"],
+  favoritosDescripcion: [
+    "Aquí puedes ver todos los productos que has marcado como favoritos",
+    "Here you can see all the products you’ve marked as favorites"
+  ],
+  favoritosError: [
+    "⚠️ Hubo un error cargando tus favoritos, revisa consola",
+    "⚠️ There was an error loading your favorites, check the console"
+  ],
+  favoritosDebesIniciarSesion: [
+    "🔒 Debes iniciar sesión para ver tus favoritos.",
+    "🔒 You must log in to see your favorites."
+  ],
+  favoritosVacio: [
+    "🚫 No tienes productos favoritos aún.",
+    "🚫 You don’t have any favorite products yet."
+  ],
+  favoritosCargando: [
+    "Cargando favoritos...",
+    "Loading favorites..."
+  ],
+
+
+  crearProductoTitulo: [
+    "🌱 Crear Nuevo Producto",
+    "🌱 Create New Product"
+  ],
+  crearProductoExito: [
+    "✅ ¡Producto creado exitosamente!",
+    "✅ Product created successfully!"
+  ],
+  crearProductoError: [
+    "⚠️ Error al crear el producto. Inténtalo de nuevo.",
+    "⚠️ Error creating the product. Please try again."
+  ],
+  crearProductoNoAutenticado: [
+    "No estás autenticado. Serás redirigido al login...",
+    "You are not authenticated. You will be redirected to login..."
+  ],
+  crearProductoCargando: [
+    "Cargando...",
+    "Loading..."
+  ],
+  crearProductoNombre: [
+    "Nombre del Producto",
+    "Product Name"
+  ],
+  crearProductoDescripcion: [
+    "Descripción",
+    "Description"
+  ],
+  agregaDescripcion: [
+    "Agrega una descripción detallada del producto",
+    "Add a detailed description of the product"
+  ],
+  crearProductoPrecio: [
+    "Precio",
+    "Price"
+  ],
+  crearProductoStock: [
+    "Stock",
+    "Stock"
+  ],
+  crearProductoCategorias: [
+    "Categorías",
+    "Categories"
+  ],
+  crearProductoUnidades: [
+    "Unidades de Medida",
+    "Units of Measure"
+  ],
+  crearProductoImagenes: [
+    "Imágenes del Producto",
+    "Product Images"
+  ],
+  crearProductoImagenesSubir: [
+    "📷 Haz clic aquí para subir imágenes",
+    "📷 Click here to upload images"
+  ],
+  crearProductoImagenesFormatos: [
+    "Formatos soportados: JPG, PNG, GIF",
+    "Supported formats: JPG, PNG, GIF"
+  ],
+  crearProductoImagenesSeleccionadas: [
+    "Imágenes seleccionadas:",
+    "Selected images:"
+  ],
+  seleccionaCategorias: [
+    "Selecciona las categorías del producto",
+    "Select the product categories"],
+
+  crearProductoBoton: [
+    "✅ Crear Producto",
+    "✅ Create Product"
+  ],
+  crearProductoBotonCargando: [
+    "🌱 Creando Producto...",
+    "🌱 Creating Product..."
+  ],
+  crearProductoValidacionNombre: [
+    "El nombre del producto es requerido",
+    "Product name is required"
+  ],
+  crearProductoValidacionDescripcion: [
+    "La descripción es requerida",
+    "Description is required"
+  ],
+  crearProductoValidacionPrecio: [
+    "El precio debe ser mayor a 0",
+    "Price must be greater than 0"
+  ],
+  crearProductoValidacionStock: [
+    "El stock no puede ser negativo",
+    "Stock cannot be negative"
+  ],
+  crearProductoValidacionCategoria: [
+    "Debe seleccionar al menos una categoría",
+    "You must select at least one category"
+  ],
+  crearProductoValidacionUnidad: [
+    "Debe seleccionar al menos una unidad de medida",
+    "You must select at least one unit of measure"
+  ],
+  seleccionaUnidades: [
+    "Selecciona las unidades de medida",
+    "Select the units of measure"
+  ],
+  seleccionadas: [
+    "seleccionada(s)",
+    "selected"
+  ],
+
+  userProductsSinImagen: [
+    "Sin imagen",
+    "No image"
+  ],
+  userProductsOferta: [
+    "Oferta",
+    "Offer"
+  ],
+  userProductsCupon: [
+    "Cupón",
+    "Coupon"
+  ],
+  userProductsSinStock: [
+    "Sin stock",
+    "Out of stock"
+  ],
+  userProductsSinDescripcion: [
+    "Sin descripción disponible",
+    "No description available"
+  ],
+  userProductsUnidad: [
+    "unidad",
+    "unit"
+  ],
+  userProductsStock: [
+    "Stock",
+    "Stock"
+  ],
+  userProductsQuitarOferta: [
+    "Quitar oferta",
+    "Remove offer"
+  ],
+  userProductsAnadirOferta: [
+    "Añadir oferta",
+    "Add offer"
+  ],
+  userProductsQuitarCupon: [
+    "Quitar cupón",
+    "Remove coupon"
+  ],
+  userProductsAnadirCupon: [
+    "Añadir cupón",
+    "Add coupon"
+  ],
+  userProductsEditar: [
+    "Editar",
+    "Edit"
+  ],
+  userProductsEliminar: [
+    "Eliminar",
+    "Delete"
+  ],
+  userProductsOfertaDesactivada: [
+    "❌ Oferta desactivada",
+    "❌ Offer deactivated"
+  ],
+  userProductsErrorDesactivarOferta: [
+    "⚠️ Error al desactivar la oferta",
+    "⚠️ Error deactivating the offer"
+  ],
+  userProductsCuponDesactivado: [
+    "❌ Cupón desactivado",
+    "❌ Coupon deactivated"
+  ],
+  userProductsErrorDesactivarCupon: [
+    "⚠️ Error al desactivar el cupón",
+    "⚠️ Error deactivating the coupon"
+  ],
+  userProductsEliminado: [
+    "Producto eliminado",
+    "Product deleted"
+  ],
+
+  finanzasCargando: [
+    "Cargando...",
+    "Loading..."
+  ],
+  finanzasCargandoEstadisticas: [
+    "Cargando estadísticas...",
+    "Loading statistics..."
+  ],
+  finanzasErrorTitulo: [
+    "No se pudieron cargar las estadísticas.",
+    "Statistics could not be loaded."
+  ],
+  finanzasErrorMensaje: [
+    "Por favor, inténtalo de nuevo más tarde.",
+    "Please try again later."
+  ],
+  finanzasTotalGastado: [
+    "Total Gastado",
+    "Total Spent"
+  ],
+  finanzasTotalGastadoDesc: [
+    "En todas tus compras",
+    "On all your purchases"
+  ],
+  finanzasTotalGanado: [
+    "Total Ganado",
+    "Total Earned"
+  ],
+  finanzasTotalGanadoDesc: [
+    "De tus ventas",
+    "From your sales"
+  ],
+  finanzasProductoMasVendido: [
+    "Producto Más Vendido",
+    "Best Selling Product"
+  ],
+  finanzasProductoMasVendidoDesc: [
+    "unidades",
+    "units"
+  ],
+  finanzasProductoMenosVendido: [
+    "Producto Menos Vendido",
+    "Least Selling Product"
+  ],
+  finanzasProductoMenosVendidoDesc: [
+    "unidades",
+    "units"
+  ],
+  finanzasBalanceGeneral: [
+    "Balance General",
+    "General Balance"
+  ],
+  finanzasIngresos: [
+    "Ingresos",
+    "Income"
+  ],
+  finanzasGastos: [
+    "Gastos",
+    "Expenses"
+  ],
+  finanzasBalanceNeto: [
+    "Balance Neto",
+    "Net Balance"
+  ],
+  finanzasProductosDestacados: [
+    "Productos Destacados",
+    "Featured Products"
+  ],
+  finanzasMasVendido: [
+    "Más Vendido",
+    "Best Seller"
+  ],
+  finanzasMenosVendido: [
+    "Menos Vendido",
+    "Worst Seller"
+  ],
+  finanzasVendidos: [
+    "vendidos",
+    "sold"
+  ],
+  finanzasTendenciaPopular: [
+    "Popular",
+    "Popular"
+  ],
+  finanzasTendenciaMejorar: [
+    "Mejorar",
+    "Improve"
+  ]
 
 
 };

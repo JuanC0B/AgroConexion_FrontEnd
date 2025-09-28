@@ -105,7 +105,7 @@ const NavUser = () => {
                         {user.username}
                       </span>
                     </div>
-                    <p className="text-xs text-gray-600 dark:text-gray-400 mt-0.5">Ver perfil</p>
+                    <p className="text-xs text-gray-600 dark:text-gray-400 mt-0.5">{t("verPerfil")}</p>
                   </div>
                   <svg className="w-4 h-4 text-gray-400 dark:text-gray-500 group-hover:text-green-500 dark:group-hover:text-green-400 transform group-hover:translate-x-1 transition-all duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -146,7 +146,7 @@ const NavUser = () => {
                       <div className="h-px bg-gradient-to-r from-transparent via-gray-300 dark:via-gray-600 to-transparent"></div>
                       <div className="flex items-center justify-center -mt-2.5">
                         <span className="bg-white dark:bg-gray-800 px-3 text-xs text-gray-500 dark:text-gray-400 font-medium">
-                          Panel de Vendedor
+                          {t("panelVendedor")}
                         </span>
                       </div>
                     </li>
@@ -183,7 +183,7 @@ const NavUser = () => {
                         <div className="w-8 h-8 bg-indigo-100 dark:bg-indigo-900/30 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
                           <BarChart className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
                         </div>
-                        <span className="font-medium">Estadísticas</span>
+                        <span className="font-medium">{t("estadisticas")}</span>
                       </Link>
                     </li>
                   </>

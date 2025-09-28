@@ -7,6 +7,9 @@ import { Product } from "@/types/product.types";
 import api from "@/lib/axios";
 import toast from "react-hot-toast";
 import { Edit2, Trash2, Tag, Gift, AlertTriangle } from 'lucide-react';
+import { useLanguage } from '@/context/LanguageContext';
+
+
 interface Props {
   products: Product[];
 }
@@ -14,17 +17,19 @@ interface Props {
 const UserProducts: React.FC<Props> = ({ products }) => {
   const router = useRouter();
 
+  const { t } = useLanguage();
+
   // Desactivar oferta
   const handleDeactivateOffer = async (offerId: number) => {
     try {
       await api.put(`/offers_and_coupons/offers/${offerId}/active/`, {
         active: false,
       });
-      toast.success("❌ Oferta desactivada");
+      toast.success(t("userProductsOfertaDesactivada"));
 
       router.refresh();
     } catch (error) {
-      toast.error("⚠️ Error al desactivar la oferta");
+      toast.error(t("userProductsErrorDesactivarOferta"));
       console.log(error)
     }
   };
@@ -35,17 +40,17 @@ const UserProducts: React.FC<Props> = ({ products }) => {
       await api.put(`/offers_and_coupons/coupon/${couponId}/active/`, {
         active: false,
       });
-      toast.success("❌ Cupón desactivado");
+      toast.success(t("userProductsCuponDesactivado"));
       router.refresh();
     } catch (error) {
-      toast.error("⚠️ Error al desactivar el cupón");
+      toast.error(t("userProductsErrorDesactivarCupon"));
     }
   };
   
   const handleDeleteProduct = async (productId: number) => {
     try {
         await api.put(`/products/delete-product/${productId}/`,);
-      toast.success("Producto Eliminado");
+      toast.success(t("userProductsEliminado"));
       router.refresh();
     } catch (error) {
         
@@ -64,7 +69,7 @@ return (
         <div className="relative w-full h-48 bg-gray-100 dark:bg-gray-700">
           {product.images?.length > 0 ? (
             <Image
-              src={`${process.env.NEXT_PUBLIC_MEDIA_URL}${product.images[0].image}`}
+              src={`${product.images[0].image}`}
               alt={`Imagen de ${product.name}`}
               fill
               className="object-cover hover:scale-105 transition-transform duration-300"
@@ -74,7 +79,7 @@ return (
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center text-gray-400 dark:text-gray-500">
-              <span className="text-sm">Sin imagen</span>
+              <span className="text-sm">{t("userProductsSinImagen")}</span>
             </div>
           )}
           
@@ -82,17 +87,17 @@ return (
           <div className="absolute top-2 right-2 flex flex-col gap-1">
             {product.offers && (
               <span className="bg-red-500 dark:bg-red-600 text-white text-xs px-2 py-1 rounded-full shadow-sm">
-                Oferta
+                {t("userProductsOferta")}
               </span>
             )}
             {product.coupon && (
               <span className="bg-green-500 dark:bg-green-600 text-white text-xs px-2 py-1 rounded-full shadow-sm">
-                Cupón
+                {t("userProductsCupon")}
               </span>
             )}
             {product.stock <= 0 && (
               <span className="bg-gray-500 dark:bg-gray-600 text-white text-xs px-2 py-1 rounded-full shadow-sm">
-                Sin stock
+                {t("userProductsSinStock")}
               </span>
             )}
           </div>
@@ -105,7 +110,7 @@ return (
           </h2>
           
           <p className="text-sm text-gray-600 dark:text-gray-300 mb-3 line-clamp-3 flex-1">
-            {product.description || 'Sin descripción disponible'}
+            {product.description || t("userProductsSinDescripcion")}
           </p>
           
           <div className="space-y-2 mb-4">
@@ -133,7 +138,7 @@ return (
                 aria-label={`Desactivar oferta de ${product.name}`}
               >
                 <Tag className="w-4 h-4" />
-                Quitar oferta
+                {t("userProductsQuitarOferta")}
               </button>
             ) : (
               <button
@@ -142,7 +147,7 @@ return (
                 aria-label={`Añadir oferta a ${product.name}`}
               >
                 <Tag className="w-4 h-4" />
-                Añadir oferta
+                {t("userProductsAnadirOferta")}
               </button>
             )}
 
@@ -153,7 +158,7 @@ return (
                 aria-label={`Desactivar cupón de ${product.name}`}
               >
                 <Gift className="w-4 h-4" />
-                Quitar cupón
+                {t("userProductsQuitarCupon")}
               </button>
             ) : (
               <button
@@ -162,7 +167,7 @@ return (
                 aria-label={`Añadir cupón a ${product.name}`}
               >
                 <Gift className="w-4 h-4" />
-                Añadir cupón
+                {t("userProductsAnadirCupon")}
               </button>
             )}
           </div>
@@ -175,7 +180,7 @@ return (
               aria-label={`Editar producto ${product.name}`}
             >
               <Edit2 className="w-4 h-4" />
-              Editar
+              {t("userProductsEditar")}
             </button>
             
             <button
@@ -184,7 +189,7 @@ return (
               aria-label={`Eliminar producto ${product.name}`}
             >
               <Trash2 className="w-4 h-4" />
-              Eliminar
+              {t("userProductsEliminar")}
             </button>
           </div>
         </div>

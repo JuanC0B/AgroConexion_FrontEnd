@@ -187,7 +187,7 @@ const GetCarrito = () => {
                     onClick={Comprar}
                     className="px-6 py-3 bg-gradient-to-r from-green-500 to-green-600 dark:from-green-600 dark:to-green-700 text-white rounded-full font-medium hover:shadow-lg hover:scale-105 transition-all duration-200"
                   >
-                    Ir a comprar
+                    {t("goShopping")}
                   </button>
                 </div>
               </div>
@@ -203,7 +203,7 @@ const GetCarrito = () => {
                     <Image
                       src={
                         item.product.images?.[0]?.image
-                          ? `${process.env.NEXT_PUBLIC_MEDIA_URL}${item.product.images[0].image}`
+                          ? `${item.product.images[0].image}`
                           : "/placeholder.png"
                       }
                       alt={item.product.name}
@@ -281,7 +281,7 @@ const GetCarrito = () => {
                         {updatingId === item.product.id && (
                           <div className="ml-3 text-sm text-gray-500 dark:text-gray-400 flex items-center gap-2">
                             <Loader2 className="animate-spin" size={16} />
-                            <span>Actualizando...</span>
+                            <span>{t("updating")}</span>
                           </div>
                         )}
                       </div>
@@ -328,7 +328,7 @@ const GetCarrito = () => {
             <div className="flex items-center gap-2 mb-4">
               <div className="w-3 h-3 bg-gradient-to-r from-green-500 to-green-600 rounded-full"></div>
               <div className="text-lg font-semibold text-gray-800 dark:text-white">
-                Resumen
+                {t("summary")}
               </div>
             </div>
 
@@ -339,7 +339,7 @@ const GetCarrito = () => {
                     {totalItems} {t("items")}
                   </div>
                   <div className="text-sm text-gray-500 dark:text-gray-400">
-                    Artículos en tu carrito
+                    {t("itemsInCart")}
                   </div>
                 </div>
               </div>
