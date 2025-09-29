@@ -118,7 +118,7 @@ export default function FavoriteCategories() {
                 <div className="relative overflow-hidden">
                   <div className="aspect-[4/3] bg-gradient-to-br from-green-100 to-emerald-100 dark:from-green-900/30 dark:to-emerald-900/30 transition-colors duration-300">
                     <Image
-                      src={`${process.env.NEXT_PUBLIC_MEDIA_URL}${fav.category.image}`}
+                      src={`${fav.category.image}`}
                       alt={fav.category.name}
                       width={400}
                       height={300}

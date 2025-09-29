@@ -390,7 +390,7 @@ const translations: Record<string, [string, string]> = {
   agrupacionCampesina: ["👥 Agrupación campesina", "👥 Farmers' group"],
   administrador: ["🛡️ Administrador", "🛡️ Admin"],
   usuarioComun: ["👤 Usuario común", "👤 Common user"],
-  correo: ["Correo", "Email"],
+  correo: ["Correo Electronico", "Email"],
   telefono: ["Teléfono", "Phone"],
   direccion: ["Dirección", "Address"],
   rol: ["Rol", "Role"],
@@ -900,6 +900,15 @@ const translations: Record<string, [string, string]> = {
 
   guardarCambios: ["Guardar cambios", "Save changes"],
   guardandoCambios: ["Guardando cambios...", "Saving changes..."],
+
+  editarPerfil: ["Editar perfil", "Edit profile"],
+  actualizaInfo: ["Actualiza tu información personal", "Update your personal information"],
+  vistaPreviaPerfil: ["Vista previa del perfil", "Profile preview"],
+  cambiarFoto: ["Cambiar foto", "Change photo"],
+  correonoModificable:["El correo no se puede modificar","Email cannot be changed"],
+  ingresaDireccion: ["Ingresa tu dirección", "Enter your address"],
+  guardando: ["Guardando...", "Saving..."],
+  miPerfil: ["Mi perfil", "My profile"],
 
 };
 

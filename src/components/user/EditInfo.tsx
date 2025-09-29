@@ -19,6 +19,7 @@ import {
   Upload,
   X,
 } from "lucide-react";
+import { useLanguage } from "@/context/LanguageContext";
 import { ROUTES } from "@/lib/constants";
 
 interface GroupProfile {
@@ -45,6 +46,7 @@ interface UserFormData {
 export default function EditInfo() {
   const { user } = useAuth();
   const router = useRouter();
+  const { t } = useLanguage();
   const [formData, setFormData] = useState<UserFormData>({
     username: "",
     email: "",
@@ -293,7 +295,7 @@ export default function EditInfo() {
         <div className="text-center">
           <Loader2 className="w-12 h-12 animate-spin text-blue-600 dark:text-blue-400 mx-auto mb-4" />
           <p className="text-gray-600 dark:text-gray-400 text-lg">
-            Cargando información...
+            {t("cargando")}
           </p>
         </div>
       </div>
@@ -309,10 +311,10 @@ export default function EditInfo() {
             <User className="w-8 h-8 text-blue-600 dark:text-blue-400" />
           </div>
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-            Editar Perfil
+            {t("editarPerfil")}
           </h1>
           <p className="text-gray-600 dark:text-gray-400">
-            Actualiza tu información personal
+            {t("actualizaInfo")}
           </p>
         </div>
 
@@ -326,7 +328,7 @@ export default function EditInfo() {
                   <div className="relative">
                     <Image
                       src={previewImage}
-                      alt="Vista previa del perfil"
+                      alt={t("vistaPreviaPerfil")}
                       width={120}
                       height={120}
                       className="w-32 h-32 rounded-full object-cover border-4 border-white dark:border-gray-700 shadow-lg"
@@ -349,7 +351,7 @@ export default function EditInfo() {
 
               <label className="cursor-pointer inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors shadow-md">
                 <Upload className="w-4 h-4 mr-2" />
-                Cambiar foto
+                {t("cambiarFoto")}
                 <input
                   type="file"
                   accept="image/*"
@@ -358,7 +360,7 @@ export default function EditInfo() {
                 />
               </label>
               <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
-                JPG, PNG o GIF (máx. 5MB)
+                {t("formatosImagen")}
               </p>
             </div>
 
@@ -368,7 +370,7 @@ export default function EditInfo() {
               <div>
                 <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
                   <User className="w-4 h-4 inline mr-2" />
-                  Nombre de usuario
+                  {t("nombreUsuario")}
                 </label>
                 <input
                   type="text"
@@ -380,7 +382,7 @@ export default function EditInfo() {
                       ? "border-red-500 dark:border-red-400"
                       : "border-gray-300 dark:border-gray-600"
                   }`}
-                  placeholder="Ingresa tu nombre de usuario"
+                  placeholder={t("ingresaNombreUsuario")}
                 />
                 {errors.username && (
                   <p className="text-red-500 dark:text-red-400 text-sm mt-1">
@@ -393,7 +395,7 @@ export default function EditInfo() {
               <div>
                 <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
                   <Mail className="w-4 h-4 inline mr-2" />
-                  Correo electrónico
+                  {t("correo")}
                 </label>
                 <input
                   type="email"
@@ -403,7 +405,7 @@ export default function EditInfo() {
                   className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-100 dark:bg-gray-600 text-gray-500 dark:text-gray-400 cursor-not-allowed"
                 />
                 <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                  El correo electrónico no se puede modificar
+                  {t("correonoModificable")}
                 </p>
               </div>
 
@@ -411,7 +413,7 @@ export default function EditInfo() {
               <div>
                 <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
                   <Phone className="w-4 h-4 inline mr-2" />
-                  Teléfono
+                  {t("telefono")}
                 </label>
                 <input
                   type="text"
@@ -436,7 +438,7 @@ export default function EditInfo() {
               <div>
                 <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
                   <MapPin className="w-4 h-4 inline mr-2" />
-                  Dirección
+                  {t("direccion")}
                 </label>
                 <input
                   type="text"
@@ -444,7 +446,7 @@ export default function EditInfo() {
                   value={formData.address ?? ""}
                   onChange={handleChange}
                   className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
-                  placeholder="Ingresa tu dirección"
+                  placeholder={t("ingresaDireccion")}
                 />
               </div>
             </div>
@@ -459,12 +461,12 @@ export default function EditInfo() {
                 {saving ? (
                   <>
                     <Loader2 className="w-5 h-5 animate-spin mr-2" />
-                    Guardando...
+                    {t("guardando")}
                   </>
                 ) : (
                   <>
                     <Save className="w-5 h-5 mr-2" />
-                    Guardar cambios
+                    {t("guardarCambios")}
                   </>
                 )}
               </button>

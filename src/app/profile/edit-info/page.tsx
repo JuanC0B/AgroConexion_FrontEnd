@@ -4,9 +4,11 @@ import { useAuth } from "@/features/auth/hooks/useAuth";
 import EditUserInfo from "@/components/user/EditInfo";
 import ToggleSeller from "@/components/user/ToggleSeller";
 import Toggle2FA from "@/components/user/Toggle2FA";
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function ProfilePage() {
   const { isAuthenticated, isLoading } = useAuth();
+  const { t } = useLanguage();
 
   if (isLoading) {
     return <p className="text-center">Cargando autenticación...</p>;
@@ -25,7 +27,7 @@ export default function ProfilePage() {
 
   return (
     <main className="max-w-5xl mx-auto py-10 px-4 space-y-8">
-      <h1 className="text-2xl font-bold mb-6 text-center">Mi Perfil</h1>
+      <h1 className="text-2xl font-bold mb-6 text-center">{t("miPerfil")}</h1>
 
       {/* Sección de edición de información */}
       <section>

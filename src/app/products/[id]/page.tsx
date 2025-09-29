@@ -190,7 +190,7 @@ const DetailProduct = () => {
                     style={{ animationDelay: `${index * 100}ms` }}
                   >
                     <Image
-                      src={`${process.env.NEXT_PUBLIC_MEDIA_URL}${img.image}`}
+                      src={`${img.image}`}
                       alt={product.name}
                       width={80}
                       height={80}
