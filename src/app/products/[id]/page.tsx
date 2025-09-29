@@ -24,7 +24,7 @@ import {
 import Link from "next/link";
 import RatingStats from "@/components/products/ratingProdfuct";
 import NewRating from "@/components/products/NewRating";
-
+import ProductoEliminado from "@/components/errores/ProductEliminado";
 const DetailProduct = () => {
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
@@ -43,6 +43,10 @@ const DetailProduct = () => {
         const res = await axios.get(
           `${process.env.NEXT_PUBLIC_API_URL}/products/detail/${productId}/`
         );
+        if (res.data?.state === "Producto eliminado") {
+          setProduct(null);
+          return
+        }
         setProduct(res.data);
 
         if (res.data.images?.length > 0) {
@@ -100,9 +104,7 @@ const DetailProduct = () => {
   if (error || !product) {
     return (
       <div className="text-center p-10">
-        <p className="text-red-600 font-medium">
-          {error || "Producto no encontrado"}
-        </p>
+          <ProductoEliminado/>
       </div>
     );
   }

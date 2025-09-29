@@ -199,7 +199,7 @@ export default function EditInfo() {
     e.preventDefault();
 
     if (!validateForm()) {
-      toast.error("Por favor corrige los errores en el formulario");
+      toast.error("Por favor corrige los errores en el formulario o verifica que todo los campos sean llenados");
       return;
     }
 

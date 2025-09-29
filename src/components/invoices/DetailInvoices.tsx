@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react"
 import api from "@/lib/axios"
 import { Receipt, Calendar, User, CreditCard, Package, ShoppingCart, Tag, Gift, Sprout } from 'lucide-react';
+import { useLanguage } from "@/context/LanguageContext";
 
 interface Offer {
   id: number
@@ -48,6 +49,7 @@ interface Invoice {
 export default function InvoicePageClient({ id }: { id: string }) {
   const [invoice, setInvoice] = useState<Invoice | null>(null)
   const [loading, setLoading] = useState(true)
+  const {t}=useLanguage()
 
   useEffect(() => {
     const fetchInvoice = async () => {
@@ -68,7 +70,7 @@ export default function InvoicePageClient({ id }: { id: string }) {
       <div className="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-lime-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-green-600 dark:border-green-400 mx-auto mb-4"></div>
-          <p className="text-gray-600 dark:text-gray-300 text-lg">Cargando factura...</p>
+          <p className="text-gray-600 dark:text-gray-300 text-lg">{t('facturacarga')}</p>
         </div>
       </div>
     )
@@ -82,10 +84,10 @@ export default function InvoicePageClient({ id }: { id: string }) {
             <Receipt className="w-12 h-12 text-red-600 dark:text-red-400 mx-auto" />
           </div>
           <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-3">
-            Factura no encontrada
+            {t('facturanoencontrada')}
           </h2>
           <p className="text-red-500 dark:text-red-400">
-            No pudimos encontrar la factura solicitada. Verifica el ID e intenta nuevamente.
+            {t('facturatextonoencontrada')}
           </p>
         </div>
       </div>
@@ -111,10 +113,10 @@ export default function InvoicePageClient({ id }: { id: string }) {
                     <Receipt className="w-8 h-8 text-white" />
                   </div>
                   <div>
-                    <h1 className="text-2xl sm:text-3xl font-bold">Factura #{invoice.id}</h1>
+                    <h1 className="text-2xl sm:text-3xl font-bold"> {t('invoice')} #{invoice.id}</h1>
                     <p className="text-green-100 dark:text-green-200 flex items-center gap-2 mt-1">
                       <Sprout className="w-4 h-4" />
-                      Productos del Campo
+                      {t('invoiceparrafo')}
                     </p>
                   </div>
                 </div>
@@ -148,7 +150,7 @@ export default function InvoicePageClient({ id }: { id: string }) {
             <div className="mb-8">
               <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4 flex items-center gap-2">
                 <Package className="w-5 h-5 text-green-600 dark:text-green-400" />
-                Detalles de la Compra
+                {t('invoicetitle')}
               </h2>
               
               {/* Vista de tabla para desktop */}
@@ -157,11 +159,11 @@ export default function InvoicePageClient({ id }: { id: string }) {
                   <table className="w-full">
                     <thead className="bg-gradient-to-r from-green-500 to-emerald-500 dark:from-green-600 dark:to-emerald-600 text-white">
                       <tr>
-                        <th className="px-6 py-4 text-left text-sm font-semibold">Producto</th>
-                        <th className="px-6 py-4 text-left text-sm font-semibold">Vendedor</th>
-                        <th className="px-6 py-4 text-center text-sm font-semibold">Cantidad</th>
-                        <th className="px-6 py-4 text-right text-sm font-semibold">Precio Unit.</th>
-                        <th className="px-6 py-4 text-right text-sm font-semibold">Subtotal</th>
+                        <th className="px-6 py-4 text-left text-sm font-semibold">{t('invoivetable1')}</th>
+                        <th className="px-6 py-4 text-left text-sm font-semibold">{t('invoivetable2')}</th>
+                        <th className="px-6 py-4 text-center text-sm font-semibold">{t('invoivetable3')}</th>
+                        <th className="px-6 py-4 text-right text-sm font-semibold">{t('invoivetable4')}</th>
+                        <th className="px-6 py-4 text-right text-sm font-semibold">{t('invoivetable5')}</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-200 dark:divide-gray-600">
@@ -219,7 +221,7 @@ export default function InvoicePageClient({ id }: { id: string }) {
                 <>
                   <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4 flex items-center gap-2">
                     <Gift className="w-5 h-5 text-orange-600 dark:text-orange-400" />
-                    Descuentos Aplicados
+                    {t('invoicedescuentos')}
                   </h2>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     {invoice.details.map(
@@ -230,11 +232,11 @@ export default function InvoicePageClient({ id }: { id: string }) {
                               <div className="bg-gradient-to-r from-green-500 to-emerald-500 dark:from-green-600 dark:to-emerald-600 rounded-xl p-4 text-white shadow-lg">
                                 <div className="flex items-center gap-2 mb-1">
                                   <Tag className="w-4 h-4" />
-                                  <span className="font-semibold text-sm">OFERTA ESPECIAL</span>
+                                  <span className="font-semibold text-sm">{t('invoiveoffert')}</span>
                                 </div>
                                 <p className="font-bold">{item.offer.title}</p>
                                 <p className="text-green-100 dark:text-green-200 text-sm">
-                                  Descuento del {item.offer.percentage}%
+                                  {t('invoicedescuento')} {item.offer.percentage}%
                                 </p>
                                 <div className="absolute top-0 right-0 w-16 h-16 bg-white bg-opacity-10 dark:bg-opacity-20 rounded-full transform translate-x-8 -translate-y-8"></div>
                               </div>
@@ -243,11 +245,11 @@ export default function InvoicePageClient({ id }: { id: string }) {
                               <div className="bg-gradient-to-r from-orange-500 to-amber-500 dark:from-orange-600 dark:to-amber-600 rounded-xl p-4 text-white shadow-lg">
                                 <div className="flex items-center gap-2 mb-1">
                                   <Gift className="w-4 h-4" />
-                                  <span className="font-semibold text-sm">CUPÓN</span>
+                                  <span className="font-semibold text-sm">{t('invoicecupon')}</span>
                                 </div>
-                                <p className="font-bold">Código: {item.coupon.code}</p>
+                                <p className="font-bold">{t('invoicecode')}: {item.coupon.code}</p>
                                 <p className="text-orange-100 dark:text-orange-200 text-sm">
-                                  Descuento del {item.coupon.percentage}%
+                                  {t('invoicedescuento')} {item.coupon.percentage}%
                                 </p>
                                 <div className="absolute top-0 right-0 w-16 h-16 bg-white bg-opacity-10 dark:bg-opacity-20 rounded-full transform translate-x-8 -translate-y-8"></div>
                               </div>
@@ -268,15 +270,14 @@ export default function InvoicePageClient({ id }: { id: string }) {
                     <ShoppingCart className="w-6 h-6 text-white" />
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">Total a Pagar</h3>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">Productos frescos del campo</p>
+                    <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">Total</h3>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">{t('invoicetotalparrafo')}</p>
                   </div>
                 </div>
                 <div className="text-right">
                   <div className="text-3xl sm:text-4xl font-bold text-green-700 dark:text-green-400">
                     ${invoice.total}
                   </div>
-                  <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">Pesos colombianos</p>
                 </div>
               </div>
             </div>
@@ -286,8 +287,8 @@ export default function InvoicePageClient({ id }: { id: string }) {
               <div className="bg-green-50 dark:bg-gray-700 rounded-xl p-4 flex items-start gap-3 shadow-sm">
                 <Sprout className="w-5 h-5 text-green-600 dark:text-green-400 mt-0.5 flex-shrink-0" />
                 <div className="text-sm text-green-700 dark:text-green-300">
-                  <p className="font-semibold mb-1">🌱 Gracias por apoyar a nuestros campesinos</p>
-                  <p>Con tu compra apoyas directamente a las familias rurales y contribuyes al desarrollo sostenible del campo colombiano.</p>
+                  <p className="font-semibold mb-1">🌱 {t('invoicemensaje')}</p>
+                  <p>{t('invoicemensajeparrafo')}</p>
                 </div>
               </div>
             </div>

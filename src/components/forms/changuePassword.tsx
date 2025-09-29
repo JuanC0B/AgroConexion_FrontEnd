@@ -13,7 +13,7 @@ import { useLanguage } from "@/context/LanguageContext";
 const ChanguePassword = ({ email, URL}: VerifyAccountProps) => {
     const {logout} = useAuth()
     const router = useRouter();
-    const { t } = useLanguage();
+    const { t } = useLanguage()
     // Funcion que actualiza el estadoi del codigo
     const [code, setCode] = useState(["", "", "", "", "", ""]);
     const [form, setForm] = useState({
