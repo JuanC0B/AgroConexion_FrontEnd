@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import api from "@/lib/axios";
 import { toast } from "react-hot-toast";
+import { useLanguage } from "@/context/LanguageContext";
 import { 
   Store, 
   ShoppingBag, 
@@ -18,6 +19,7 @@ export default function ToggleSeller() {
   const [hasGroup, setHasGroup] = useState<boolean>(false);
   const [loading, setLoading] = useState(true);
   const [updating, setUpdating] = useState(false);
+  const { t } = useLanguage();
 
   useEffect(() => {
     const fetchInfo = async () => {
@@ -57,7 +59,7 @@ export default function ToggleSeller() {
         <div className="flex items-center justify-center py-8">
           <Loader2 className="w-8 h-8 animate-spin text-gray-400 dark:text-gray-500" />
           <span className="ml-3 text-gray-600 dark:text-gray-400">
-            Cargando información...
+            {t("cargando")}
           </span>
         </div>
       </div>
@@ -86,10 +88,10 @@ export default function ToggleSeller() {
       {/* Título */}
       <div className="text-center mb-6">
         <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
-          Estado de Usuario
+          {t("estadoUsuario")}
         </h3>
         <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
-          Cambia entre modo comprador y vendedor
+          {t("cambiaModo")}
         </p>
       </div>
 
@@ -109,7 +111,7 @@ export default function ToggleSeller() {
                 : "bg-purple-500 dark:bg-purple-400"
             }`}
           ></div>
-          {isSeller ? "Vendedor" : "Comprador"}
+          {isSeller ? (t("vendedor")) : (t("comprador"))}
         </div>
       </div>
 
@@ -117,8 +119,8 @@ export default function ToggleSeller() {
       <div className="text-center mb-6">
         <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
           {isSeller
-            ? "Tienes permisos para crear y gestionar productos en tu tienda. Los compradores pueden ver tu inventario."
-            : "Puedes navegar y comprar productos de los vendedores registrados en la plataforma."}
+            ? (t("infoPermisos"))
+            : (t("puedesNavegar"))}
         </p>
       </div>
 
@@ -133,12 +135,10 @@ export default function ToggleSeller() {
               </div>
               <div>
                 <h4 className="text-sm font-semibold text-amber-800 dark:text-amber-200 mb-1">
-                  Miembro de agrupación
+                  {t("miembroAgrupacion")}
                 </h4>
                 <p className="text-sm text-amber-700 dark:text-amber-300 leading-relaxed">
-                  No puedes cambiar tu estado de vendedor porque perteneces a
-                  una agrupación. Los permisos son gestionados por el
-                  administrador del grupo.
+                  {t("noPuedesCambiar")}
                 </p>
               </div>
             </div>
@@ -150,7 +150,7 @@ export default function ToggleSeller() {
               className="inline-flex items-center px-6 py-3 rounded-xl font-semibold bg-gray-300 dark:bg-gray-600 text-gray-500 dark:text-gray-400 cursor-not-allowed transition-all duration-200"
             >
               <AlertCircle className="w-5 h-5 mr-2" />
-              Cambio no disponible
+              {t("cambioNoDisponible")}
             </button>
           </div>
         </div>
@@ -164,20 +164,20 @@ export default function ToggleSeller() {
               <div className="p-4 bg-gray-50 dark:bg-gray-700/50 rounded-xl border border-gray-100 dark:border-gray-600/50">
                 <h4 className="text-sm font-semibold text-gray-800 dark:text-gray-200 mb-3 flex items-center">
                   <Store className="w-4 h-4 mr-2 text-blue-600 dark:text-blue-400" />
-                  Beneficios del modo vendedor:
+                  {t("beneficiosVendedor")}
                 </h4>
                 <ul className="text-xs text-gray-600 dark:text-gray-400 space-y-2">
                   <li className="flex items-center">
                     <CheckCircle2 className="w-3 h-3 text-blue-500 mr-2 flex-shrink-0" />
-                    Crear y gestionar tu propia tienda
+                    {t("crearTienda")}
                   </li>
                   <li className="flex items-center">
                     <CheckCircle2 className="w-3 h-3 text-blue-500 mr-2 flex-shrink-0" />
-                    Publicar productos y servicios
+                    {t("publicarProductos")}
                   </li>
                   <li className="flex items-center">
                     <CheckCircle2 className="w-3 h-3 text-blue-500 mr-2 flex-shrink-0" />
-                    Panel de estadísticas y ventas
+                    {t("panelEstadisticas")}
                   </li>
                 </ul>
               </div>
@@ -192,12 +192,12 @@ export default function ToggleSeller() {
                   {updating ? (
                     <>
                       <Loader2 className="w-5 h-5 animate-spin mr-2" />
-                      Cambiando...
+                      {t("cambiando")}
                     </>
                   ) : (
                     <>
                       <Repeat className="w-5 h-5 mr-2" />
-                      Cambiar a vendedor
+                      {t("cambiarVendedor")}
                     </>
                   )}
                 </button>

@@ -7,10 +7,13 @@ import { useRouter } from "next/navigation";
 import { useAuth } from '@/features/auth/hooks/useAuth'
 import { ROUTES } from "@/lib/constants";
 import api from "@/lib/axios";
+import { useLanguage } from "@/context/LanguageContext";
+
 // Funcion para verificar la cuenta recibe como parametro el email del usuario y la ruta del ENDPOINT 
 const ChanguePassword = ({ email, URL}: VerifyAccountProps) => {
     const {logout} = useAuth()
     const router = useRouter();
+    const { t } = useLanguage();
     // Funcion que actualiza el estadoi del codigo
     const [code, setCode] = useState(["", "", "", "", "", ""]);
     const [form, setForm] = useState({
@@ -80,7 +83,7 @@ const ChanguePassword = ({ email, URL}: VerifyAccountProps) => {
         const fullCode = code.join("");
         // Verificamso que se envien los seis dijitos
         if (fullCode.length !== 6) {
-            setError("Debes ingresar los 6 dígitos del código");
+            setError(t("debesIngresarDigitos"));
             return;
         }
 
@@ -134,10 +137,10 @@ return(
                     </div>
                 </div>
                 <h2 className="mt-6 text-3xl font-bold tracking-wide text-gray-800 dark:text-white transition-colors duration-300">
-                    Recuperar Contraseña
+                    {t("recuperarContraseña")}
                 </h2>
                 <p className="text-gray-600 dark:text-gray-400 mt-2 text-center text-sm">
-                    Verifica tu código y crea una nueva contraseña
+                    {t("verificaCodigo")}
                 </p>
                 <div className="mt-3 h-1 w-16 bg-gradient-to-r from-orange-400 to-orange-600 dark:from-orange-500 dark:to-orange-400 rounded-full"></div>
             </div>
@@ -146,7 +149,7 @@ return(
             <div className="flex flex-col items-center gap-6 mb-8">
                 <div className="text-center">
                     <label className="text-base font-semibold text-gray-700 dark:text-gray-300 mb-4 block">
-                        Código de verificación
+                        {t("codigoVerificacion")}
                     </label>
                     <div className="inline-flex items-center gap-2 bg-green-50 dark:bg-green-900/20 px-3 py-1 rounded-full border border-green-200 dark:border-green-700">
                         <svg className="w-4 h-4 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -181,13 +184,13 @@ return(
                         <svg className="w-4 h-4 text-orange-500 dark:text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                         </svg>
-                        Nueva Contraseña
+                        {t("nuevaContraseña")}
                     </label>
                     <div className="relative">
                         <input
                             type={showPassword ? "text" : "password"}
                             id="new_password"
-                            placeholder="Ingresa tu nueva contraseña"
+                            placeholder={t("ingresaNuevaContraseña")}
                             value={form.new_password}
                             onChange={handleChangePassword}
                             className="w-full rounded-xl border-2 border-green-200 dark:border-gray-600 px-4 py-3 pr-12 focus:outline-none focus:ring-2 focus:ring-orange-400 dark:focus:ring-orange-500 transition-all bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
@@ -219,13 +222,13 @@ return(
                         <svg className="w-4 h-4 text-orange-500 dark:text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
-                        Confirmar Nueva Contraseña
+                        {t("confirmarNuevaContraseña")}
                     </label>
                     <div className="relative">
                         <input
                             type={showPassword2 ? "text" : "password"}
                             id="new_password2"
-                            placeholder="Confirma tu nueva contraseña"
+                            placeholder={t("confirmaNuevaContraseña")}
                             value={form.new_password2}
                             onChange={handleChangePassword}
                             className="w-full rounded-xl border-2 border-green-200 dark:border-gray-600 px-4 py-3 pr-12 focus:outline-none focus:ring-2 focus:ring-orange-400 dark:focus:ring-orange-500 transition-all bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
@@ -283,7 +286,7 @@ return(
                 <svg className="w-5 h-5 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
                 </svg>
-                <span>Recuperar Contraseña</span>
+                <span>{t("recuperarContraseña")}</span>
             </button>
         </form>
     </div>

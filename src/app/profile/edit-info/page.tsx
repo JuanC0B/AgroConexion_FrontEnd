@@ -26,9 +26,7 @@ export default function ProfilePage() {
   }
 
   return (
-    <main className="max-w-5xl mx-auto py-10 px-4 space-y-8">
-      <h1 className="text-2xl font-bold mb-6 text-center">{t("miPerfil")}</h1>
-
+    <main className="max-w-5xl mx-auto px-4 space-y-8">
       {/* Sección de edición de información */}
       <section>
         <EditUserInfo />

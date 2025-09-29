@@ -8,12 +8,14 @@ import { useAuth } from '@/features/auth/hooks/useAuth'
 import { ROUTES } from '@/lib/constants'
 import { Lock } from 'lucide-react'
 import api from '@/lib/axios'
+import { useLanguage } from "@/context/LanguageContext";
 
 const ChangePassword = () => {
   const router = useRouter()
   const { user, isAuthenticated, isLoading } = useAuth()
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState<string | null>(null)
+  const { t } = useLanguage();
 
   useEffect(() => {
     if (!isLoading && !isAuthenticated) {
@@ -53,11 +55,11 @@ const ChangePassword = () => {
   }
 
   if (isLoading) {
-    return <p>Cargando autenticación...</p>
+    return <p>{t("cargando")}</p>
   }
 
   if (!isAuthenticated) {
-    return <p>No tienes acceso a esta acción. Por favor inicia sesión.</p>
+    return <p>{t("noTienesAcceso")}</p>
   }
 
   return (
@@ -79,14 +81,14 @@ const ChangePassword = () => {
         <div className="flex-1 text-left">
           <div className="flex items-center gap-2">
             <span className="font-semibold text-base">
-              {loading ? 'Enviando solicitud...' : 'Cambiar contraseña'}
+              {loading ? (t("enviandoSolicitud")) : (t("cambiarContraseña"))}
             </span>
             {loading && (
               <div className="w-4 h-4 border-2 border-slate-400 dark:border-slate-500 border-t-transparent rounded-full animate-spin"></div>
             )}
           </div>
           <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
-            {loading ? 'Procesando tu solicitud de cambio' : 'Actualiza tu contraseña por seguridad'}
+            {loading ? (t("procesandoSolicitud")) : (t("actualizaContraseña"))}
           </p>
         </div>
 
