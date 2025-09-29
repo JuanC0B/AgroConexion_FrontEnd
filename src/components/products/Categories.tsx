@@ -195,7 +195,7 @@ const GetAllCategories = () => {
             <div className="hidden sm:flex items-center justify-center p-2 
                             border-t border-green-200 dark:border-gray-700">
               <span className="text-xs text-gray-500 dark:text-gray-400">
-                {category.length} categorías disponibles
+                {category.length} {t("categoriasDisponibles")}
               </span>
             </div>
           )}

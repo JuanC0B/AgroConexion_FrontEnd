@@ -7,17 +7,18 @@ import { SiFacebook, SiInstagram, SiX } from "react-icons/si";
 import { useLanguage } from '@/context/LanguageContext';
 
 const Footer: React.FC = () => {
-  const { t } = useLanguage(); // 👈 hook dentro del componente, usando {}
+  const { t } = useLanguage();
 
   return (
     <footer
       className="bg-green-700 dark:bg-green-900 
-               text-white dark:text-gray-100 
-               pt-10 pb-6 transition-colors duration-500"
+                 text-white dark:text-gray-100 
+                 pt-10 pb-6 transition-colors duration-500"
     >
-      <div className="container mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-8">
+      <div className="container mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8">
+        
         {/* Logo + Descripción */}
-        <div>
+        <div className="flex flex-col items-center md:items-start text-center md:text-left">
           <div className="flex items-center gap-2 mb-3">
             <Image
               src="/AgroConexion.svg"
@@ -28,54 +29,15 @@ const Footer: React.FC = () => {
             />
             <h2 className="text-xl font-bold">AgroConexión</h2>
           </div>
-          <p className="text-sm text-gray-200 dark:text-gray-300">
+          <p className="text-sm text-gray-200 dark:text-gray-300 max-w-xs">
             {t('footerDescription')}
           </p>
         </div>
 
-        {/* Enlaces rápidos */}
-        <div>
-          <h3 className="font-semibold text-lg mb-3">{t('enlaces')}</h3>
-          <ul className="space-y-2 text-sm">
-            <li>
-              <a
-                href="/about"
-                className="hover:text-green-300 dark:hover:text-green-400 transition-colors"
-              >
-                {t('sobreNosotros')}
-              </a>
-            </li>
-            <li>
-              <a
-                href="/contact"
-                className="hover:text-green-300 dark:hover:text-green-400 transition-colors"
-              >
-                {t('contacto')}
-              </a>
-            </li>
-            <li>
-              <a
-                href="/privacy"
-                className="hover:text-green-300 dark:hover:text-green-400 transition-colors"
-              >
-                {t('politicaDePrivacidad')}
-              </a>
-            </li>
-            <li>
-              <a
-                href="/products"
-                className="hover:text-green-300 dark:hover:text-green-400 transition-colors"
-              >
-                {t('productos')}
-              </a>
-            </li>
-          </ul>
-        </div>
-
         {/* Redes Sociales */}
-        <div>
+        <div className="flex flex-col items-center text-center">
           <h3 className="font-semibold text-lg mb-3">{t("siguenos")}</h3>
-          <div className="flex space-x-4">
+          <div className="flex space-x-6">
             <a
               href="https://facebook.com"
               target="_blank"
@@ -104,10 +66,10 @@ const Footer: React.FC = () => {
         </div>
 
         {/* Contacto */}
-        <div>
+        <div className="flex flex-col items-center md:items-end text-center md:text-right">
           <h3 className="font-semibold text-lg mb-3">{t("contactoTitle")}</h3>
           <p className="text-sm">📍 Funza, Cundinamarca</p>
-          <p className="text-sm">📧 agroconexions@gmail.com</p>
+          <p className="text-sm">📧 agroconexion@gmail.com</p>
           <p className="text-sm">📞 +57 350 742 7337</p>
         </div>
       </div>

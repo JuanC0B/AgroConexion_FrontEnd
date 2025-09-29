@@ -1026,6 +1026,8 @@ const translations: Record<string, [string, string]> = {
   invoicetotalparrafo:["Productos frescos del campo","Fresh produce from the farm"],
   invoicemensaje:["Gracias por apoyar a nuestros campesinos","Thank you for supporting our farmers."],
   invoicemensajeparrafo:["Con tu compra apoyas directamente a las familias rurales y contribuyes al desarrollo sostenible del campo colombiano.","With your purchase, you directly support rural families and contribute to the sustainable development of the Colombian countryside."],
+
+  categoriasDisponibles: ["Categorías Disponibles", "Available Categories"],
 };
 
 /* ============================================================
