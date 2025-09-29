@@ -953,6 +953,30 @@ const translations: Record<string, [string, string]> = {
   registrodeorganizacioncrear:["Crear Cuenta","Create Account"],
   registrodeorganizacionsesion:["Iniciar Sesión","Log In"],
   registrodeorganizacionussuario:["Registro como Usuario","Register as a User"],
+
+  // facturaciono detalle
+  facturacarga:["Cargando factura...","Loiding..."],
+  facturanoencontrada:["Factura no encontrada","Invoice not found"],
+  facturatextonoencontrada:["No pudimos encontrar la factura solicitada. Verifica el ID e intenta nuevamente.","We were unable to find the requested invoice. Please verify the ID and try again."],
+  invoice:["Factura","Invoice"],
+  invoicepro:["Factura","Invoice"],
+  invoiceparrafo:["Productos del Campo","Farm Products"],
+  invoicetitle:["Detalles de la Compra","Purchase Details"],
+  invoivetable1:["Producto","Product"],
+  invoivetable2:["Vendedor","Salesperson"],
+  invoivetable3:["Cantidad","Stock"],
+  invoivetable4:["Precio Unit.","Unit price."],
+  invoivetable5:["Subtotal","Subtotal"],
+
+  invoicedescuentos:["Descuentos Aplicados","Discounts Applied"],
+  invoiveoffert:["Oferta","Offert"],
+  invoicedescuento:["Descuento","Discounts"],
+  invoicecupon:["Cupon","Coupon"],
+  invoicecode:["Codigo","Code"],
+
+  invoicetotalparrafo:["Productos frescos del campo","Fresh produce from the farm"],
+  invoicemensaje:["Gracias por apoyar a nuestros campesinos","Thank you for supporting our farmers."],
+  invoicemensajeparrafo:["Con tu compra apoyas directamente a las familias rurales y contribuyes al desarrollo sostenible del campo colombiano.","With your purchase, you directly support rural families and contribute to the sustainable development of the Colombian countryside."],
 };
 
 /* ============================================================
