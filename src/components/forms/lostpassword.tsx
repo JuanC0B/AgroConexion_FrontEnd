@@ -5,8 +5,10 @@ import { useRouter } from "next/navigation";
 import {LostPassword} from '@/types/auth.types'
 import Image from "next/image"
 import { ROUTES } from "@/lib/constants";
+import { useLanguage } from "@/context/LanguageContext";
 const RecoverPassword =()=>{
     const URL = '/users/password-reset/request/'
+    const {t} = useLanguage()
     const router = useRouter();
     const [form, setForm] = useState({
         email: ""
@@ -81,10 +83,10 @@ const RecoverPassword =()=>{
                     </div>
                 </div>
                 <h2 className="mt-6 text-3xl font-bold tracking-wide text-gray-800 dark:text-white transition-colors duration-300">
-                    Recuperar Contraseña
+                    {t('recuperarcontraseña')}
                 </h2>
                 <p className="text-gray-600 dark:text-gray-400 mt-2 text-center text-sm">
-                    Te ayudamos a recuperar tu cuenta
+                    {t('recuperarcontraseñaparrafo')}
                 </p>
                 <div className="mt-3 h-1 w-16 bg-gradient-to-r from-red-400 to-red-600 dark:from-red-500 dark:to-red-400 rounded-full"></div>
             </div>
@@ -97,7 +99,7 @@ const RecoverPassword =()=>{
                         <svg className="w-4 h-4 text-red-500 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" />
                         </svg>
-                        Correo electrónico
+                        {t('recuperarcontraseñacorreo')}
                     </label>
                     <div className="relative">
                         <input
@@ -124,12 +126,12 @@ const RecoverPassword =()=>{
                         </svg>
                         <div className="text-sm">
                             <p className="text-blue-800 dark:text-blue-300 font-semibold mb-1">
-                                ¿Cómo funciona?
+                                {t('recuperarcontraseñafunciona')}
                             </p>
                             <ul className="text-blue-700 dark:text-blue-400 space-y-1 text-xs">
-                                <li>• Te enviaremos un código de verificación</li>
-                                <li>• Revisa tu bandeja de entrada y spam</li>
-                                <li>• Ingresa el código para crear una nueva contraseña</li>
+                                <li>• {t('recuperarcontraseñalista1')}</li>
+                                <li>• {t('recuperarcontraseñalista2')}</li>
+                                <li>• {t('recuperarcontraseñalista3')}</li>
                             </ul>
                         </div>
                     </div>
@@ -166,7 +168,7 @@ const RecoverPassword =()=>{
                     <svg className="w-5 h-5 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                     </svg>
-                    <span>Enviar Código de Recuperación</span>
+                    <span>{t('recuperarcontraseñabotonrecibir')}</span>
                 </button>
 
                 {/* Back to Login */}
@@ -178,7 +180,7 @@ const RecoverPassword =()=>{
                         <svg className="w-4 h-4 group-hover:-translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                         </svg>
-                        Volver al inicio de sesión
+                        {t('recuperarcontraseñabotonenvio')}
                     </button>
                 </div>
             </div>

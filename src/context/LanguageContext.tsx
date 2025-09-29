@@ -188,6 +188,10 @@ const translations: Record<string, [string, string]> = {
   registrarse: ["Registrarse", "Register"],
   estadistica: ["Estadisticas", "Statistics"],
 
+  // errores
+  productonoencontro:["Producto no encontrado","Product not found"],
+  productonoencontroparrafo:["Este producto no existe o lo han eliminado","This product does not exist or has been removed."],
+
   // DetailProduct
   cargandoProducto: ["Cargando producto...", "Loading product..."],
   errorCargarProducto: [
@@ -910,6 +914,45 @@ const translations: Record<string, [string, string]> = {
   guardando: ["Guardando...", "Saving..."],
   miPerfil: ["Mi perfil", "My profile"],
 
+  // verificar cuenta
+  verificarcuenta:["Verificar Cuenta","Verify Account"],
+  verificarcuentamensage:["Confirma tu identidad para continuar","Please confirm your identity to continue."],
+  verificarcuentacodigo:["Ingresa el código de 6 dígitos enviado a","Enter the 6-digit code sent to"],
+
+  // contraseña
+  recuperarcontraseña:["Recuperar Contraseña","Recover password"],
+  recuperarcontraseñaparrafo:["Te ayudamos a recuperar tu cuenta","We'll help you recover your account"],
+  recuperarcontraseñacorreo:["Correo electrónico","Email"],
+  recuperarcontraseñafunciona:["¿Cómo funciona?","How does it work?"],
+  recuperarcontraseñalista1:["enviaremos un código de verificación","and we will send you a verification code"],
+  recuperarcontraseñalista2:["Revisa tu bandeja de entrada y spam","Check your inbox and spam folder."],
+  recuperarcontraseñalista3:["Ingresa el código para crear una nueva contraseña","Enter the code to create a new password"],
+  recuperarcontraseñabotonrecibir:["Enviar Código de Recuperación","Send Recovery Code"],
+  recuperarcontraseñabotonenvio:["Volver al inicio de sesión","Return to login"],
+
+  // recuperra contrseña
+  contrseñanueva:["Nueva contraseña","New Password"],
+  contrseñanuevaconfirmar:["Confirmar contraseña","Confirm new Password"],
+  cambiarcontraseña:["Cambiar contraseña","Changue password"],
+
+  // registro de organizacion
+  registrodeorganizacion:["Registro de Organización","Organization Registration"],
+  registrodeorganizacionparrafo:["Únete a nuestra plataforma y conecta directamente con consumidores","Join our platform and connect directly with consumers"],
+  registrodeorganizacionusername:["Nombre de usuario","User Name"],
+  registrodeorganizaciontelefono:["Número de teléfono","Phone number"],
+  registrodeorganizaciondireccion:["Dirección","Addres"],
+  registrodeorganizaciontipo:["Tipo de organización","Type of organization"],
+  registrodeorganizacionselect:["Selecciona una opción","Select an option"],
+  registrodeorganizacionrepresentante:["Representante legal","Legal representative"],
+  registrodeorganizacioncedula:["Cédula del representante","Representative's ID card"],
+  registrodeorganizacionimage:["Imagen de perfil","Image profile"],
+  registrodeorganizacioncdlunaimage:["Imagen de cédula","Image ID card"],
+  registrodeorganizacionrut:["Documento RUT (PDF)","RUT document (PDF)"],
+  registrodeorganizacionpassword:["Contraseña","Password"],
+  registrodeorganizacionconfirmar:["Confirmas contraseña","Confirm password"],
+  registrodeorganizacioncrear:["Crear Cuenta","Create Account"],
+  registrodeorganizacionsesion:["Iniciar Sesión","Log In"],
+  registrodeorganizacionussuario:["Registro como Usuario","Register as a User"],
 };
 
 /* ============================================================

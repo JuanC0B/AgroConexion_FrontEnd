@@ -8,6 +8,7 @@ import Cropper from "react-easy-crop";
 import { Area } from "react-easy-crop";
 import Link from "next/link";
 import {ROUTES} from '@/lib/constants'
+import { useLanguage } from "@/context/LanguageContext";
 const organization_type = {
   cooperative: "Cooperativa",
   association: "Asociación",
@@ -25,6 +26,7 @@ const RegisterAgropu = () => {
     };
     // Permite navegar
     const router = useRouter();
+    const {t}=useLanguage()
     // URL de la solicitud
     const BACKEND_URL = `${process.env.NEXT_PUBLIC_API_URL}/users/group/register/`;
     // Funcion para actualizar el estado de la vision de la contraseña
@@ -305,10 +307,10 @@ const RegisterAgropu = () => {
                         </div>
                     </div>
                     <h2 className="mt-6 text-3xl font-bold tracking-wide text-gray-800 dark:text-white transition-colors duration-300">
-                        Registro de Organización
+                        {t('registrodeorganizacion')}
                     </h2>
                     <p className="text-gray-600 dark:text-gray-400 mt-2 text-center max-w-2xl">
-                        Únete a nuestra plataforma y conecta directamente con consumidores
+                        {t('registrodeorganizacionparrafo')}
                     </p>
                     <div className="mt-3 h-1 w-24 bg-gradient-to-r from-green-400 to-green-600 dark:from-green-500 dark:to-green-400 rounded-full"></div>
                 </div>
@@ -320,7 +322,7 @@ const RegisterAgropu = () => {
                             <svg className="w-4 h-4 text-green-500 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                             </svg>
-                            Nombre de usuario
+                            {t('registrodeorganizacionusername')}
                         </label>
                         <input
                             type="text"
@@ -338,7 +340,7 @@ const RegisterAgropu = () => {
                             <svg className="w-4 h-4 text-green-500 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" />
                             </svg>
-                            Correo electrónico
+                            Email
                         </label>
                         <input
                             type="email"
@@ -356,7 +358,7 @@ const RegisterAgropu = () => {
                             <svg className="w-4 h-4 text-green-500 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                             </svg>
-                            Número de teléfono
+                            {t('registrodeorganizaciontelefono')}
                         </label>
                         <input
                             type="text"
@@ -375,7 +377,7 @@ const RegisterAgropu = () => {
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                             </svg>
-                            Dirección
+                            {t(' registrodeorganizaciondireccion')}
                         </label>
                         <input
                             type="text"
@@ -393,7 +395,7 @@ const RegisterAgropu = () => {
                             <svg className="w-4 h-4 text-green-500 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                             </svg>
-                            Tipo de organización
+                            {t('registrodeorganizaciontipo')}
                         </label>
                         <select
                             id="organization_type"
@@ -401,7 +403,7 @@ const RegisterAgropu = () => {
                             onChange={handleChange}
                             className="rounded-xl border-2 border-green-200 dark:border-gray-600 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-green-400 dark:focus:ring-green-500 transition-all bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                         >
-                            <option value="">Selecciona una opción</option>
+                            <option value="">{t('registrodeorganizacionselect')}</option>
                             {Object.entries(organization_type).map(([key, label]) => (
                                 <option key={key} value={key} className="bg-white dark:bg-gray-700">
                                     {label}
@@ -434,7 +436,7 @@ const RegisterAgropu = () => {
                             <svg className="w-4 h-4 text-green-500 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                             </svg>
-                            Representante legal
+                            {t('registrodeorganizacionrepresentante')}
                         </label>
                         <input
                             type="text"
@@ -452,7 +454,7 @@ const RegisterAgropu = () => {
                             <svg className="w-4 h-4 text-green-500 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2" />
                             </svg>
-                            Cédula del representante
+                            {t('registrodeorganizacioncedula')}
                         </label>
                         <input
                             type="text"
@@ -473,7 +475,7 @@ const RegisterAgropu = () => {
                             <svg className="w-5 h-5 text-green-500 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                             </svg>
-                            Imagen de perfil
+                            {t('registrodeorganizacionimage')}
                         </label>
                         <input
                             type="file"
@@ -507,7 +509,7 @@ const RegisterAgropu = () => {
                             <svg className="w-5 h-5 text-blue-500 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2" />
                             </svg>
-                            Imagen de cédula
+                            {t('registrodeorganizacioncdlunaimage')}
                         </label>
                         <input
                             type="file"
@@ -541,7 +543,7 @@ const RegisterAgropu = () => {
                             <svg className="w-5 h-5 text-purple-500 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                             </svg>
-                            Documento RUT (PDF)
+                            {t('registrodeorganizacionrut')}
                         </label>
                         <input
                             type="file"
@@ -571,7 +573,7 @@ const RegisterAgropu = () => {
                             <svg className="w-4 h-4 text-green-500 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                             </svg>
-                            Contraseña
+                            {t('registrodeorganizacionpassword')}
                         </label>
                         <div className="relative">
                             <input
@@ -607,7 +609,7 @@ const RegisterAgropu = () => {
                             <svg className="w-4 h-4 text-green-500 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
-                            Confirmar contraseña
+                            {t('registrodeorganizacionconfirmar')}
                         </label>
                         <div className="relative">
                             <input
@@ -671,7 +673,7 @@ const RegisterAgropu = () => {
                         <svg className="w-5 h-5 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
                         </svg>
-                        <span>Crear Cuenta</span>
+                        <span>{t('registrodeorganizacioncrear')}</span>
                     </button>
                 </div>
 
@@ -740,7 +742,7 @@ const RegisterAgropu = () => {
                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
                             </svg>
-                            <span className="font-medium">Iniciar Sesión</span>
+                            <span className="font-medium">{t('registrodeorganizacionsesion')}</span>
                         </div>
                     </Link>
                     <Link href={ROUTES.REGISTER}>
@@ -748,7 +750,7 @@ const RegisterAgropu = () => {
                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                             </svg>
-                            <span className="font-medium">Registro como Usuario</span>
+                            <span className="font-medium">{t('registrodeorganizacionussuario')}</span>
                         </div>
                     </Link>
                 </div>

@@ -8,10 +8,11 @@ import { authService } from '@/features/auth/services/authService'
 import { ROUTES } from "@/lib/constants";
 import { useAuth } from '@/features/auth/hooks/useAuth';
 import { setStoredTokens } from '@/lib/auth';
-
+import { useLanguage } from "@/context/LanguageContext";
 // Funcion para verificar la cuenta recibe como parametro el email del usuario y la ruta del ENDPOINT 
 const VerifyAccount = ({ email, URL }: VerifyAccountProps) => {
     const router = useRouter();
+    const { t } =useLanguage()
     // Funcion que actualiza el estadoi del codigo
     const [code, setCode] = useState(["", "", "", "", "", ""]);
     // Funcion que actualiza el estado de los mensajes
@@ -132,10 +133,10 @@ return(
                     </div>
                 </div>
                 <h2 className="mt-6 text-3xl font-bold tracking-wide text-gray-800 dark:text-white transition-colors duration-300">
-                    Verificar Cuenta
+                    {t('verificarcuenta')}
                 </h2>
                 <p className="text-gray-600 dark:text-gray-400 mt-2 text-center text-sm">
-                    Confirma tu identidad para continuar
+                    {t('verificarcuentamensage')}
                 </p>
                 <div className="mt-3 h-1 w-16 bg-gradient-to-r from-blue-400 to-blue-600 dark:from-blue-500 dark:to-blue-400 rounded-full"></div>
             </div>
@@ -144,7 +145,7 @@ return(
             <div className="flex flex-col items-center gap-6">
                 <div className="text-center">
                     <label className="text-base font-semibold text-gray-700 dark:text-gray-300 mb-4 block">
-                        Ingresa el código de 6 dígitos enviado a
+                        {t('verificarcuentacodigo')}
                     </label>
                     <div className="inline-flex items-center gap-2 bg-green-50 dark:bg-green-900/20 px-3 py-1 rounded-full border border-green-200 dark:border-green-700">
                         <svg className="w-4 h-4 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -202,7 +203,7 @@ return(
                     <svg className="w-5 h-5 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
-                    <span>Verificar Cuenta</span>
+                    <span>{t('verificarcuenta')}</span>
                 </button>
 
                 {/* Resend Code

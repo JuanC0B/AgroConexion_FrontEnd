@@ -5,10 +5,11 @@ import { useRef, useState } from "react";
 import {VerifyAccountProps, NewPassword} from '@/types/auth.types'
 import { useRouter } from "next/navigation";
 import { ROUTES } from "@/lib/constants";
-
+import { useLanguage } from "@/context/LanguageContext";
 // Funcion para verificar la cuenta recibe como parametro el email del usuario y la ruta del ENDPOINT 
 const ResetPassword = ({ email, URL }: VerifyAccountProps) => {
     const router = useRouter();
+    const{ t } = useLanguage()
     // Funcion que actualiza el estadoi del codigo
     const [code, setCode] = useState(["", "", "", "", "", ""]);
     const [form, setForm] = useState({
@@ -123,13 +124,13 @@ return(
                     className="rounded-full border-4 border-green-300 dark:border-green-500 shadow-md bg-white dark:bg-gray-100 transition-colors duration-300"
                 />
                 <h2 className="mt-4 text-3xl font-bold tracking-wide text-gray-900 dark:text-white transition-colors duration-300">
-                    Verify Account
+                    {t('verificarcuenta')}
                 </h2>
             </div>
             
             <div className="flex flex-col items-center gap-4">
                 <label className="text-lg text-center font-semibold mb-2 text-gray-800 dark:text-gray-200 transition-colors duration-300">
-                    Ingresa el código de 6 dígitos enviado a{' '}
+                    {t('verificarcuentacodigo')}{' '}
                     <span className="text-green-700 dark:text-green-400 font-bold">
                         {email}
                     </span>
@@ -198,7 +199,7 @@ return(
             
             <div className="flex flex-col gap-1 relative mb-6">
                 <label htmlFor="new_password2" className="font-semibold text-gray-700 dark:text-gray-300 transition-colors duration-300">
-                    Confirm new Password
+                    {t('contrseñanuevaconfirmar')}
                 </label>
                 <input
                     type={showPassword2 ? "text" : "password"}
@@ -233,7 +234,7 @@ return(
                     type="submit" 
                     className="bg-green-500 hover:bg-green-600 dark:bg-green-600 dark:hover:bg-green-500 text-white font-bold py-3 px-8 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-green-400 dark:focus:ring-green-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 min-w-[200px]"
                 >
-                    Recover Password
+                    {t('recuperarcontraseña')}
                 </button>
             </div>
         </form>
