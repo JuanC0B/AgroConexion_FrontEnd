@@ -189,13 +189,17 @@ const Notifications = () => {
 
       {/* Dropdown - Adaptativo según el tamaño de pantalla */}
       {open && (
-        <div className="absolute right-0 top-full mt-2 sm:mt-3 
-                        w-[95vw] sm:w-[24rem] lg:w-[26rem] 
+        <div className="fixed sm:absolute 
+                        top-14 sm:top-full 
+                        left-2 sm:left-auto 
+                        right-2 sm:right-0 
+                        mt-2 sm:mt-3 
+                        w-auto sm:w-[20rem] lg:w-[26rem] 
                         bg-white dark:bg-gray-800 rounded-xl sm:rounded-2xl 
                         shadow-2xl dark:shadow-black/50 
-                        border-2 border-green-300 dark:border-green-600 
+                        border border-green-300 dark:border-green-600 
                         z-50 animate-fade-slide backdrop-blur-sm
-                        max-w-sm sm:max-w-none">
+                        max-h-[calc(100vh-4.5rem)] sm:max-h-none">
           {/* Header del dropdown */}
           <div className="flex items-center justify-between p-3 sm:p-4 
                           border-b border-green-200 dark:border-gray-700">
@@ -219,7 +223,7 @@ const Notifications = () => {
           </div>
 
           {/* Contenedor de notificaciones con scroll responsivo */}
-          <div className="max-h-[50vh] sm:max-h-[60vh] lg:max-h-[28rem] overflow-y-auto 
+          <div className="max-h-[calc(100vh-8rem)] sm:max-h-[60vh] lg:max-h-[28rem] overflow-y-auto 
                           scrollbar-thin scrollbar-thumb-green-400 dark:scrollbar-thumb-green-500 
                           scrollbar-track-green-100 dark:scrollbar-track-gray-700
                           hover:scrollbar-thumb-green-500 dark:hover:scrollbar-thumb-green-400">
@@ -321,14 +325,15 @@ const Notifications = () => {
                             e.stopPropagation()
                             deleteNotification(n?.id)
                           }}
-                          className="flex-shrink-0 p-1 sm:p-1.5 text-gray-400 
+                          className="flex-shrink-0 p-1.5 sm:p-2 text-gray-400 
                                      hover:text-red-500 dark:hover:text-red-400 
                                      hover:bg-red-50 dark:hover:bg-red-900/20 
                                      rounded-lg transition-all duration-200 
-                                     opacity-0 group-hover:opacity-100
-                                     min-w-[32px] min-h-[32px] flex items-center justify-center"
+                                     touch-manipulation
+                                     min-w-[36px] min-h-[36px] sm:min-w-[32px] sm:min-h-[32px]
+                                     flex items-center justify-center"
                         >
-                          <Trash2 size={12} className="sm:w-3.5 sm:h-3.5" />
+                          <Trash2 className="w-4 h-4 sm:w-3.5 sm:h-3.5" />
                         </button>
                       </div>
                     </li>

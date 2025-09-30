@@ -132,7 +132,8 @@ export function Navbar() {
                 )}
               </Link>
 
-              <div className="flex">
+              {/* ✅ NOTIFICACIONES - Siempre visible en todos los tamaños */}
+              <div className="relative flex">
                 <Notifications />
               </div>
 
@@ -145,22 +146,21 @@ export function Navbar() {
                 <GiFarmTractor className="text-xl lg:text-2xl" />
               </Link>
 
-              <div className="hidden md:flex">
-                <button
-                  onClick={toggleLanguage}
-                  className="text-xs lg:text-sm text-white border border-white/30 
-                             px-2 py-1 rounded hover:bg-green-800 dark:hover:bg-green-800 
-                             transition-colors min-w-[32px] font-medium"
-                  aria-label="Cambiar idioma"
-                >
-                  {language === "es" ? "EN" : "ES"}
-                </button>
-              </div>
+              {/* Botón de idioma - Siempre visible */}
+              <button
+                onClick={toggleLanguage}
+                className="text-xs lg:text-sm text-white border border-white/30 
+                           px-2 py-1 rounded hover:bg-green-800 dark:hover:bg-green-800 
+                           transition-colors min-w-[32px] font-medium"
+                aria-label="Cambiar idioma"
+              >
+                {language === "es" ? "EN" : "ES"}
+              </button>
             </>
           )}
 
-          {/* Usuario siempre visible */}
-          <div className="flex">
+          {/* Usuario siempre visible con posicionamiento responsivo */}
+          <div className="relative flex">
             <NavUser />
           </div>
         </div>
@@ -174,8 +174,10 @@ export function Navbar() {
             onClick={() => setIsMenuOpen(false)}
           />
           
-          <div className="md:hidden fixed inset-y-0 left-0 z-50 w-full max-w-xs sm:max-w-sm 
-                          bg-white dark:bg-gray-800 shadow-2xl transform transition-transform duration-300
+          <div className="md:hidden fixed inset-y-0 left-0 z-50 
+                          w-[calc(100vw-3rem)] max-w-xs sm:max-w-sm 
+                          bg-white dark:bg-gray-800 shadow-2xl 
+                          transform transition-transform duration-300
                           flex flex-col">
             
             {/* Header del menú */}
@@ -252,38 +254,6 @@ export function Navbar() {
                     <ShoppingCart className="w-5 h-5 flex-shrink-0" />
                     <span className="text-sm font-medium">Carrito</span>
                   </Link>
-
-                  {/* ✅ Corrección: evitar botón dentro de botón */}
-                  <div
-                    role="button"
-                    tabIndex={0}
-                    onClick={() => setIsMenuOpen(false)}
-                    onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && setIsMenuOpen(false)}
-                    className="flex items-center gap-3 text-gray-700 dark:text-gray-300 
-                               hover:text-green-600 dark:hover:text-green-400 
-                               transition-colors py-2.5 px-3 rounded-lg cursor-pointer
-                               hover:bg-green-50 dark:hover:bg-green-900/20"
-                  >
-                    <Notifications />
-                    <span className="text-sm font-medium">Notificaciones</span>
-                  </div>
-
-                  <button
-                    onClick={() => {
-                      toggleLanguage()
-                      setIsMenuOpen(false)
-                    }}
-                    className="flex items-center gap-3 text-gray-700 dark:text-gray-300 
-                               hover:text-green-600 dark:hover:text-green-400 
-                               transition-colors py-2.5 px-3 rounded-lg w-full text-left
-                               hover:bg-green-50 dark:hover:bg-green-900/20"
-                  >
-                    <div className="w-5 h-5 border border-gray-400 dark:border-gray-500 rounded text-xs 
-                                    flex items-center justify-center font-bold flex-shrink-0">
-                      {language === "es" ? "EN" : "ES"}
-                    </div>
-                    <span className="text-sm font-medium">Cambiar idioma</span>
-                  </button>
                 </div>
               </div>
             </div>
