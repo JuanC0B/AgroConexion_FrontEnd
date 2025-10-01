@@ -66,7 +66,7 @@ export default function CreateCouponForm({ productId }: CreateCouponFormProps) {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 p-4 sm:p-6 lg:p-8">
+    <div className="min-h-screen p-4 sm:p-6 lg:p-8">
       <div className="max-w-2xl mx-auto">
         {/* Header con tema campesino para cupones */}
         <div className="text-center mb-8">

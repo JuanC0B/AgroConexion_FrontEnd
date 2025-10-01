@@ -49,7 +49,7 @@ export default function CreateOfferForm({ productId }: CreateOfferFormProps) {
 
   return (
     <div>
-      <div className="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-lime-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-9000 p-4 sm:p-6 lg:p-8 transition-colors duration-300">
+      <div className="min-h-screen  p-4 sm:p-6 lg:p-8 transition-colors duration-300">
         <div className="max-w-2xl mx-auto">
 
           {/* Header con tema campesino */}
