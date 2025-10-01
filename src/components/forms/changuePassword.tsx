@@ -118,10 +118,10 @@ const ChanguePassword = ({ email, URL}: VerifyAccountProps) => {
     
     // Retornamos componente XML
 return(
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-400 via-white to-green-500 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 py-8 transition-colors duration-300">
-        <form onSubmit={handleSubmit} className="bg-white/90 dark:bg-gray-800/95 shadow-2xl rounded-3xl px-10 py-10 w-full max-w-md mx-auto backdrop-blur-sm border border-white/20 dark:border-gray-700/50 m-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-400 via-white to-green-500 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 py-4 sm:py-8 transition-colors duration-300 px-4">
+        <form onSubmit={handleSubmit} className="bg-white/90 dark:bg-gray-800/95 shadow-2xl rounded-3xl px-6 sm:px-10 py-8 sm:py-10 w-full max-w-md mx-auto backdrop-blur-sm border border-white/20 dark:border-gray-700/50">
             {/* Header */}
-            <div className="flex flex-col items-center mb-8">
+            <div className="flex flex-col items-center mb-6 sm:mb-8">
                 <div className="relative">
                     <Image
                         src='/AgroConexion.svg'
@@ -136,7 +136,7 @@ return(
                         </svg>
                     </div>
                 </div>
-                <h2 className="mt-6 text-3xl font-bold tracking-wide text-gray-800 dark:text-white transition-colors duration-300">
+                <h2 className="mt-4 sm:mt-6 text-2xl sm:text-3xl font-bold tracking-wide text-gray-800 dark:text-white transition-colors duration-300">
                     {t("recuperarContraseña")}
                 </h2>
                 <p className="text-gray-600 dark:text-gray-400 mt-2 text-center text-sm">
@@ -146,7 +146,7 @@ return(
             </div>
 
             {/* Code Verification */}
-            <div className="flex flex-col items-center gap-6 mb-8">
+            <div className="flex flex-col items-center gap-4 sm:gap-6 mb-6 sm:mb-8">
                 <div className="text-center">
                     <label className="text-base font-semibold text-gray-700 dark:text-gray-300 mb-4 block">
                         {t("codigoVerificacion")}
@@ -155,11 +155,11 @@ return(
                         <svg className="w-4 h-4 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" />
                         </svg>
-                        <span className="text-green-700 dark:text-green-300 font-semibold text-sm">{email}</span>
+                        <span className="text-green-700 dark:text-green-300 font-semibold text-sm truncate max-w-[200px]">{email}</span>
                     </div>
                 </div>
 
-                <div className="flex gap-2 justify-center">
+                <div className="flex gap-1.5 sm:gap-2 justify-center flex-wrap">
                     {code.map((digit, idx) => (
                         <input
                             key={idx}
@@ -167,7 +167,7 @@ return(
                             type="text"
                             inputMode="numeric"
                             maxLength={1}
-                            className="w-12 h-12 text-center text-xl font-bold border-2 border-green-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-orange-400 dark:focus:ring-orange-500 focus:border-orange-400 dark:focus:border-orange-500 outline-none bg-green-50 dark:bg-gray-700 text-gray-900 dark:text-white transition-all duration-200"
+                            className="w-10 h-10 sm:w-12 sm:h-12 text-center text-lg sm:text-xl font-bold border-2 border-green-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-orange-400 dark:focus:ring-orange-500 focus:border-orange-400 dark:focus:border-orange-500 outline-none bg-green-50 dark:bg-gray-700 text-gray-900 dark:text-white transition-all duration-200"
                             value={digit}
                             onChange={e => handleChange(idx, e.target.value)}
                             onKeyDown={e => handleKeyDown(idx, e)}
@@ -177,7 +177,7 @@ return(
             </div>
 
             {/* Password Fields */}
-            <div className="space-y-6 mb-6">
+            <div className="space-y-4 sm:space-y-6 mb-6">
                 {/* New Password */}
                 <div className="flex flex-col gap-2">
                     <label htmlFor="new_password" className="font-semibold text-gray-700 dark:text-gray-300 flex items-center gap-2">
@@ -193,12 +193,12 @@ return(
                             placeholder={t("ingresaNuevaContraseña")}
                             value={form.new_password}
                             onChange={handleChangePassword}
-                            className="w-full rounded-xl border-2 border-green-200 dark:border-gray-600 px-4 py-3 pr-12 focus:outline-none focus:ring-2 focus:ring-orange-400 dark:focus:ring-orange-500 transition-all bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
+                            className="w-full rounded-xl border-2 border-green-200 dark:border-gray-600 px-3 sm:px-4 py-2.5 sm:py-3 pr-10 sm:pr-12 focus:outline-none focus:ring-2 focus:ring-orange-400 dark:focus:ring-orange-500 transition-all bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 text-sm sm:text-base"
                         />
                         <button
                             type="button"
                             onClick={() => setShowPassword((v) => !v)}
-                            className="absolute right-3 top-1/2 -translate-y-1/2 p-1 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors duration-200 focus:outline-none"
+                            className="absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 p-1 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors duration-200 focus:outline-none"
                             tabIndex={-1}
                             aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
                         >
@@ -231,12 +231,12 @@ return(
                             placeholder={t("confirmaNuevaContraseña")}
                             value={form.new_password2}
                             onChange={handleChangePassword}
-                            className="w-full rounded-xl border-2 border-green-200 dark:border-gray-600 px-4 py-3 pr-12 focus:outline-none focus:ring-2 focus:ring-orange-400 dark:focus:ring-orange-500 transition-all bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
+                            className="w-full rounded-xl border-2 border-green-200 dark:border-gray-600 px-3 sm:px-4 py-2.5 sm:py-3 pr-10 sm:pr-12 focus:outline-none focus:ring-2 focus:ring-orange-400 dark:focus:ring-orange-500 transition-all bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 text-sm sm:text-base"
                         />
                         <button
                             type="button"
                             onClick={() => setShowPassword2((v) => !v)}
-                            className="absolute right-3 top-1/2 -translate-y-1/2 p-1 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors duration-200 focus:outline-none"
+                            className="absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 p-1 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors duration-200 focus:outline-none"
                             tabIndex={-1}
                             aria-label={showPassword2 ? "Ocultar contraseña" : "Mostrar contraseña"}
                         >
@@ -258,8 +258,8 @@ return(
             {/* Error/Success Messages */}
             {error && (
                 <div className="mb-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700 rounded-xl">
-                    <div className="flex items-center gap-2">
-                        <svg className="w-4 h-4 text-red-500 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div className="flex items-start sm:items-center gap-2">
+                        <svg className="w-4 h-4 text-red-500 dark:text-red-400 flex-shrink-0 mt-0.5 sm:mt-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" />
                         </svg>
                         <span className="text-red-600 dark:text-red-400 text-sm font-semibold">{error}</span>
@@ -269,8 +269,8 @@ return(
 
             {success && (
                 <div className="mb-4 p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-700 rounded-xl">
-                    <div className="flex items-center gap-2">
-                        <svg className="w-4 h-4 text-green-500 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div className="flex items-start sm:items-center gap-2">
+                        <svg className="w-4 h-4 text-green-500 dark:text-green-400 flex-shrink-0 mt-0.5 sm:mt-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
                         <span className="text-green-600 dark:text-green-400 text-sm font-semibold">{success}</span>
@@ -281,7 +281,7 @@ return(
             {/* Submit Button */}
             <button 
                 type="submit" 
-                className="w-full bg-gradient-to-r from-green-500 to-green-600 dark:from-green-600 dark:to-green-700 hover:from-green-600 hover:to-green-700 dark:hover:from-green-700 dark:hover:to-green-800 text-white font-bold py-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-3 group"
+                className="w-full bg-gradient-to-r from-green-500 to-green-600 dark:from-green-600 dark:to-green-700 hover:from-green-600 hover:to-green-700 dark:hover:from-green-700 dark:hover:to-green-800 text-white font-bold py-3 sm:py-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-3 group"
             >
                 <svg className="w-5 h-5 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />

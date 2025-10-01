@@ -8,13 +8,15 @@ import toast from "react-hot-toast";
 import { Trash2, Heart, Star, Sparkles, Eye } from "lucide-react";
 import { FavoriteCategory } from "@/types/product.types";
 import { useRouter } from "next/navigation";
-import { useLanguage } from '@/context/LanguageContext';
-
+import { useLanguage } from "@/context/LanguageContext";
+import { AxiosError } from "axios";
+import { errorMonitor } from "events";
+import { ROUTES } from "@/lib/constants";
 
 export default function FavoriteCategories() {
   const [favorites, setFavorites] = useState<FavoriteCategory[]>([]);
   const [loading, setLoading] = useState(false);
-  const route = useRouter()
+  const route = useRouter();
   const { t } = useLanguage();
 
   // Cargar las categorías favoritas
@@ -24,7 +26,15 @@ export default function FavoriteCategories() {
         const res = await api.get("/cart/categories/");
         setFavorites(res.data);
       } catch (error) {
-        toast.error(t("errorCargaCategorias"));
+        if (error instanceof AxiosError) {
+          if (error.response?.status === 401) 
+            toast.error("No estas logeado");
+            setTimeout(() => {
+              route.push(ROUTES.LOGIN);
+            }, 5000);
+        }else{
+          toast.error(t("errorCargaCategorias"));
+        }
       }
     };
     fetchFavorites();
@@ -44,7 +54,7 @@ export default function FavoriteCategories() {
     }
   };
   const handleViewCategory = (id: number) => {
-    route.push(`/categories/${id}`)
+    route.push(`/categories/${id}`);
   };
 
   return (
@@ -68,8 +78,10 @@ export default function FavoriteCategories() {
               <div className="flex items-center gap-2 mt-2">
                 <Star className="w-4 h-4 text-orange-500 fill-orange-500 animate-pulse" />
                 <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                  {t("categoriasGuardadas")
-                    .replace("{count}", favorites.length.toString())}
+                  {t("categoriasGuardadas").replace(
+                    "{count}",
+                    favorites.length.toString()
+                  )}
                 </p>
               </div>
             </div>
@@ -94,7 +106,10 @@ export default function FavoriteCategories() {
               </div>
               {/* Círculos decorativos */}
               <div className="absolute -top-4 -left-4 w-6 h-6 border-2 border-green-300 dark:border-green-600 rounded-full animate-ping"></div>
-              <div className="absolute -bottom-4 -right-4 w-4 h-4 bg-emerald-400 dark:bg-emerald-500 rounded-full animate-bounce" style={{ animationDelay: '0.5s' }}></div>
+              <div
+                className="absolute -bottom-4 -right-4 w-4 h-4 bg-emerald-400 dark:bg-emerald-500 rounded-full animate-bounce"
+                style={{ animationDelay: "0.5s" }}
+              ></div>
             </div>
             <h3 className="text-2xl lg:text-3xl font-bold text-gray-800 dark:text-white mb-4 transition-colors duration-300">
               {t("sinFavoritos")}
@@ -199,7 +214,9 @@ export default function FavoriteCategories() {
                   <div className="absolute inset-0 bg-white/90 dark:bg-gray-800/90 backdrop-blur-md flex items-center justify-center transition-all duration-300">
                     <div className="flex items-center gap-3 bg-white dark:bg-gray-700 px-4 py-3 rounded-xl shadow-lg border border-gray-200 dark:border-gray-600">
                       <div className="w-5 h-5 border-2 border-green-600 dark:border-green-400 border-t-transparent rounded-full animate-spin" />
-                      <span className="text-gray-700 dark:text-gray-300 font-medium">{t("eliminando")}</span>
+                      <span className="text-gray-700 dark:text-gray-300 font-medium">
+                        {t("eliminando")}
+                      </span>
                     </div>
                   </div>
                 )}
@@ -214,8 +231,14 @@ export default function FavoriteCategories() {
         {/* Elementos decorativos de fondo */}
         <div className="fixed inset-0 pointer-events-none overflow-hidden -z-10">
           <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-green-200/20 dark:bg-green-900/10 rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-emerald-200/20 dark:bg-emerald-900/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
-          <div className="absolute top-1/2 right-1/3 w-32 h-32 bg-teal-200/20 dark:bg-teal-900/10 rounded-full blur-2xl animate-pulse" style={{ animationDelay: '4s' }}></div>
+          <div
+            className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-emerald-200/20 dark:bg-emerald-900/10 rounded-full blur-3xl animate-pulse"
+            style={{ animationDelay: "2s" }}
+          ></div>
+          <div
+            className="absolute top-1/2 right-1/3 w-32 h-32 bg-teal-200/20 dark:bg-teal-900/10 rounded-full blur-2xl animate-pulse"
+            style={{ animationDelay: "4s" }}
+          ></div>
         </div>
       </div>
     </div>

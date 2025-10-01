@@ -11,8 +11,10 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import toast from "react-hot-toast";
-import { useLanguage } from '@/context/LanguageContext';
-
+import { useLanguage } from "@/context/LanguageContext";
+import { useRouter } from "next/navigation";
+import { ROUTES } from "@/lib/constants";
+import { AxiosError } from "axios";
 
 interface Coupon {
   id: number;
@@ -36,14 +38,26 @@ export default function UserCoupons() {
   const [coupons, setCoupons] = useState<Coupon[]>([]);
   const [loading, setLoading] = useState(true);
   const { t } = useLanguage();
+  const router = useRouter();
 
   useEffect(() => {
     const fetchCoupons = async () => {
       try {
         const res = await api.get("/offers_and_coupons/user/coupons/");
         setCoupons(res.data);
-      } catch (error) {
-        toast.error(t("errorCargaCupones"));
+      } catch (error: unknown) {
+        if (error instanceof AxiosError) {
+          if (error.response?.status === 401) {
+            toast.error("No estás autorizado");
+            setTimeout(()=>{
+              router.push(ROUTES.LOGIN);
+            }, 5000)
+          } else {
+            toast.error(t("errorCargaCupones"));
+          }
+        } else {
+          toast.error(t("errorCargaCupones"));
+        }
       } finally {
         setLoading(false);
       }
@@ -87,7 +101,14 @@ export default function UserCoupons() {
               <div className="flex items-center gap-2 mt-2">
                 <div className="w-2 h-2 bg-purple-500 dark:bg-purple-400 rounded-full animate-pulse"></div>
                 <p className="text-gray-600 dark:text-gray-400 text-sm">
-                  {coupons.filter(item => !item.used && new Date(item.coupon.end_date) >= new Date()).length} disponibles
+                  {
+                    coupons.filter(
+                      (item) =>
+                        !item.used &&
+                        new Date(item.coupon.end_date) >= new Date()
+                    ).length
+                  }{" "}
+                  disponibles
                 </p>
               </div>
             </div>
@@ -108,18 +129,20 @@ export default function UserCoupons() {
             return (
               <div
                 key={item.id}
-                className={`relative overflow-hidden rounded-3xl shadow-lg transition-all duration-300 hover:shadow-2xl group ${isDisabled
+                className={`relative overflow-hidden rounded-3xl shadow-lg transition-all duration-300 hover:shadow-2xl group ${
+                  isDisabled
                     ? "bg-gray-100 dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700"
                     : "bg-white dark:bg-gray-800 border-2 border-transparent hover:border-purple-200 dark:hover:border-purple-700 hover:-translate-y-2"
-                  }`}
+                }`}
                 style={{ animationDelay: `${index * 100}ms` }}
               >
                 {/* Decoración superior */}
                 <div
-                  className={`h-3 ${isDisabled
+                  className={`h-3 ${
+                    isDisabled
                       ? "bg-gray-300 dark:bg-gray-600"
                       : "bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 dark:from-purple-400 dark:via-pink-400 dark:to-orange-400"
-                    }`}
+                  }`}
                 />
 
                 <div className="p-6">
@@ -127,20 +150,27 @@ export default function UserCoupons() {
                   <div className="flex items-start justify-between mb-4">
                     <div className="flex items-center gap-3">
                       <div
-                        className={`p-2 rounded-xl ${isDisabled
+                        className={`p-2 rounded-xl ${
+                          isDisabled
                             ? "bg-gray-200 dark:bg-gray-700"
                             : "bg-gradient-to-r from-purple-100 to-pink-100 dark:from-purple-900/30 dark:to-pink-900/30"
-                          }`}
+                        }`}
                       >
                         <TicketPercent
-                          className={`w-5 h-5 ${isDisabled ? "text-gray-400 dark:text-gray-500" : "text-purple-600 dark:text-purple-400"
-                            }`}
+                          className={`w-5 h-5 ${
+                            isDisabled
+                              ? "text-gray-400 dark:text-gray-500"
+                              : "text-purple-600 dark:text-purple-400"
+                          }`}
                         />
                       </div>
                       <div>
                         <h3
-                          className={`font-bold text-sm sm:text-base leading-tight ${isDisabled ? "text-gray-500 dark:text-gray-400" : "text-gray-800 dark:text-white"
-                            }`}
+                          className={`font-bold text-sm sm:text-base leading-tight ${
+                            isDisabled
+                              ? "text-gray-500 dark:text-gray-400"
+                              : "text-gray-800 dark:text-white"
+                          }`}
                         >
                           {coupon.description || t("cuponEspecial")}
                         </h3>
@@ -149,30 +179,42 @@ export default function UserCoupons() {
 
                     {/* Badge de estado */}
                     <div
-                      className={`px-3 py-1 rounded-full text-xs font-semibold ${used
+                      className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                        used
                           ? "bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400"
                           : expired
-                            ? "bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-400"
-                            : "bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400"
-                        }`}
+                          ? "bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-400"
+                          : "bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400"
+                      }`}
                     >
-                      {used ? t("usado") : expired ? t("expirado") : t("disponible")}
+                      {used
+                        ? t("usado")
+                        : expired
+                        ? t("expirado")
+                        : t("disponible")}
                     </div>
                   </div>
 
                   {/* Descuento destacado */}
                   <div className="text-center mb-6">
                     <div
-                      className={`inline-block ${isDisabled
+                      className={`inline-block ${
+                        isDisabled
                           ? "text-gray-400 dark:text-gray-500"
                           : "text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-400 dark:to-pink-400"
-                        }`}
+                      }`}
                     >
                       <span className="text-4xl sm:text-5xl font-bold">
                         {coupon.percentage}%
                       </span>
                     </div>
-                    <p className={`text-sm font-medium mt-1 ${isDisabled ? "text-gray-500 dark:text-gray-400" : "text-gray-600 dark:text-gray-300"}`}>
+                    <p
+                      className={`text-sm font-medium mt-1 ${
+                        isDisabled
+                          ? "text-gray-500 dark:text-gray-400"
+                          : "text-gray-600 dark:text-gray-300"
+                      }`}
+                    >
                       {t("descuento")}
                     </p>
                   </div>
@@ -181,16 +223,27 @@ export default function UserCoupons() {
                   <div className="space-y-3 mb-6">
                     <div className="flex items-center gap-2 text-sm">
                       <CreditCard
-                        className={`w-4 h-4 ${isDisabled ? "text-gray-400 dark:text-gray-500" : "text-gray-600 dark:text-gray-300"
-                          }`}
+                        className={`w-4 h-4 ${
+                          isDisabled
+                            ? "text-gray-400 dark:text-gray-500"
+                            : "text-gray-600 dark:text-gray-300"
+                        }`}
                       />
                       <span
                         className={
-                          isDisabled ? "text-gray-500 dark:text-gray-400" : "text-gray-700 dark:text-gray-300"
+                          isDisabled
+                            ? "text-gray-500 dark:text-gray-400"
+                            : "text-gray-700 dark:text-gray-300"
                         }
                       >
                         {t("compraMinima")}{" "}
-                        <strong className={isDisabled ? "text-gray-600 dark:text-gray-400" : "text-purple-600 dark:text-purple-400"}>
+                        <strong
+                          className={
+                            isDisabled
+                              ? "text-gray-600 dark:text-gray-400"
+                              : "text-purple-600 dark:text-purple-400"
+                          }
+                        >
                           $
                           {Number(coupon.min_purchase_amount).toLocaleString(
                             "es-CO"
@@ -201,25 +254,28 @@ export default function UserCoupons() {
 
                     <div className="flex items-center gap-2 text-sm">
                       <Calendar
-                        className={`w-4 h-4 ${expired
+                        className={`w-4 h-4 ${
+                          expired
                             ? "text-red-500 dark:text-red-400"
                             : isDisabled
-                              ? "text-gray-400 dark:text-gray-500"
-                              : "text-gray-600 dark:text-gray-300"
-                          }`}
+                            ? "text-gray-400 dark:text-gray-500"
+                            : "text-gray-600 dark:text-gray-300"
+                        }`}
                       />
                       <span
                         className={
                           expired
                             ? "text-red-600 dark:text-red-400"
                             : isDisabled
-                              ? "text-gray-500 dark:text-gray-400"
-                              : "text-gray-700 dark:text-gray-300"
+                            ? "text-gray-500 dark:text-gray-400"
+                            : "text-gray-700 dark:text-gray-300"
                         }
                       >
                         {t("validoHasta")}{" "}
                         <strong>
-                          {new Date(coupon.end_date).toLocaleDateString("es-CO")}
+                          {new Date(coupon.end_date).toLocaleDateString(
+                            "es-CO"
+                          )}
                         </strong>
                       </span>
                     </div>
@@ -227,19 +283,29 @@ export default function UserCoupons() {
 
                   {/* Código del cupón */}
                   <div
-                    className={`p-4 rounded-xl border-2 border-dashed ${isDisabled
+                    className={`p-4 rounded-xl border-2 border-dashed ${
+                      isDisabled
                         ? "bg-gray-50 dark:bg-gray-700/50 border-gray-300 dark:border-gray-600"
                         : "bg-purple-50 dark:bg-purple-900/20 border-purple-300 dark:border-purple-700"
-                      }`}
+                    }`}
                   >
                     <div className="flex items-center justify-between">
                       <div className="">
-                        <p className={`text-xs mb-1 ${isDisabled ? "text-gray-500 dark:text-gray-400" : "text-gray-600 dark:text-gray-400"}`}>
+                        <p
+                          className={`text-xs mb-1 ${
+                            isDisabled
+                              ? "text-gray-500 dark:text-gray-400"
+                              : "text-gray-600 dark:text-gray-400"
+                          }`}
+                        >
                           {t("codigo")}
                         </p>
                         <code
-                          className={`font-mono font-bold text-lg ${isDisabled ? "text-gray-500 dark:text-gray-400" : "text-purple-700 dark:text-purple-300"
-                            }`}
+                          className={`font-mono font-bold text-lg ${
+                            isDisabled
+                              ? "text-gray-500 dark:text-gray-400"
+                              : "text-purple-700 dark:text-purple-300"
+                          }`}
                         >
                           {coupon.code}
                         </code>
@@ -264,8 +330,18 @@ export default function UserCoupons() {
                     >
                       <div className="flex items-center justify-center gap-2">
                         <span>{t("usarCupon")}</span>
-                        <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5-5 5M6 12h12" />
+                        <svg
+                          className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M13 7l5 5-5 5M6 12h12"
+                          />
                         </svg>
                       </div>
                     </Link>
@@ -276,8 +352,11 @@ export default function UserCoupons() {
                     <div className="absolute inset-0 bg-gray-200/80 dark:bg-gray-800/80 backdrop-blur-sm flex items-center justify-center rounded-3xl">
                       <div className="text-center">
                         <div
-                          className={`w-16 h-16 mx-auto mb-3 rounded-full flex items-center justify-center ${used ? "bg-red-500 dark:bg-red-600" : "bg-gray-500 dark:bg-gray-600"
-                            } shadow-lg`}
+                          className={`w-16 h-16 mx-auto mb-3 rounded-full flex items-center justify-center ${
+                            used
+                              ? "bg-red-500 dark:bg-red-600"
+                              : "bg-gray-500 dark:bg-gray-600"
+                          } shadow-lg`}
                         >
                           <span className="text-white font-bold text-xl">
                             {used ? "✕" : "⏰"}
