@@ -223,7 +223,7 @@ export function Navbar() {
                 <div className="pb-4 border-b border-gray-200 dark:border-gray-600">
                   <button
                     onClick={toggleLanguage}
-                    className="flex items-center text-white hover:text-gray-200 transition-colors p-2 rounded-lg hover:bg-gray-700"
+                    className="flex items-center text-gray-700 hover:text-gray-700 transition-colors p-2 rounded-lg hover:bg-gray-700 dark:text-white"
                     aria-label="Cambiar idioma"
                     title={`Cambiar a ${
                       language === "es" ? "English" : "Español"
