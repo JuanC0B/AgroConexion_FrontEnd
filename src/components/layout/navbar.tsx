@@ -5,7 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import GetAllCategories from '@/components/products/Categories'
 import NavUser from '@/components/user/NavUser'
-import { ShoppingCart, Menu, X, Ticket } from 'lucide-react'
+import { ShoppingCart, Menu, X, Ticket, Languages } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import api from '@/lib/axios'
 import Notifications from '../notification/notification'
@@ -102,7 +102,7 @@ export function Navbar() {
           )}
         </div>
 
-        {/* DERECHA: según estado de login */}
+        {/* DERECHA: según estado de login + botón de idioma */}
         <div className="flex items-center gap-1 sm:gap-2 lg:gap-4 flex-shrink-0">
           {isAuthenticated && (
             <>
@@ -132,7 +132,7 @@ export function Navbar() {
                 )}
               </Link>
 
-              {/* ✅ NOTIFICACIONES - Siempre visible en todos los tamaños */}
+              {/* Notificaciones */}
               <div className="relative flex">
                 <Notifications />
               </div>
@@ -145,21 +145,25 @@ export function Navbar() {
               >
                 <GiFarmTractor className="text-xl lg:text-2xl" />
               </Link>
-
-              {/* Botón de idioma - Siempre visible */}
-              <button
-                onClick={toggleLanguage}
-                className="text-xs lg:text-sm text-white border border-white/30 
-                           px-2 py-1 rounded hover:bg-green-800 dark:hover:bg-green-800 
-                           transition-colors min-w-[32px] font-medium"
-                aria-label="Cambiar idioma"
-              >
-                {language === "es" ? "EN" : "ES"}
-              </button>
             </>
           )}
 
-          {/* Usuario siempre visible con posicionamiento responsivo */}
+          {/* ✅ BOTÓN DE IDIOMA - Oculto en móvil (md:flex) */}
+          <button
+            onClick={toggleLanguage}
+            className="hidden md:flex text-white hover:text-gray-200 transition-colors 
+                       p-2 rounded-lg hover:bg-white/10 items-center gap-1 sm:gap-1.5
+                       flex-shrink-0"
+            aria-label="Cambiar idioma"
+            title={`Cambiar a ${language === 'es' ? 'English' : 'Español'}`}
+          >
+            <Languages className="w-5 h-5 lg:w-5 lg:h-5" />
+            <span className="text-xs sm:text-sm font-semibold uppercase">
+              {language === 'es' ? 'ES' : 'EN'}
+            </span>
+          </button>
+
+          {/* Usuario */}
           <div className="relative flex">
             <NavUser />
           </div>
@@ -207,54 +211,82 @@ export function Navbar() {
             {/* Contenido menú */}
             <div className="flex-1 overflow-y-auto">
               <div className="p-4 space-y-6">
-                {/* Categorías: siempre en el menú si no está logeado */}
+                {/* ✅ Botón de idioma PRIMERO en menú móvil */}
+                <div className="pb-4 border-b border-gray-200 dark:border-gray-600">
+                  <button
+                    onClick={() => {
+                      toggleLanguage()
+                      setIsMenuOpen(false)
+                    }}
+                    className="w-full flex items-center justify-between gap-3 text-gray-700 dark:text-gray-300 
+                               hover:text-green-600 dark:hover:text-green-400 
+                               transition-colors py-3 px-3 rounded-lg
+                               hover:bg-green-50 dark:hover:bg-green-900/20
+                               border border-gray-200 dark:border-gray-600"
+                  >
+                    <div className="flex items-center gap-3">
+                      <Languages className="w-5 h-5 flex-shrink-0" />
+                      <span className="text-sm font-medium">
+                        {language === 'es' ? 'Idioma: Español' : 'Language: English'}
+                      </span>
+                    </div>
+                    <span className="text-xs font-semibold uppercase bg-green-100 dark:bg-green-900/30 
+                                     text-green-700 dark:text-green-400 px-2.5 py-1 rounded">
+                      {language === 'es' ? 'ES' : 'EN'}
+                    </span>
+                  </button>
+                </div>
+
+                {/* Categorías */}
                 <div className="space-y-2">
                   <div className="w-full">
                     <GetAllCategories />
                   </div>
                 </div>
 
-                <div className="space-y-3 pt-4 border-t border-gray-200 dark:border-gray-600">
-                  <h3 className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide">
-                    Servicios
-                  </h3>
+                {isAuthenticated && (
+                  <div className="space-y-3 pt-4 border-t border-gray-200 dark:border-gray-600">
+                    <h3 className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide">
+                      {t('menuresponsivoservicios')}
+                    </h3>
 
-                  <Link
-                    href={ROUTES.COUPOND}
-                    onClick={() => setIsMenuOpen(false)}
-                    className="flex items-center gap-3 text-gray-700 dark:text-gray-300 
-                               hover:text-green-600 dark:hover:text-green-400 
-                               transition-colors py-2.5 px-3 rounded-lg
-                               hover:bg-green-50 dark:hover:bg-green-900/20"
-                  >
-                    <Ticket className="w-5 h-5 flex-shrink-0" />
-                    <span className="text-sm font-medium">Cupones</span>
-                  </Link>
+                    <Link
+                      href={ROUTES.COUPOND}
+                      onClick={() => setIsMenuOpen(false)}
+                      className="flex items-center gap-3 text-gray-700 dark:text-gray-300 
+                                 hover:text-green-600 dark:hover:text-green-400 
+                                 transition-colors py-2.5 px-3 rounded-lg
+                                 hover:bg-green-50 dark:hover:bg-green-900/20"
+                    >
+                      <Ticket className="w-5 h-5 flex-shrink-0" />
+                      <span className="text-sm font-medium">{t('menuresponsivocupones')}</span>
+                    </Link>
 
-                  <Link
-                    href={ROUTES.FAVORITECATEGORIES}
-                    onClick={() => setIsMenuOpen(false)}
-                    className="flex items-center gap-3 text-gray-700 dark:text-gray-300 
-                               hover:text-green-600 dark:hover:text-green-400 
-                               transition-colors py-2.5 px-3 rounded-lg
-                               hover:bg-green-50 dark:hover:bg-green-900/20"
-                  >
-                    <GiFarmTractor className="text-xl flex-shrink-0" />
-                    <span className="text-sm font-medium">Categorías Favoritas</span>
-                  </Link>
+                    <Link
+                      href={ROUTES.FAVORITECATEGORIES}
+                      onClick={() => setIsMenuOpen(false)}
+                      className="flex items-center gap-3 text-gray-700 dark:text-gray-300 
+                                 hover:text-green-600 dark:hover:text-green-400 
+                                 transition-colors py-2.5 px-3 rounded-lg
+                                 hover:bg-green-50 dark:hover:bg-green-900/20"
+                    >
+                      <GiFarmTractor className="text-xl flex-shrink-0" />
+                      <span className="text-sm font-medium">{t('menuresponsivocategorioes')}</span>
+                    </Link>
 
-                  <Link
-                    href="/cart"
-                    onClick={() => setIsMenuOpen(false)}
-                    className="flex items-center gap-3 text-gray-700 dark:text-gray-300 
-                               hover:text-green-600 dark:hover:text-green-400 
-                               transition-colors py-2.5 px-3 rounded-lg
-                               hover:bg-green-50 dark:hover:bg-green-900/20"
-                  >
-                    <ShoppingCart className="w-5 h-5 flex-shrink-0" />
-                    <span className="text-sm font-medium">Carrito</span>
-                  </Link>
-                </div>
+                    <Link
+                      href="/cart"
+                      onClick={() => setIsMenuOpen(false)}
+                      className="flex items-center gap-3 text-gray-700 dark:text-gray-300 
+                                 hover:text-green-600 dark:hover:text-green-400 
+                                 transition-colors py-2.5 px-3 rounded-lg
+                                 hover:bg-green-50 dark:hover:bg-green-900/20"
+                    >
+                      <ShoppingCart className="w-5 h-5 flex-shrink-0" />
+                      <span className="text-sm font-medium">{t('menuresponsivoCarrito')}</span>
+                    </Link>
+                  </div>
+                )}
               </div>
             </div>
 

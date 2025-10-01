@@ -1028,6 +1028,11 @@ const translations: Record<string, [string, string]> = {
   invoicemensajeparrafo:["Con tu compra apoyas directamente a las familias rurales y contribuyes al desarrollo sostenible del campo colombiano.","With your purchase, you directly support rural families and contribute to the sustainable development of the Colombian countryside."],
 
   categoriasDisponibles: ["Categorías Disponibles", "Available Categories"],
+
+  menuresponsivoservicios:["Servicios","Services"],
+  menuresponsivocupones:["Cupones","Coupons"],
+  menuresponsivocategorioes:["Categorías Favoritas","Favorite Categories"],
+  menuresponsivoCarrito:["Carrito","Cart"],
 };
 
 /* ============================================================
