@@ -171,8 +171,11 @@ const ProductCard: React.FC<ProductCardProps & { defaultFavorite?: boolean }> = 
         {/* Info del producto - Se expande para ocupar el espacio disponible */}
         <div className="flex-grow space-y-3">
           <h2 className="text-lg font-bold text-gray-900 dark:text-gray-100 leading-snug line-clamp-2">
-            {description}
+            {name}
           </h2>
+          <p className="text-sm font-bold text-gray-900 dark:text-gray-500 leading-snug line-clamp-2">
+            {description}
+          </p>
 
           {/* Precio y rating */}
           <div className="flex items-center justify-between">

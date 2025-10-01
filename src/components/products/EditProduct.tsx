@@ -351,7 +351,7 @@ export default function EditProductForm({ productId }: { productId: number }) {
                 >
                   <div className="relative overflow-hidden rounded-xl aspect-square">
                     <Image
-                      src={`${process.env.NEXT_PUBLIC_MEDIA_URL}${img.image}`}
+                      src={`${img.image}`}
                       alt="Product"
                       fill
                       className={`object-cover rounded-xl border-2 shadow-lg transition-all duration-300 group-hover:scale-105 ${deleteImages.includes(img.id)
