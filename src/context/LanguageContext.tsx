@@ -1033,8 +1033,36 @@ const translations: Record<string, [string, string]> = {
   menuresponsivocupones:["Cupones","Coupons"],
   menuresponsivocategorioes:["Categorías Favoritas","Favorite Categories"],
   menuresponsivoCarrito:["Carrito","Cart"],
-};
 
+
+  //Preview de la compra
+  check:["Finalizar Compra","Checkout"],
+  checkparrafo:["Revisa tu pedido y completa la información de pago","Review your order and complete the payment information."],
+  checkproductos:["Producto Seleccionado","Selected Product"],
+  checkcantidad:["Cantidad","Quantity"],
+  checkAhorro:["Ahorro","Savings"],
+  checkcupon:["Cupón de Descuento","Discount Coupon"],
+  checkAplicar:["Aplicar","Apply"],
+  checkAplicarparrafo:["¿Tienes un cupón? Ingrésalo para obtener descuentos adicionales","Do you have a coupon? Enter it to get additional discounts."],
+  checkmetodo:["Método de Pago","Payment Method"],
+  checkefectivo:["Efectivo","Cash"],
+  checkefectivocontraentrega:["Contra entrega","Upon delivery"],
+  checketarjeta:["Tarjeta","Card"],
+  checketarjetadebito:["Débito/Crédito","Debit/Credit"],
+
+  datoscardnumero:["Card number","Card number"],
+  datoscardnombre:["Nombre del titular","Name of the holder"],
+  datoscardfecha:["Fecha de vencimiento","Expiration date"],
+  datoscardtexto:["Tu información está protegida con encriptación SSL","Your information is protected with SSL encryption."],
+
+  resumen:["Resumen del Pedido","Order Summary"],
+  resumendescuento:["Descuento","Discount"],
+  resumenenvio:["Envío","Shipping"],
+  resumenahorro:["¡Excelente! Estás ahorrando $","Excellent! You're saving $"],
+  resumenboton:["Confirmar Compra","Confirm Purchase"],
+  resumenparrafo:["Al confirmar tu compra, aceptas nuestros términos y condiciones","By confirming your purchase, you agree to our terms and conditions."],
+  
+};
 /* ============================================================
    CONTEXTO
 ============================================================ */
